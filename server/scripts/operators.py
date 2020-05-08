@@ -1,7 +1,7 @@
 import math
 
-from server.standard import StdUncertainty
-from server.simple import SimpleUncertainty
+from server.scripts.standard import StdUncertainty
+from server.scripts.simple import SimpleUncertainty
 
 
 def sin(o):
