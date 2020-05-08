@@ -1,7 +1,7 @@
 import requests
 
-url = 'http://thomaslin2020.pythonanywhere.com/'
-data = {'method': 'simple', 'equation': 'U(3,1)-U(5,1)+23'}
+url = 'http://localhost:5001/'
+data = {'method': 'simple', 'equation': 'ln(arctan(U(3,5)-log(U(2.4,6))))+pi+R'}
 x = requests.post(url, data=data)
 
 print(x.text)
