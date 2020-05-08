@@ -6,6 +6,9 @@ class SimpleUncertainty:
     def __neg__(self):
         return SimpleUncertainty(-self.value, self.uncertainty)
 
+    def __abs__(self):
+        return SimpleUncertainty(abs(self.value), self.uncertainty)
+
     def __add__(self, other):
         if isinstance(other, (int, float)):
             return SimpleUncertainty(self.value + other, self.uncertainty)
@@ -30,7 +33,7 @@ class SimpleUncertainty:
         temp = self.value / other.value
         return SimpleUncertainty(temp,
                                  abs(((self.uncertainty / abs(self.value)) + (
-                                             other.uncertainty / abs(other.value))) * temp))
+                                         other.uncertainty / abs(other.value))) * temp))
 
     def __pow__(self, power):
         temp = self.value ** power

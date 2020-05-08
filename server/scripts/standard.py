@@ -9,6 +9,9 @@ class StdUncertainty:
     def __neg__(self):
         return StdUncertainty(-self.value, self.uncertainty)
 
+    def __abs__(self):
+        return StdUncertainty(abs(self.value), self.uncertainty)
+
     def __add__(self, other):
         if isinstance(other, (int, float)):
             return StdUncertainty(self.value + other, self.uncertainty)
