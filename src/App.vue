@@ -40,7 +40,7 @@
                 const fd = new FormData()
                 fd.append('method', this.mode)
                 fd.append('equation', document.getElementById('equation').value)
-                axios.post('http://thomaslin2020.pythonanywhere.com/', fd)
+                axios.post('https://thomaslin2020.pythonanywhere.com/', fd)
                     .then(response => {
                         this.result = response.data
                         console.log(response)
