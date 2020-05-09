@@ -42,3 +42,6 @@ class StdUncertainty:
 
     def __str__(self):
         return '(%f±%f)' % (self.value, self.uncertainty)
+
+    def __round__(self, n=None):
+        pass

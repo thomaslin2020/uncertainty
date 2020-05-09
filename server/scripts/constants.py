@@ -17,7 +17,7 @@ class Constants:
         return str(self.value)
 
 
-print(Constants(pi, 0) + Constants(R, 0))
+# print(Constants(pi, 0) + Constants(R, 0))
 """
 Avogadro’s constant (𝐿𝐿 or 𝑁𝑁𝐴𝐴) = 6.02 × 1023 mol−1
 Gas constant (𝑅𝑅) = 8.31 J K−1 mol−1
@@ -32,6 +32,3 @@ Faraday’s constant (𝐹𝐹) = 9.65 × 104 C mol−1
 Ionic product constant for water (𝐾𝐾w) = 1.00 × 10−14 mol2 dm−6 at 298 K
 1 amu = 1.66 × 10−27 kg
 """
-
-z = 1 + 2j
-print(z * 2)
