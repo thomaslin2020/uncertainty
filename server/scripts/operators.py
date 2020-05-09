@@ -180,15 +180,12 @@ def round_to(o, n, cap_sigfigs):
             num = str(round(float(temp) * uncertainty_digits) / uncertainty_digits)
             if cap_sigfigs:
                 num = sanity_check(num, min(max_sigfigs, n))
+                num = num[:num.index('.') + 1 + len(uncertainty[uncertainty.index('.') + 1:])]
             else:
-                num = sanity_check(num, n)
-            # print(num.index('.') + 1 + len(uncertainty[uncertainty.index('.') + 1:]))
-            num = num[:num.index('.') + 1 + len(uncertainty[uncertainty.index('.') + 1:])]
-            uncertainty = uncertainty[:-1] if uncertainty[-1] == '.' else uncertainty
-            if not cap_sigfigs:
                 num = np.format_float_positional(o.value, precision=n,
                                                  unique=False, fractional=False, trim='k')
                 num = sanity_check(num, n)
+            uncertainty = uncertainty[:-1] if uncertainty[-1] == '.' else uncertainty
             if num[-1] == '.':
                 if cap_sigfigs:
                     num = integer_check(num, min(max_sigfigs, n) + 1)
