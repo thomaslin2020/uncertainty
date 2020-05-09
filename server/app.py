@@ -26,8 +26,6 @@ def main():
         else:
             U = StdUncertainty
         try:
-            print(U.__name__)
-            round_to(U(3,5),2)
             return str(eval(request.form['equation']))
         except:
             return 'Please fix your equation'
