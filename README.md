@@ -5,7 +5,7 @@ This calculator is a web app for performing calculations involving quantities wi
 [![Maintenance](https://img.shields.io/maintenance/yes/2020.svg)]() [![Build Status](https://travis-ci.org/arnog/mathlive.svg?branch=master)](https://travis-ci.org/arnog/mathlive) 
 
 - [ ] Calculates error propagation for common functions with steps of calculation
-- [ ] Supports accurate rounding and significant figures
+- [x] Supports accurate rounding and significant figures
 - [ ] Supports common constants and unit conversion
 - [ ] View results in scientific and engineering modes
 - [ ] Integration with Excel data through drag and drop
