@@ -14,12 +14,30 @@ class SimpleUncertainty:
             return SimpleUncertainty(self.value + other, self.uncertainty)
         return SimpleUncertainty(self.value + other.value, self.uncertainty + other.uncertainty)
 
+    def __radd__(self, other):
+        if isinstance(other, (int, float)):
+            return SimpleUncertainty(self.value + other, self.uncertainty)
+        return SimpleUncertainty(self.value + other.value, self.uncertainty + other.uncertainty)
+
     def __sub__(self, other):
         if isinstance(other, (int, float)):
             return SimpleUncertainty(self.value - other, self.uncertainty)
         return SimpleUncertainty(self.value - other.value, self.uncertainty + other.uncertainty)
 
+    def __rsub__(self, other):
+        if isinstance(other, (int, float)):
+            return SimpleUncertainty(other - self.value, self.uncertainty)
+        return SimpleUncertainty(other.value - self.value, self.uncertainty + other.uncertainty)
+
     def __mul__(self, other):
+        if isinstance(other, (int, float)):
+            return SimpleUncertainty(self.value * other, self.uncertainty * other)
+        temp = self.value * other.value
+        return SimpleUncertainty(temp,
+                                 abs(((self.uncertainty / abs(self.value)) + (
+                                         other.uncertainty / abs(other.value))) * temp))
+
+    def __rmul__(self, other):
         if isinstance(other, (int, float)):
             return SimpleUncertainty(self.value * other, self.uncertainty * other)
         temp = self.value * other.value
@@ -34,6 +52,10 @@ class SimpleUncertainty:
         return SimpleUncertainty(temp,
                                  abs(((self.uncertainty / abs(self.value)) + (
                                          other.uncertainty / abs(other.value))) * temp))
+
+    def __rtruediv__(self, other):
+        if isinstance(other, (int, float)):
+            return SimpleUncertainty(other, 0) / SimpleUncertainty(self.value, self.uncertainty)
 
     def __pow__(self, power):
         temp = self.value ** power

@@ -14,6 +14,21 @@ Vue.use(VueRouter)
     path: '/about',
     name: 'About',
     component: () => import('../views/About.vue')
+  },
+  {
+    path: '/guide',
+    name: 'About',
+    component: () => import('../views/Guide.vue')
+  },
+  {
+    path: '/tools',
+    name: 'Tools',
+    component: () => import('../views/Tools.vue')
+  },
+  {
+    path: '/resources',
+    name: 'Resources',
+    component: () => import('../views/Resources.vue')
   }
 ]
 

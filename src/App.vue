@@ -13,7 +13,6 @@
                             <b-nav-item to="/about">About</b-nav-item>
                             <b-nav-item to="/quick_guide">Quick Guide</b-nav-item>
                             <b-nav-item to="/tools">Tools</b-nav-item>
-                            <b-nav-item to="/documentation">Documentation</b-nav-item>
                             <b-nav-item to="#">Resources</b-nav-item>
                         </b-navbar-nav>
                     </b-collapse>
@@ -110,7 +109,7 @@
     }
 
     .background-layer {
-        background: rgba(255, 255, 255, 0.43);
+        background: rgba(255, 255, 255, 0.6);
         width: 80%;
         max-width: 80%;
         border-radius: 10px

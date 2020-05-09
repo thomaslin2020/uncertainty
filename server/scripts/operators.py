@@ -70,6 +70,27 @@ def ln(o):
         if isinstance(o, SimpleUncertainty) else StdUncertainty(value, abs(uncertainty))
 
 
+def sq(o):
+    value = o.value * o.value
+    uncertainty = 2 * o.value * o.uncertainty
+    return SimpleUncertainty(value, abs(uncertainty)) \
+        if isinstance(o, SimpleUncertainty) else StdUncertainty(value, abs(uncertainty))
+
+
+def sqrt(o):
+    value = math.sqrt(o.value)
+    uncertainty = 1 / (2 * math.sqrt(o.value)) * o.uncertainty
+    return SimpleUncertainty(value, abs(uncertainty)) \
+        if isinstance(o, SimpleUncertainty) else StdUncertainty(value, abs(uncertainty))
+
+
+def cbrt(o):
+    value = math.pow(o.value, 1 / 3)
+    uncertainty = 1 / (3 * (o.value ** (2 / 3))) * o.uncertainty
+    return SimpleUncertainty(value, abs(uncertainty)) \
+        if isinstance(o, SimpleUncertainty) else StdUncertainty(value, abs(uncertainty))
+
+
 def sanity_check(o, n):
     if o[-1] != '.' and o[0] == '0':  # if is in the form '0.#'
         temp = o[o.index('.') + 1:]
@@ -229,3 +250,4 @@ print(r_(SimpleUncertainty(0, 0), 5))
 
 # it should be noted that r() would omit trailing zeros
 # if number is integer, trailing zeros would be omitted
+print(710 - SimpleUncertainty(3, 5) - 40)
