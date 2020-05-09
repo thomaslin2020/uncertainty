@@ -2,9 +2,7 @@
 
 This calculator is a web app for performing calculations involving quantities with uncertainties.
 
-```
-[![Maintenance](https://img.shields.io/maintenance/yes/2020.svg)]()
-```
+[![Maintenance](https://img.shields.io/maintenance/yes/2020.svg)]() [![Build Status](https://travis-ci.org/arnog/mathlive.svg?branch=master)](https://travis-ci.org/arnog/mathlive) 
 
 - [ ] Calculates error propagation for common functions with steps of calculation
 - [ ] Supports accurate rounding and significant figures
@@ -17,3 +15,5 @@ This calculator is a web app for performing calculations involving quantities wi
 - [ ] Login to track calcultion history
 - [ ] Builds computational graph of calculation
 - [ ] Graphing based on uncertainty values
+
+Try it at [https://thomaslin2020.github.io/uncertainty](https://thomaslin2020.github.io/uncertainty) 
