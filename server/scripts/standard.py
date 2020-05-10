@@ -42,9 +42,6 @@ class StdUncertainty:
     def __rmul__(self, other):
         if isinstance(other, (int, float)):
             return StdUncertainty(self.value * other, self.uncertainty * other)
-        temp = self.value * other.value
-        return StdUncertainty(temp, abs(math.sqrt(
-            ((self.uncertainty / abs(self.value)) ** 2) + ((other.uncertainty / abs(other.value)) ** 2)) * temp))
 
     def __truediv__(self, other):
         if isinstance(other, (int, float)):

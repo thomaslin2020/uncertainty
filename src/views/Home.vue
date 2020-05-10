@@ -4,17 +4,17 @@
             <div style="width: 80%">
                 <h1>Equation</h1>
                 <br>
-                <b-input type="text" id="equation" name="equation"></b-input>
+                <b-input id="equation" name="equation" type="text"></b-input>
                 <br>
                 Choose your mode:
-                <input type="radio" id="simple" value="simple" v-model="mode">
+                <input id="simple" type="radio" v-model="mode" value="simple">
                 <label for="simple">Simple</label>
                 &nbsp;
-                <input type="radio" id="standard" value="standard" v-model="mode">
+                <input id="standard" type="radio" v-model="mode" value="standard">
                 <label for="standard">Standard</label>
                 <br>
                 <br>
-                <b-button type="submit" value="upload" @click="send">Calculate</b-button>
+                <b-button @click="send" type="submit" value="upload">Calculate</b-button>
                 <br>
                 <br>
                 <h2>Result: {{result}}</h2>

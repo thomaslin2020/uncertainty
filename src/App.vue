@@ -9,9 +9,9 @@
                     <b-navbar-toggle id="collapse-button" target="nav-collapse"></b-navbar-toggle>
                     <b-collapse id="nav-collapse" is-nav>
                         <b-navbar-nav class="ml-auto">
-                            <b-nav-item to="/home">Home</b-nav-item>
+                            <b-nav-item to="/">Home</b-nav-item>
                             <b-nav-item to="/about">About</b-nav-item>
-                            <b-nav-item to="/quick_guide">Quick Guide</b-nav-item>
+                            <b-nav-item to="/guide">Quick Guide</b-nav-item>
                             <b-nav-item to="/tools">Tools</b-nav-item>
                             <b-nav-item to="#">Resources</b-nav-item>
                         </b-navbar-nav>

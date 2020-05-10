@@ -1,5 +1,8 @@
 <template>
-    <div></div>
+    <div>
+        <h1>This is a Tools Page</h1>
+
+    </div>
 </template>
 
 <script>

@@ -40,10 +40,6 @@ class SimpleUncertainty:
     def __rmul__(self, other):
         if isinstance(other, (int, float)):
             return SimpleUncertainty(self.value * other, self.uncertainty * other)
-        temp = self.value * other.value
-        return SimpleUncertainty(temp,
-                                 abs(((self.uncertainty / abs(self.value)) + (
-                                         other.uncertainty / abs(other.value))) * temp))
 
     def __truediv__(self, other):
         if isinstance(other, (int, float)):
