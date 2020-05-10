@@ -33,7 +33,7 @@ def binary_node(s, o, operator):
     dot.node(operator_node, operator)
     dot.edges([(s.node, operator_node), (o.node, operator_node)])
     if level == 2:
-        return operator_node
+        return [operator_node]
     temp_node_1 = str(next(num))
     temp_node_2 = str(next(num))
     dot.node(temp_node_1, '%.2g %s %.2g' % (s.value, operator, o.value))
@@ -41,8 +41,8 @@ def binary_node(s, o, operator):
     dot.edge(operator_node, temp_node_1)
     dot.edge(operator_node, temp_node_2)
     if level == 3:
-        return temp_node_1, temp_node_2
-    return temp_node_1, temp_node_2, s.node, o.node
+        return [temp_node_1, temp_node_2]
+    return [temp_node_1, temp_node_2, s.node, o.node]
 
 
 def sin(o):
@@ -68,9 +68,9 @@ class SimpleUncertainty:
                                  *binary_node(self, other, '+'))
 
 
-def start_session(verbose=2):
+def start_session(verbose=2, f='pdf'):
     n = iter(range(sys.maxsize))
-    d = Digraph(strict=True, comment='Computational Graph')
+    d = Digraph(strict=False, comment='Computational Graph', format=f)
     return n, d, verbose
 
 
@@ -81,5 +81,8 @@ def process(string, name=None):
         dot.save(name)
 
 
-num, dot, level = start_session(3)
-process('SimpleUncertainty(1, 2) + SimpleUncertainty(3, 4)', 'file.gv')
+num, dot, level = start_session(2)
+U = SimpleUncertainty
+t1 = ((U(3, 5) + U(2, 4)) + U(8, 1)) + U(8, 1) + (U(3, 5) + U(2, 4)) + U(8, 1) + (U(3, 5) + U(2, 4))
+dot.save('files/file.gv')
+dot.render('files/file')
