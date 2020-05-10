@@ -1,7 +1,7 @@
 <template>
     <div>
         <h1>This is a Guide Page</h1>
-        <div style="width: 600px">
+        <div style="width: 600px; max-width: 100%;">
             <vue-table-dynamic
                     :params="params"
                     @cell-change="onCellChange"
@@ -28,11 +28,7 @@
                     ],
                     header: 'row',
                     stripe: true,
-                    edit: {
-                        row: [1],
-                        column: [1],
-                        cell: [[-1, -1]]
-                    }
+                    edit: {}
                 }
             }
         },
@@ -40,8 +36,11 @@
             onCellChange(rowIndex, columnIndex, data) {
                 console.log('onCellChange: ', rowIndex, columnIndex, data)
                 console.log('table data: ', this.$refs.table.getData())
-            }
+            },
         },
+        mounted() {
+            this.params.edit.column = Array.from({length: this.params.data[0].length - 1}, (_, i) => i + 1)
+        }
     }
 </script>
 
