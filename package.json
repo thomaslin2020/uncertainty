@@ -17,9 +17,13 @@
     "bootstrap": "^4.4.1",
     "bootstrap-vue": "^2.13.1",
     "core-js": "^3.6.4",
+    "jest": "^26.0.1",
+    "jquery": "^3.5.1",
     "mathlive": "^0.50.3",
+    "mdbvue": "^6.7.1",
     "vue": "^2.6.11",
-    "vue-router": "^3.1.6"
+    "vue-router": "^3.1.6",
+    "vue-table-dynamic": "^0.2.1"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.3.0",
