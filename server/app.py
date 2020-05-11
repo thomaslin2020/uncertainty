@@ -14,11 +14,13 @@ app.config.from_object(__name__)
 CORS(app, resources={r'/*': {'origins': '*'}})
 
 
-# noinspection PyBroadException
-@app.route('/calculate', methods=['GET', 'POST'])
-def main():
-    if request.method == 'GET':
-        return 'Hello World'
+@app.route('/', methods=['GET'])
+def hello_world():
+    return 'Hello World'
+
+
+@app.route('/api/calculate', methods=['POST'])
+def calculate():
     if request.method == 'POST':
         U = None
         if request.form['method'] == 'simple':
