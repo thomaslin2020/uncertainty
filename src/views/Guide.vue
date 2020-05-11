@@ -7,7 +7,7 @@
                         :params="params"
                         @cell-change="onCellChange"
                         ref="table"
-                >
+                > 
                 </vue-table-dynamic>
             </div>
         </div>
