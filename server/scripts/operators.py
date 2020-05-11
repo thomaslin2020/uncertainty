@@ -250,4 +250,3 @@ print(r_(SimpleUncertainty(0, 0), 5))
 
 # it should be noted that r() would omit trailing zeros
 # if number is integer, trailing zeros would be omitted
-print(710 - SimpleUncertainty(3, 5) - 40)
