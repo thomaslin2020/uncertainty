@@ -11,7 +11,7 @@ app.config.update(
 
 CORS(app, resources={r'/*': {'origins': '*'}})
 
- 
+
 # noinspection PyBroadException
 @app.route('/', methods=['GET', 'POST'])
 def main():
