@@ -1,3 +1,8 @@
+from graphviz import Digraph
+
+
+# level 0 = clustered operators, level 1 = normal computational graph (with all operators), level 2 = omit extra lines, level 3 = complete
+# level -1 = omit all operators
 class SimpleUncertainty:
     def __init__(self, value, uncertainty):
         self.value = value

@@ -15,7 +15,7 @@ CORS(app, resources={r'/*': {'origins': '*'}})
 
 
 # noinspection PyBroadException
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/calculate', methods=['GET', 'POST'])
 def main():
     if request.method == 'GET':
         return 'Hello World'

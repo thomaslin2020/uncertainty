@@ -40,7 +40,7 @@
                 const fd = new FormData()
                 fd.append('method', this.mode)
                 fd.append('equation', document.getElementById('equation').value)
-                axios.post('https://uncertainty-calculator.herokuapp.com/', fd)
+                axios.post('https://uncertainty-calculator.herokuapp.com/calculate', fd)
                     .then(response => {
                         this.result = response.data
                         console.log(response)

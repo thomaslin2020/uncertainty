@@ -7,7 +7,10 @@ from server.scripts.standard import StdUncertainty
 from server.scripts.simple import SimpleUncertainty
 
 
+# add expand
 def sin(o):
+    if isinstance(o, (int, float)):
+        return math.sin(o)
     value = math.sin(o.value)
     uncertainty = math.cos(o.value) * o.uncertainty
     return SimpleUncertainty(value, abs(uncertainty)) \
@@ -15,6 +18,8 @@ def sin(o):
 
 
 def cos(o):
+    if isinstance(o, (int, float)):
+        return math.cos(o)
     value = math.cos(o.value)
     uncertainty = math.sin(o.value) * o.uncertainty
     return SimpleUncertainty(value, abs(uncertainty)) \
@@ -22,6 +27,8 @@ def cos(o):
 
 
 def tan(o):
+    if isinstance(o, (int, float)):
+        return math.tan(o)
     value = math.tan(o.value)
     uncertainty = o.uncertainty / (math.cos(o.value) ** 2)
     return SimpleUncertainty(value, abs(uncertainty)) \
@@ -29,6 +36,8 @@ def tan(o):
 
 
 def arcsin(o):
+    if isinstance(o, (int, float)):
+        return math.asin(o)
     value = math.asin(o.value)
     uncertainty = o.uncertainty / math.sqrt(1 - o.value ** 2)
     return SimpleUncertainty(value, abs(uncertainty)) \
@@ -36,6 +45,8 @@ def arcsin(o):
 
 
 def arccos(o):
+    if isinstance(o, (int, float)):
+        return math.acos(o)
     value = math.acos(o.value)
     uncertainty = -o.uncertainty / math.sqrt(1 - o.value ** 2)
     return SimpleUncertainty(value, abs(uncertainty)) \
@@ -43,6 +54,8 @@ def arccos(o):
 
 
 def arctan(o):
+    if isinstance(o, (int, float)):
+        return math.atan(o)
     value = math.atan(o.value)
     uncertainty = o.uncertainty / (1 + o.value ** 2)
     return SimpleUncertainty(value, abs(uncertainty)) \
@@ -50,6 +63,8 @@ def arctan(o):
 
 
 def exp(o):
+    if isinstance(o, (int, float)):
+        return math.exp(o)
     value = math.exp(o.value)
     uncertainty = math.exp(o.value) * o.uncertainty
     return SimpleUncertainty(value, abs(uncertainty)) \
@@ -57,6 +72,8 @@ def exp(o):
 
 
 def log(o, base=10):
+    if isinstance(o, (int, float)):
+        return math.log(o, base)
     value = math.log(o.value, base)
     uncertainty = o.uncertainty / (math.log(base, math.e) * o.value)
     return SimpleUncertainty(value, abs(uncertainty)) \
@@ -64,6 +81,8 @@ def log(o, base=10):
 
 
 def ln(o):
+    if isinstance(o, (int, float)):
+        return math.log(o, math.e)
     value = math.log(o.value, math.e)
     uncertainty = o.uncertainty / o.value
     return SimpleUncertainty(value, abs(uncertainty)) \
@@ -71,6 +90,8 @@ def ln(o):
 
 
 def sq(o):
+    if isinstance(o, (int, float)):
+        return o * o
     value = o.value * o.value
     uncertainty = 2 * o.value * o.uncertainty
     return SimpleUncertainty(value, abs(uncertainty)) \
@@ -78,6 +99,8 @@ def sq(o):
 
 
 def sqrt(o):
+    if isinstance(o, (int, float)):
+        return math.sqrt(o)
     value = math.sqrt(o.value)
     uncertainty = 1 / (2 * math.sqrt(o.value)) * o.uncertainty
     return SimpleUncertainty(value, abs(uncertainty)) \
@@ -85,6 +108,8 @@ def sqrt(o):
 
 
 def cbrt(o):
+    if isinstance(o, (int, float)):
+        return math.pow(o, 1 / 3)
     value = math.pow(o.value, 1 / 3)
     uncertainty = 1 / (3 * (o.value ** (2 / 3))) * o.uncertainty
     return SimpleUncertainty(value, abs(uncertainty)) \

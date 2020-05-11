@@ -26,6 +26,7 @@
                     <br>
                 </div>
             </div>
+            <br>
         </div>
         <footer class="footer page-footer font-small unique-color-dark ">
             <div class="footer-copyright text-center py-3">
