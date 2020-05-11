@@ -1,13 +1,15 @@
 <template>
     <div>
         <h1>This is a Guide Page</h1>
-        <div style="width: 600px; max-width: 100%;">
-            <vue-table-dynamic
-                    :params="params"
-                    @cell-change="onCellChange"
-                    ref="table"
-            >
-            </vue-table-dynamic>
+        <div class="parent">
+            <div style="width: 90%; max-width: 100%;">
+                <vue-table-dynamic
+                        :params="params"
+                        @cell-change="onCellChange"
+                        ref="table"
+                >
+                </vue-table-dynamic>
+            </div>
         </div>
     </div>
 </template>
@@ -28,7 +30,10 @@
                     ],
                     header: 'row',
                     stripe: true,
-                    edit: {}
+                    edit: {},
+                    border: true,
+                    columnWidth: [{column: 0, width: 50}],
+                    showCheck: true
                 }
             }
         },
@@ -45,5 +50,9 @@
 </script>
 
 <style scoped>
-
+    .parent {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
 </style>

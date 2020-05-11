@@ -1,8 +1,6 @@
 from flask import Flask, jsonify, request, render_template
 from flask_cors import CORS
 from server.scripts.operators import *
-from server.scripts.constants import *
-import math
 
 app = Flask(__name__)
 app.config.from_object(__name__)
