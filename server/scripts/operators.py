@@ -7,6 +7,8 @@ from server.scripts.standard import StdUncertainty
 from server.scripts.simple import SimpleUncertainty
 
 
+# deg2rad
+
 # add expand
 def sin(o):
     if isinstance(o, (int, float)):

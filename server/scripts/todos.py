@@ -273,6 +273,6 @@ def process(string, name=None):
 
 num, dot, level = start_session(3)
 U = SimpleUncertainty
-U(1, 2) + U(3, 4) + 4 + e + U(3, 4)
+U(1, 2) + U(3, 4) + 4 + e + U(3, 4) + pi
 dot.save('files/file.gv')
 dot.render('files/file')
