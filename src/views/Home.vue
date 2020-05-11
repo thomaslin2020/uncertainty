@@ -46,6 +46,7 @@
                         this.result = response.data
                         console.log(response)
                     }).catch(e => {
+                    this.result = 'None'
                     console.log(e)
                 })
             }

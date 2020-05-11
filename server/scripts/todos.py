@@ -9,6 +9,8 @@ from contextlib import contextmanager
 
 from graphviz import Digraph
 
+from server.scripts.constants import *
+
 
 def temp_node(o, name):
     node = str(next(num))
@@ -102,13 +104,17 @@ def sin(o):
 
 
 class SimpleUncertainty:  # uncertainty combined
-    def __init__(self, value, uncertainty, *nodes, last_operator=None, last_node=None, in_nodes=None, temp=None):
+
+    def __init__(self, value, uncertainty, *nodes, last_operator=None, last_node=None, in_nodes=None, temp=None,
+                 count=0):
         self.value = value
         self.uncertainty = uncertainty
         self.last_operator = last_operator
         self.last_node = last_node
         self.nodes = nodes
+        self.count = count
         self.in_nodes = in_nodes
+
         if temp is None:
             self.node = str(next(num))
             dot.node(self.node, '(%.3g±%.3g)' % (self.value, self.uncertainty))
@@ -123,19 +129,65 @@ class SimpleUncertainty:  # uncertainty combined
                 temp = str(next(num))
                 dot.node(temp, str(other))
                 dot.edge(temp, self.last_node)
-                dot.node(self.in_nodes[0], self.in_nodes[1] + '+ %s' % other)
-                return SimpleUncertainty(self.value + other, self.uncertainty + other,
+                self.in_nodes[1] += ' + %s' % other
+                dot.node(self.in_nodes[0], self.in_nodes[1])
+
+                return SimpleUncertainty(self.value + other, self.uncertainty,
+                                         last_operator='+',
+                                         last_node=self.last_node, in_nodes=self.in_nodes,
+                                         temp=str(int(self.last_node) + 3 + self.count), count=self.count)
+            elif isinstance(other, Constants):
+                temp = str(next(num))
+                dot.node(temp, other.symbol)
+                dot.edge(temp, self.last_node)
+                self.in_nodes[1] += ' + %s' % other.symbol
+                dot.node(self.in_nodes[0], self.in_nodes[1])
+                return SimpleUncertainty(self.value + other, self.uncertainty,
                                          last_operator='+',
                                          last_node=self.last_node, in_nodes=self.in_nodes,
                                          temp=str(int(self.last_node) + 3))
             dot.edge(other.node, self.last_node)
-            dot.node(self.in_nodes[0], self.in_nodes[1] + '+ %s' % other.value)
-            dot.node(self.in_nodes[2], self.in_nodes[3] + '+ %s' % other.uncertainty)
-
+            self.in_nodes[1] += ' + %s' % other.value
+            self.in_nodes[3] += ' + %.2g' % other.uncertainty
+            dot.node(self.in_nodes[0], self.in_nodes[1])
+            dot.node(self.in_nodes[2], self.in_nodes[3])
             return SimpleUncertainty(self.value + other.value, self.uncertainty + other.uncertainty, last_operator='+',
                                      last_node=self.last_node, in_nodes=self.in_nodes,
-                                     temp=str(int(self.last_node) + 3))
+                                     temp=str(int(self.last_node) + 3), count=self.count)
         else:
+            if isinstance(other, (int, float)):
+                temp = str(next(num))
+                dot.node(temp, str(other))
+                operator_node = str(next(num))
+                dot.node(operator_node, '+')
+                dot.edges([(temp, operator_node), (self.node, operator_node)])
+                temp_node_1, temp_node_2 = str(next(num)), str(next(num))
+                dot.node(temp_node_1, '%.2g %s %.2g' % (self.value, '+', other))
+                dot.node(temp_node_2, 'Δ: %.2g + %.2g' % (self.uncertainty, 0))
+                dot.edges([(operator_node, temp_node_1), (operator_node, temp_node_2)])
+                in_nodes = [temp_node_1, '%.2g %s %.2g' % (self.value, '+', other), temp_node_2,
+                            'Δ: %.2g + %.2g' % (self.uncertainty, 0)]
+                # self.count += 1
+                return SimpleUncertainty(self.value + other, self.uncertainty,
+                                         temp_node_1,
+                                         temp_node_2, last_operator='+', last_node=operator_node, in_nodes=in_nodes,
+                                         temp=None, count=self.count)
+            elif isinstance(other, Constants):
+                temp = str(next(num))
+                dot.node(temp, other.symbol)
+                operator_node = str(next(num))
+                dot.node(operator_node, '+')
+                dot.edges([(temp, operator_node), (self.node, operator_node)])
+                temp_node_1, temp_node_2 = str(next(num)), str(next(num))
+                dot.node(temp_node_1, '%.2g %s %.2s' % (self.value, '+', other.symbol))
+                dot.node(temp_node_2, 'Δ: %.2g + %.2g' % (self.uncertainty, 0))
+                dot.edges([(operator_node, temp_node_1), (operator_node, temp_node_2)])
+                in_nodes = [temp_node_1, '%.2g %s %.2s' % (self.value, '+', other.symbol), temp_node_2,
+                            'Δ: %.2g + %.2g' % (self.uncertainty, 0)]
+                return SimpleUncertainty(self.value + other.value, self.uncertainty,
+                                         temp_node_1,
+                                         temp_node_2, last_operator='+', last_node=operator_node, in_nodes=in_nodes,
+                                         temp=None)
             operator_node = str(next(num))
             dot.node(operator_node, '+')
             dot.edges([(self.node, operator_node), (other.node, operator_node)])
@@ -155,8 +207,8 @@ class SimpleUncertainty:  # uncertainty combined
         if self.last_operator == '-' and self.last_node is not None:
             dot.edge(other.node, self.last_node)
 
-            dot.node(self.in_nodes[0], self.in_nodes[1] + '- %s' % other.value)
-            dot.node(self.in_nodes[2], self.in_nodes[3] + '+ %s' % other.uncertainty)
+            dot.node(self.in_nodes[0], self.in_nodes[1] + ' - %s' % other.value)
+            dot.node(self.in_nodes[2], self.in_nodes[3] + ' + %s' % other.uncertainty)
 
             return SimpleUncertainty(self.value + other.value, self.uncertainty + other.uncertainty,
                                      last_operator='-',
@@ -221,6 +273,6 @@ def process(string, name=None):
 
 num, dot, level = start_session(3)
 U = SimpleUncertainty
-t1 = U(0.45,0.5) + U(3, 5) +4
+U(1, 2) + U(3, 4) + 4 + e + U(3, 4)
 dot.save('files/file.gv')
 dot.render('files/file')
