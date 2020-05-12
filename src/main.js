@@ -9,9 +9,16 @@ import {faGithub, faInstagram, faWeixin} from '@fortawesome/free-brands-svg-icon
 import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome'
 import {faEnvelope} from '@fortawesome/free-solid-svg-icons'
 import VueTableDynamic from 'vue-table-dynamic'
+import Vuesax from 'vuesax'
+import 'vuesax/dist/vuesax.css'
+import VueMathjax from 'vue-mathjax'
 
 library.add(faGithub, faInstagram, faWeixin, faEnvelope)
+
 Vue.component('font-awesome-icon', FontAwesomeIcon)
+
+Vue.use(VueMathjax)
+Vue.use(Vuesax)
 Vue.use(BootstrapVue);
 Vue.use(VueTableDynamic)
 

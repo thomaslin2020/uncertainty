@@ -4,8 +4,7 @@ import sys
 import math
 
 # TODO: Add different levels of verbosity
-# group functions, self-defined functions, visualize uncertainty propagation
-from contextlib import contextmanager
+# visualize uncertainty propagation
 
 from graphviz import Digraph
 
@@ -104,15 +103,12 @@ def sin(o):
 
 
 class SimpleUncertainty:  # uncertainty combined
-
-    def __init__(self, value, uncertainty, *nodes, last_operator=None, last_node=None, in_nodes=None, temp=None,
-                 count=0):
+    def __init__(self, value, uncertainty, *nodes, last_operator=None, last_node=None, in_nodes=None, temp=None):
         self.value = value
         self.uncertainty = uncertainty
         self.last_operator = last_operator
         self.last_node = last_node
         self.nodes = nodes
-        self.count = count
         self.in_nodes = in_nodes
 
         if temp is None:
@@ -135,7 +131,7 @@ class SimpleUncertainty:  # uncertainty combined
                 return SimpleUncertainty(self.value + other, self.uncertainty,
                                          last_operator='+',
                                          last_node=self.last_node, in_nodes=self.in_nodes,
-                                         temp=str(int(self.last_node) + 3 + self.count), count=self.count)
+                                         temp=str(int(self.last_node) + 3))
             elif isinstance(other, Constants):
                 temp = str(next(num))
                 dot.node(temp, other.symbol)
@@ -153,7 +149,7 @@ class SimpleUncertainty:  # uncertainty combined
             dot.node(self.in_nodes[2], self.in_nodes[3])
             return SimpleUncertainty(self.value + other.value, self.uncertainty + other.uncertainty, last_operator='+',
                                      last_node=self.last_node, in_nodes=self.in_nodes,
-                                     temp=str(int(self.last_node) + 3), count=self.count)
+                                     temp=str(int(self.last_node) + 3))
         else:
             if isinstance(other, (int, float)):
                 temp = str(next(num))
@@ -167,11 +163,9 @@ class SimpleUncertainty:  # uncertainty combined
                 dot.edges([(operator_node, temp_node_1), (operator_node, temp_node_2)])
                 in_nodes = [temp_node_1, '%.2g %s %.2g' % (self.value, '+', other), temp_node_2,
                             'Δ: %.2g + %.2g' % (self.uncertainty, 0)]
-                # self.count += 1
                 return SimpleUncertainty(self.value + other, self.uncertainty,
-                                         temp_node_1,
-                                         temp_node_2, last_operator='+', last_node=operator_node, in_nodes=in_nodes,
-                                         temp=None, count=self.count)
+                                         temp_node_1, temp_node_2, last_operator='+', last_node=operator_node,
+                                         in_nodes=in_nodes, temp=None)
             elif isinstance(other, Constants):
                 temp = str(next(num))
                 dot.node(temp, other.symbol)

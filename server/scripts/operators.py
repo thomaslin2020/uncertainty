@@ -164,14 +164,14 @@ def round_to(o, n, cap_sigfigs):
                                              unique=False, fractional=False, trim='k')
             num = sanity_check(num, min(max_sigfigs, n))
         else:
-            num = np.format_float_positional(o, precision=n,
+            num = np.format_float_positional(o, precision=min(n, 15),
                                              unique=False, fractional=False, trim='k')
             num = sanity_check(num, n)
         if num[-1] == '.':
             if cap_sigfigs:
                 num = integer_check(num, min(max_sigfigs, n) + 1)
             else:
-                num = integer_check(num, n + 1)
+                num = integer_check(num, min(n, 15) + 1)
         num = num[:-1] if num[-1] == '.' else num
         return num
 
@@ -185,9 +185,9 @@ def round_to(o, n, cap_sigfigs):
         num = sanity_check(num, min(max_sigfigs, n))
     else:
         o.value = o.value if o.value < 1e-14 else o.value + 1e-15
-        num = np.format_float_positional(o.value, precision=n, unique=False, fractional=False,
+        num = np.format_float_positional(o.value, precision=min(n, 15), unique=False, fractional=False,
                                          trim='k')
-        num = sanity_check(num, n)
+        num = sanity_check(num, min(n, 15))
     num = num[:-1] if num[-1] == '.' else num
     o.uncertainty = o.uncertainty if o.uncertainty < 1e-14 else o.uncertainty + 1e-15
     uncertainty = np.format_float_positional(o.uncertainty, precision=1, unique=False, fractional=False, trim='k')
@@ -207,14 +207,14 @@ def round_to(o, n, cap_sigfigs):
                                                      unique=False, fractional=False, trim='k')
                     num = sanity_check(num, min(max_sigfigs, n))
                 else:
-                    num = np.format_float_positional(float(num), precision=n,
+                    num = np.format_float_positional(float(num), precision=min(n, 15),
                                                      unique=False, fractional=False, trim='k')
-                    num = sanity_check(num, n)
+                    num = sanity_check(num, min(n, 15))
                 if num[-1] == '.':
                     if cap_sigfigs:
                         num = integer_check(num, min(max_sigfigs, n) + 1)
                     else:
-                        num = integer_check(num, n + 1)
+                        num = integer_check(num, min(n, 15) + 1)
                 num = num[:-1] if num[-1] == '.' else num
                 return '(%s±%s)' % (num, temp)
             else:
@@ -230,15 +230,15 @@ def round_to(o, n, cap_sigfigs):
                 num = sanity_check(num, min(max_sigfigs, n))
                 num = num[:num.index('.') + 1 + len(uncertainty[uncertainty.index('.') + 1:])]
             else:
-                num = np.format_float_positional(o.value, precision=n,
+                num = np.format_float_positional(o.value, precision=min(n, 15),
                                                  unique=False, fractional=False, trim='k')
-                num = sanity_check(num, n)
+                num = sanity_check(num, min(n, 15))
             uncertainty = uncertainty[:-1] if uncertainty[-1] == '.' else uncertainty
             if num[-1] == '.':
                 if cap_sigfigs:
                     num = integer_check(num, min(max_sigfigs, n) + 1)
                 else:
-                    num = integer_check(num, n + 1)
+                    num = integer_check(num, min(n, 15) + 1)
         return '(%s±%s)' % (num, uncertainty)
     else:
         if float(uncertainty) < 0.5:
@@ -246,7 +246,7 @@ def round_to(o, n, cap_sigfigs):
             if cap_sigfigs:
                 return '(%s±%s)' % (integer_check(num, min(max_sigfigs, n)), uncertainty)
             else:
-                return '(%s±%s)' % (integer_check(num, n), uncertainty)
+                return '(%s±%s)' % (integer_check(num, min(n, 15)), uncertainty)
         else:
             uncertainty = round(float(uncertainty) if float(uncertainty) < 1e-14 else float(uncertainty) + 1e-15)
             uncertainty_digits = 10 ** math.floor(math.log10(uncertainty))
@@ -255,7 +255,7 @@ def round_to(o, n, cap_sigfigs):
             if cap_sigfigs:
                 return '(%s±%s)' % (integer_check(str(num), min(max_sigfigs, n)), uncertainty)
             else:
-                return '(%s±%s)' % (integer_check(str(num), n), uncertainty)
+                return '(%s±%s)' % (integer_check(str(num), min(n, 15)), uncertainty)
 
 
 def r(o, n=3):  # shorthand for typing convenience
@@ -277,3 +277,4 @@ print(r_(SimpleUncertainty(0, 0), 5))
 
 # it should be noted that r() would omit trailing zeros
 # if number is integer, trailing zeros would be omitted
+print(r_(SimpleUncertainty(1.2345678, 5), 90))

@@ -1,58 +1,49 @@
 <template>
     <div>
         <h1>This is a Guide Page</h1>
-        <div class="parent">
-            <div style="width: 90%; max-width: 100%;">
-                <vue-table-dynamic
-                        :params="params"
-                        @cell-change="onCellChange"
-                        ref="table"
-                >
-                </vue-table-dynamic>
-            </div>
-        </div>
+        <highlightable-input
+                highlight-style="background-color:yellow"
+                :highlight-enabled="highlightEnabled"
+                :highlight="highlight"
+                v-model="msg"
+        />
     </div>
 </template>
 <script>
-    import VueTableDynamic from 'vue-table-dynamic'
+
+    import HighlightableInput from "vue-highlightable-input"
 
     export default {
-        name: "Guide",
-        components: {VueTableDynamic},
+        name: 'Guide',
+        components: {
+            HighlightableInput
+        },
         data() {
             return {
-                params: {
-                    data: [
-                        ['Index', 'Data1', 'Data2', 'Data3'],
-                        [1, '23', '7c95f7', '9a3853'],
-                        [2, 'ec0b78', 'ba045d', 'ecf03c'],
-                        [3, '63788d', 'a8c325', 'aab418']
-                    ],
-                    header: 'row',
-                    stripe: true,
-                    edit: {},
-                    border: true,
-                    columnWidth: [{column: 0, width: 50}],
-                    showCheck: true
-                }
+                msg: '',
+                highlight: [
+                    {text: 'chicken', style: "background-color:#f37373"},
+                    {text: 'noodle', style: "background-color:#fca88f"},
+                    {text: 'soup', style: "background-color:#bbe4cb"},
+                    {text: 'so', style: "background-color:#fff05e"},
+                    "whatever",
+                    {start: 2, end: 5, style: "background-color:#f330ff"}
+                ],
+                highlightEnabled: true
             }
         },
-        methods: {
-            onCellChange(rowIndex, columnIndex, data) {
-                console.log('onCellChange: ', rowIndex, columnIndex, data)
-                console.log('table data: ', this.$refs.table.getData())
-            },
-        },
-        mounted() {
-            this.params.edit.column = Array.from({length: this.params.data[0].length - 1}, (_, i) => i + 1)
-        }
     }
 </script>
 
 <style scoped>
-    .parent {
+    .input-parent {
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
         justify-content: center;
+    }
+
+    .input-button {
+        margin-right: 10px;
+        margin-left: 10px;
     }
 </style>

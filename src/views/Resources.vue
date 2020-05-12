@@ -1,16 +1,19 @@
 <template>
     <div>
-        <h1>This is a Resource Page</h1>
-
+        <textarea v-model="formula" cols="30" rows="10"></textarea>
+        <vue-mathjax :formula="formula"></vue-mathjax>
     </div>
 </template>
 
 <script>
+
     export default {
-        name: "Resources"
+        name: 'HelloWorld',
+        data() {
+            return {
+                formula: '$$x = {-b \\pm \\sqrt{b^2-4ac} \\over 2a}.$$',
+                msg: 'Welcome to Your Vue.js App'
+            }
+        }
     }
 </script>
-
-<style scoped>
-
-</style>
