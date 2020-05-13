@@ -3,18 +3,27 @@
         <h1>Calculations with Tables</h1>
         <div class="input-parent">
             <div style="width: 80%">
-                <b-input id="columns-input" name="columns-input" type="text"
+                <b-input v-model="input_value" name="columns-input" type="text"
                          placeholder="Enter your variables"></b-input>
                 <br>
                 <div>
-                    <b-button class="input-button" @click="parse_input">Generate Table</b-button>
+                    <b-button class="input-button" @click="generate_table">Generate Table</b-button>
                     <b-button class="input-button" @click="clear_table">Clear Table</b-button>
                 </div>
                 <br>
             </div>
         </div>
         <div v-if="showTable">
-            <Table :data="this.generate_data(columns)" :key="input + refresh_key"></Table>
+            <div class="parent">
+                <div style="width: 90%; max-width: 100%;">
+                    <vue-table-dynamic
+                            :params="params"
+                            @cell-change="onCellChange"
+                            ref="table" :key="refresh_key"
+                    >
+                    </vue-table-dynamic>
+                </div>
+            </div>
         </div>
         <div class="input-parent" v-if="showTable">
             <div style="width: 80%">
@@ -23,76 +32,108 @@
                          placeholder="Enter your equation"></b-input>
                 <br>
                 <div>
-                    <label for="mode"><strong>Mode:</strong></label><select id="mode" class="input-button" v-model="mode">
+                    <label for="mode"><strong>Mode:</strong></label><select id="mode" class="input-button"
+                                                                            v-model="mode">
                     <option value="simple" selected="selected">Simple</option>
                     <option value="standard">Standard</option>
                 </select>
-                    <label for="verbose"><strong>Level:</strong></label><select id="verbose" class="input-button" v-model="level">
+                    <label for="verbose"><strong>Level:</strong></label><select id="verbose" class="input-button"
+                                                                                v-model="level">
                     <option value="-1">Simplest</option>
                     <option value="0" selected="selected">Normal (Combined)</option>
                     <option value="1">Normal</option>
                     <option value="2">Detailed (Combined)</option>
                     <option value="3">Detailed</option>
                 </select>
-                    <b-button class="input-button">Calculate</b-button>
+                    <b-button class="input-button" @click="calculate">Calculate</b-button>
                 </div>
             </div>
         </div>
     </div>
 </template>
 <script>
-    import Table from "../components/Table";
+    import VueTableDynamic from 'vue-table-dynamic'
+    import Vue from 'vue'
 
     export default {
         name: "TableCalculation",
-        components: {Table},
+        components: {VueTableDynamic},
         data() {
             return {
+                input_value: "",
                 columns: [],
-                input: "",
                 showTable: false,
                 refresh_key: 0,
                 mode: "simple",
-                level: "0"
+                level: "0",
+                params: {
+                    data: [],
+                    header: 'row',
+                    stripe: true,
+                    edit: {},
+                    border: true,
+                    columnWidth: [{column: 0, width: 50}],
+                    showCheck: true,
+                }
             }
         },
         methods: {
-            parse_input: function () {
-                let input = document.getElementById("columns-input").value.trim()
-                this.showTable = input.length !== 0;
-                let c = input.split(",")
+            generate_table: function () {
+                this.input_value = this.input_value.trim().replace(/\W,/g, '')
+                if (this.input_value.substring(this.input_value.length - 1) === ",") {
+                    this.input_value = this.input_value.substring(0, this.input_value.length - 1)
+                }
+                if (this.input_value.substring(0, 1) === ",") {
+                    this.input_value = this.input_value.substring(1, this.input_value.length)
+                }
+                this.showTable = this.input_value.length !== 0;
+                let c = this.input_value.split(",")
+                this.columns = c
                 for (let i = 0; i < c.length; i++) {
                     c[i] = c[i].trim()
                 }
                 c.unshift("Index")
-                this.columns = c
-                this.input = input
-            },
-            generate_data: function (columns) {
                 let array = []
                 let temp = []
-                for (let i = 0; i < columns.length; i++) {
-                    temp.push(columns[i])
+                for (let i = 0; i < c.length; i++) {
+                    temp.push(c[i])
                 }
                 array.push(temp)
                 for (let i = 0; i < 5; i++) {
                     temp = []
                     temp.push(i)
-                    for (let j = 1; j < columns.length; j++) {
+                    for (let j = 1; j < c.length; j++) {
                         temp.push(0)
                     }
                     array.push(temp)
                 }
-                return array
+                console.log(array)
+                Vue.set(this.params, 'data', array)
+                this.params.edit.column = Array.from({length: this.params.data[0].length - 1}, (_, i) => i + 1)
+                this.refresh_key = Math.random()
             },
             clear_table: function () {
+                for (let i = 1; i < this.params.data.length; i++) {
+                    for (let j = 2; j < this.params.data[i].length; j++) {
+                        this.params.data[i][j] = 0
+                    }
+                }
                 this.refresh_key = Math.random()
-            }
+            },
+            calculate: function () {
+
+            },
+            onCellChange(rowIndex, columnIndex, data) {
+                data = data.replace(/\D/g, '')
+                console.log('onCellChange: ', rowIndex, columnIndex, data)
+                console.log('table data: ', this.$refs.table.getData())
+            },
         },
         mounted() {
         }
     }
 </script>
+
 
 <style scoped>
     .input-parent {
@@ -105,4 +146,11 @@
         margin-right: 10px;
         margin-left: 10px;
     }
+
+    .parent {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
 </style>
