@@ -46,11 +46,21 @@
             }
         },
         methods: {
+            count: function (str, char) {
+                let c = 0
+                for (let i = 0; i < str.length; i++) {
+                    if (str[i] === char) {
+                        ++c;
+                    }
+                }
+                return c
+            },
             send() {
                 if (this.equation.length !== 0) {
                     const fd = new FormData()
+                    this.equation += ')'.repeat(this.count(this.equation, '(') - this.count(this.equation, ')'))
                     fd.append('method', this.mode)
-                    fd.append('equation', document.getElementById('equation').value.replace("^","**"))
+                    fd.append('equation', this.equation.replace("^", "**"))
                     this.result = "loading..."
                     axios.post('https://uncertainty-calculator.herokuapp.com/api/calculate', fd)
                         .then(response => {

@@ -2,7 +2,7 @@
     <div class="about">
         <h1>About this Calculator</h1>
         <div class="parent-container">
-            <div style="width: 80%">
+            <div style="width: 88%">
                 <p>This is a website for performing calculations involving unknown quantities using error propagation.
                     Calculations may involve algebraic expressions such as: <strong>addition</strong>,
                     <strong>subtraction</strong>, <strong>multiplication</strong>, <strong>division</strong>, <strong>trigonometric
@@ -19,16 +19,20 @@
 
                 <p>In most experiments that you will encounter, most measured data isn’t perfect. Uncertainty gives a
                     quantitative indication of the result, which represents how well the result represents the value of
-                    the
-                    measured quantity, allowing people to asses the reliability of the measurements.</p>
+                    the measured quantity, allowing people to asses the reliability of the measurements.</p>
 
                 <h2>Error vs Uncertainty</h2>
 
-                <p>Write something here…</p>
+                <ul>
+                    <li><strong>Error</strong> is the difference between a measurement and the true value of the
+                        quantity of measurement
+                    </li>
+                    <li><strong>Uncertainty</strong> is the range of values which the true value is asserted to lie</li>
+                </ul>
 
                 <h2>Types of uncertainties:</h2>
 
-                <h3>Random uncertainties</h3>
+                <h3><strong>Random uncertainties</strong></h3>
 
                 <ul>
                     <li>Every apparatus has its associated degree of random uncertainty</li>
@@ -36,8 +40,9 @@
                     <li>These errors <strong>cannot be eliminated</strong></li>
                 </ul>
 
-                <p>Analog and Digital</p>
-
+                <div style="text-align: left">
+                    <strong>Analog and Digital</strong>
+                </div>
                 <ul>
                     <li>The uncertainty of any <strong>analog</strong> measuring instrument is ± <strong>half</strong>
                         of
@@ -48,8 +53,9 @@
                     </li>
                 </ul>
 
-                <p>Other random uncertainties:</p>
-
+                <div style="text-align: left">
+                    <strong>Other random uncertainties:</strong>
+                </div>
                 <ul>
                     <li>Time measurement - response time of hitting a stopwatch</li>
                     <li>Detecting color changes in an experiment</li>
@@ -58,8 +64,9 @@
                         on these observations</strong></li>
                 </ul>
 
-                <p>Properties:</p>
-
+                <div style="text-align: left">
+                    <strong>Properties:</strong>
+                </div>
                 <ul>
                     <li>Random <strong>errors</strong> (not uncertainty!) can be reduced by repeating the measurements
                         to
@@ -68,7 +75,7 @@
                     <li>The experiment is <strong>reproducible</strong> and <strong>repeatable</strong></li>
                 </ul>
 
-                <h3>Systematic Error:</h3>
+                <h3><strong>Systematic Error:</strong></h3>
 
                 <ul>
                     <li>Usually a result of poor experimental design</li>
@@ -98,13 +105,80 @@
 
                 <h2>Calculating error:</h2>
 
-                <p>Write something here…</p>
+                <div v-katex:display="'\\%error=\\frac{\\mid value - exact \\mid}{exact} \\times 100 \\%'"></div>
 
                 <p>Further information: <a
                         href="https://chem.libretexts.org/Bookshelves/General_Chemistry/Map%3A_Chemistry_-_The_Central_Science_(Brown_et_al.)/01._Introduction%3A_Matter_and_Measurement/1.5%3A_Uncertainty_in_Measurement">Chemistry
                     LibreTexts</a></p>
 
                 <h2>Rules for calculating uncertainty values</h2>
+
+                <div>
+                    <table :key="component">
+                        <tr>
+                            <th>Type</th>
+                            <th>Example</th>
+                            <th>Simple</th>
+                            <th>Standard</th>
+                        </tr>
+                        <tr>
+                            <td>
+                                <i>Addition</i> or <i>Subtraction</i>
+                            </td>
+                            <td>
+                                <div v-katex:display="'y=a+b-c'"></div>
+                            </td>
+                            <td>
+                                <div v-katex:display="'\\Delta R=\\Delta a+ \\Delta b+ \\Delta c'"></div>
+                            </td>
+                            <td>
+                                <div v-katex:display="'\\sigma_y=\\sqrt{\\sigma_a^2 +\\sigma_b^2+\\sigma_c^2}'"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <i>Multiplication</i> or <i>Division</i>
+                            </td>
+                            <td>
+                                <div v-katex:display="'y=\\frac{ab}{c}'"></div>
+                            </td>
+                            <td>
+                                <div v-katex:display="'\\frac{\\Delta y}{y} =\\frac{\\Delta a}{a} + \\frac{\\Delta b}{b} + \\frac{\\Delta c}{c}'"></div>
+                            </td>
+                            <td>
+                                <div v-katex:display="'\\frac{\\sigma_y}{y} =\\sqrt{\\Big(\\frac{\\sigma_a}{a}\\Big)^2 + \\Big(\\frac{\\sigma_b}{b}\\Big)^2 + \\Big(\\frac{\\sigma_c}{c}\\Big)^2}'"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <i>Exponential</i>
+                            </td>
+                            <td>
+                                <div v-katex:display="'y=a^x'"></div>
+                            </td>
+                            <td>
+                                <div v-katex:display="'\\Delta y=\\left|n\\frac{\\Delta a}{a}\\right|'"></div>
+                            </td>
+                            <td>
+                                <div v-katex:display="'\\sigma_y=\\left|n\\frac{\\sigma_a}{a}\\right|'"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <i>General</i>
+                            </td>
+                            <td>
+                                <div v-katex:display="'y=f(x)'"></div>
+                            </td>
+                            <td>
+                                <div v-katex:display="'\\Delta y= f(x+\\Delta x) - f(x)'"></div>
+                            </td>
+                            <td>
+                                <div v-katex:display="'\\sigma_y=\\left|\\frac{d f(x)}{dx}\\sigma_x\\right|'"></div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
 
                 <div class="figure-container">
                     <figure><img
@@ -127,7 +201,38 @@
 <script>
     export default {
         name: 'About',
-        props: {}
+        props: {},
+        data() {
+            return {
+                random: 0,
+                component: 0
+            }
+        },
+        methods: {
+            wait: function (ms) {
+                let d = new Date();
+                let d2 = null;
+                do {
+                    d2 = new Date();
+                }
+                while (d2 - d < ms);
+                this.component += 1
+            }
+        },
+        watch: {
+            random: function () {
+                console.log('data changed');
+                this.$nextTick().then(() => {
+                    this.random = Math.random()
+                });
+            }
+        }
+        ,
+        mounted() {
+            this.wait(100);
+            this.$forceUpdate()
+            this.component += 1
+        }
     }
 </script>
 
@@ -152,6 +257,11 @@
         text-align: left;
     }
 
+    h3 {
+        text-align: left;
+        font-size: 20px;
+    }
+
     figure {
         padding: 5px;
         margin: auto;
@@ -163,10 +273,31 @@
         padding: 3px;
         text-align: center;
     }
-    .figure-container{
+
+    .figure-container {
         padding: 10px;
         background: #FFF;
-        border-ra3dius: 15px;
-        border: 4px solid rgba(0,0,0,0.2);
+        border-radius: 15px;
+        border: 4px solid rgba(0, 0, 0, 0.2);
+    }
+
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(odd) {
+        background-color: #FFFFFF;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
     }
 </style>

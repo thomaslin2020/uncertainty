@@ -12,12 +12,17 @@ import VueTableDynamic from 'vue-table-dynamic'
 import Vuesax from 'vuesax'
 import 'vuesax/dist/vuesax.css'
 import VueMathjax from 'vue-mathjax'
+import 'katex/dist/katex.min.css';
+import VueKatex from 'vue-katex';
 
 library.add(faGithub, faInstagram, faWeixin, faEnvelope)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 Vue.use(VueMathjax)
+Vue.use(VueKatex, {
+  globalOptions: {}
+});
 Vue.use(Vuesax)
 Vue.use(BootstrapVue);
 Vue.use(VueTableDynamic)
