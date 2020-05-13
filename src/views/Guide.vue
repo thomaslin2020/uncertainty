@@ -1,49 +1,45 @@
 <template>
     <div>
-        <h1>This is a Guide Page</h1>
-        <highlightable-input
-                highlight-style="background-color:yellow"
-                :highlight-enabled="highlightEnabled"
-                :highlight="highlight"
-                v-model="msg"
-        />
+        <div style="display: inline-block">
+            <h3>Try it</h3>
+
+        </div>
     </div>
 </template>
+
 <script>
 
-    import HighlightableInput from "vue-highlightable-input"
-
     export default {
-        name: 'Guide',
-        components: {
-            HighlightableInput
-        },
+        name: 'HelloWorld',
+        components: {},
         data() {
             return {
-                msg: '',
+                msg: 'A bold new future hacker news',
+                defaultStyle: {'background-color': 'purple', 'color': 'white'},
                 highlight: [
-                    {text: 'chicken', style: "background-color:#f37373"},
-                    {text: 'noodle', style: "background-color:#fca88f"},
-                    {text: 'soup', style: "background-color:#bbe4cb"},
-                    {text: 'so', style: "background-color:#fff05e"},
+                    {text: 'hacker news', style: "background-color:#ff6600"},
+                    {text: 'CASEsensitive', style: "background-color:#fca88f", caseSensitive: true},
+                    {text: '@Soup', style: "background-color:#bbe4cb"},
+                    {text: 'comic-sans', style: "font-family:comic-sans"},
+                    {text: 'bold', style: "font-weight: bold;"},
                     "whatever",
-                    {start: 2, end: 5, style: "background-color:#f330ff"}
+                    {start: 0, end: 1, style: "border: 3px solid #AAAD21;"},
+                    {start: 3, end: 5, style: "border: 2px solid #73AD21;"},
+                    {
+                        text: /[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}/img,
+                        style: "color: white; background-color:#aa2313"
+                    }, // Phone number regex
+                    {text: /{{\w+}}/gm, style: 'color: green;'},
+                    {text: /{{.*?}}/gm, style: 'color: red'},
+                    {text: /{{\w+/gm, style: 'color: green'},
                 ],
-                highlightEnabled: true
+                highlightEnabled: true,
+                caseEnabled: false,
+                customHighlight: ''
             }
         },
     }
 </script>
 
 <style scoped>
-    .input-parent {
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-    }
-
-    .input-button {
-        margin-right: 10px;
-        margin-left: 10px;
-    }
 </style>
