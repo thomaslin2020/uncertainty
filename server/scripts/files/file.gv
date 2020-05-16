@@ -1,4 +1,6 @@
+// Computational Graph digraph
 digraph {
+bgcolor=transparent;
 	0 [label="(2±4)"]
 	1 [label=2]
 	2 [label="+"]

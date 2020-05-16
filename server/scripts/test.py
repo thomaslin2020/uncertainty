@@ -1,17 +1,4 @@
-from sqlalchemy import create_engine
-from sqlalchemy.orm import scoped_session, sessionmaker
-from sqlalchemy.ext.declarative import declarative_base
+string = 'digraph {\n\t0 [label=\"(2±4)\"]\n\t1 [label=2]\n\t2 [label=\"+\"]\n\t0 -> 2\n\t1 -> 2\n\t3 [label=\"(4±4)\"]\n\t2 -> 3\n}'
 
-engine = create_engine('sqlite:test.db', convert_unicode=True)
-db_session = scoped_session(sessionmaker(autocommit=False,
-                                         autoflush=False,
-                                         bind=engine))
-Base = declarative_base()
-Base.query = db_session.query_property()
-
-
-def init_db():
-    # import all modules here that might define models so that
-    # they will be registered properly on the metadata.  Otherwise
-    # you will have to import them first before calling init_db()
-    Base.metadata.create_all(bind=engine)
+temp = ''.join(s for s in string if ord(s) > 31 and ord(s) < 126 or s == '±')
+print(temp)

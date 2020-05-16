@@ -19,9 +19,10 @@ library.add(faGithub, faInstagram, faWeixin, faEnvelope)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
+Vue.use(require('vue-script2'))
 Vue.use(VueMathjax)
 Vue.use(VueKatex, {
-  globalOptions: {}
+    globalOptions: {}
 });
 Vue.use(Vuesax)
 Vue.use(BootstrapVue);

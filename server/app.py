@@ -69,7 +69,7 @@ class Calculation(db.Model):
 
 def start_session(f='pdf'):
     n = iter(range(sys.maxsize))
-    d = Digraph(strict=False, comment='Computational Graph', format=f)
+    d = Digraph(strict=False, format=f)
     return n, d
 
 
@@ -993,11 +993,9 @@ def calculate():
                 db.session.add(Calculation(date=datetime.utcnow(), equation=request.form['equation'], mode=method,
                                            show_graph=False))
                 db.session.commit()
-
                 return jsonify({'result': result, 'graph': ''})
-            except Exception as e:
-                return e.args
-                # return 'Please fix your equation'
+            except:
+                return 'Please fix your equation'
         else:
             num, dot = start_session()
             method = request.form['method']
@@ -1007,8 +1005,9 @@ def calculate():
                                                                              method)
             try:
                 result = str(eval(equation))
-                graph = str(dot)
-                graph = graph if graph != "// Computational Graph\ndigraph {\n}" else ""
+                graph = dot.source
+                graph = graph if graph != "digraph {\n}" else ""
+                graph = "digraph {\n\t"+"bgcolor=transparent\n\t"+graph[graph.index('0'):]
                 db.session.add(Calculation(date=datetime.utcnow(), equation=request.form['equation'], mode=method,
                                            show_graph=True))
                 db.session.commit()

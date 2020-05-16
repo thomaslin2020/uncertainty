@@ -1,35 +1,39 @@
 <template>
-    <div style="display: flex; flex-direction: row; justify-content: center;">
-        <div style="width: 80%;max-width: 80%">
-            <b-input v-model="searchTerm" placeholder="Start typing here..."></b-input>
-            <div v-for="(name, key) in names" v-bind:key="key">
-                <div v-html="matchName(name)"></div>
-            </div>
-            <!--            <b-input v-model="formula" cols="30" rows="10"></b-input>-->
-            <!--            <br>-->
-            <!--            <vue-mathjax :formula="formula"></vue-mathjax>-->
-        </div>
+    <div class="pa-2">
+        <p>Hello</p>
+        <graph-viz :dot-data="dotData"></graph-viz>
     </div>
-</template>
 
+</template>
 <script>
+    import graphViz from "../components/graphViz";
 
     export default {
         name: 'HelloWorld',
         data() {
             return {
-                names: ['John', 'Johan', 'Deon', 'Derek', 'Alex', 'Alejandro'],
-                searchTerm: ''
-                // formula: '$$x = {-b \\pm \\sqrt{b^2-4ac} \\over 2a}.$$',
-                // msg: 'Welcome to Your Vue.js App'
-            }
+                dotData: "digraph {\n\t0 [label=\"(1±2)\"]\n}",
+            };
         },
-        methods: {
-            matchName(current) {
-                let reggie = new RegExp(this.searchTerm, "ig");
-                let found = current.search(reggie) !== -1;
-                return !found ? current : current.replace(reggie, '<b>' + this.searchTerm + '</b>');
-            }
-        }
+        components: {
+            graphViz,
+        },
     }
 </script>
+
+<style scoped>
+    .input {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        top: 56px;
+        width: 100%;
+        height: 100%;
+    }
+
+    .image {
+        position: fixed;
+        top: 80px;
+        left: 50%;
+    }
+</style>

@@ -26,6 +26,11 @@
                 </div>
                 <br>
                 <h2>Result: {{result}}</h2>
+                <div v-if="dotData" style="display: flex;
+        flex-direction: column;
+        justify-content: center;">
+                    <graph-viz :dot-data="dotData"></graph-viz>
+                </div>
             </div>
         </div>
     </div>
@@ -33,16 +38,20 @@
 
 <script>
     import axios from 'axios'
+    import graphViz from "../components/graphViz";
 
     export default {
         name: 'Home',
-        components: {},
+        components: {
+            graphViz,
+        },
         data() {
             return {
                 result: 'None',
                 equation: "",
                 mode: 'simple',
-                showGraph: false
+                showGraph: false,
+                dotData: ""
             }
         },
         methods: {
@@ -65,7 +74,8 @@
                     this.result = "loading..."
                     axios.post('https://thomaslin2020.pythonanywhere.com/api/calculate', fd)
                         .then(response => {
-                            this.result = response.data
+                            this.result = response.data.result
+                            this.dotData = response.data.graph
                             console.log(response)
                         }).catch(e => {
                         this.result = 'None'
