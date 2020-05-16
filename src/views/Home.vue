@@ -4,25 +4,32 @@
             <div style="width: 80%">
                 <h1>Uncertainty Calculator</h1>
                 <br>
+
                 <b-input id="equation" name="equation" type="text"
                          placeholder="Enter your equation"
                          v-model="equation"></b-input>
                 <br>
-                <div>
-                    <label for="mode"><strong>Mode:</strong></label><select id="mode" class="input-button"
-                                                                            v-model="mode">
-                    <option value="simple" selected="selected">Simple</option>
-                    <option value="standard">Standard</option>
-                </select>
-                    <label for="verbose"><strong>Level:</strong></label><select id="verbose" class="input-button"
-                                                                                v-model="level">
-                    <option value="-1">Simplest</option>
-                    <option value="0" selected="selected">Normal (Combined)</option>
-                    <option value="1">Normal</option>
-                    <option value="2">Detailed (Combined)</option>
-                    <option value="3" v-if="equation.length < 10">Detailed</option>
-                </select>
-                    <b-button class="input-button" @click="send" type="submit" value="upload">Calculate</b-button>
+                <div class="options">
+                    <div style="display: inline-block;vertical-align: middle">
+                        <label for="mode" style="vertical-align: middle;"><strong>Mode:</strong></label><select
+                            id="mode" class="input-button"
+                            v-model="mode">
+                        <option value="simple" selected="selected">Simple</option>
+                        <option value="standard">Standard</option>
+                    </select>
+                        <b-checkbox style="display: inline-block; margin-right: 10px" v-model="showGraph"><p
+                                style="font-size: 18px">
+                            <strong>Show Progress</strong></p></b-checkbox>
+                        <label for="verbose" style="vertical-align: middle;"><strong>Level:</strong></label><select
+                            v-if="showGraph"
+                            id="verbose" class="input-button"
+                            v-model="level">
+                        <option value="0">Normal</option>
+                        <option value="1">Detailed</option>
+                    </select>
+
+                        <b-button class="input-button" @click="send" type="submit" value="upload">Calculate</b-button>
+                    </div>
                 </div>
                 <br>
                 <h2>Result: {{result}}</h2>
@@ -42,7 +49,8 @@
                 result: 'None',
                 equation: "",
                 mode: 'simple',
-                level: "0"
+                level: "0",
+                showGraph: false
             }
         },
         methods: {
@@ -83,5 +91,17 @@
     .input-button {
         margin-right: 10px;
         margin-left: 10px;
+    }
+
+    .options {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        text-align: center;
+    }
+
+    label {
+        font-size: 20px;
+        margin: auto;
     }
 </style>

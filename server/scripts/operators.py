@@ -3,8 +3,6 @@ import numpy as np
 
 from decimal import Decimal
 from locale import atof
-from server.scripts.standard import StdUncertainty
-from server.scripts.simple import SimpleUncertainty
 
 
 # deg2rad
@@ -15,8 +13,8 @@ def sin(o):
         return math.sin(o)
     value = math.sin(o.value)
     uncertainty = math.cos(o.value) * o.uncertainty
-    return SimpleUncertainty(value, abs(math.sin(o.value + o.uncertainty) - value)) \
-        if isinstance(o, SimpleUncertainty) else StdUncertainty(value, abs(uncertainty))
+    return StdUncertainty(value, abs(math.sin(o.value + o.uncertainty) - value)) \
+        if isinstance(o, StdUncertainty) else StdUncertaintyNoGraph(value, abs(uncertainty))
 
 
 def cos(o):
@@ -24,8 +22,8 @@ def cos(o):
         return math.cos(o)
     value = math.cos(o.value)
     uncertainty = math.sin(o.value) * o.uncertainty
-    return SimpleUncertainty(value, abs(math.cos(o.value + o.uncertainty) - value)) \
-        if isinstance(o, SimpleUncertainty) else StdUncertainty(value, abs(uncertainty))
+    return StdUncertainty(value, abs(math.cos(o.value + o.uncertainty) - value)) \
+        if isinstance(o, StdUncertainty) else StdUncertaintyNoGraph(value, abs(uncertainty))
 
 
 def tan(o):
@@ -33,8 +31,8 @@ def tan(o):
         return math.tan(o)
     value = math.tan(o.value)
     uncertainty = o.uncertainty / (math.cos(o.value) ** 2)
-    return SimpleUncertainty(value, abs(math.tan(o.value + o.uncertainty) - value)) \
-        if isinstance(o, SimpleUncertainty) else StdUncertainty(value, abs(uncertainty))
+    return StdUncertainty(value, abs(math.tan(o.value + o.uncertainty) - value)) \
+        if isinstance(o, StdUncertainty) else StdUncertaintyNoGraph(value, abs(uncertainty))
 
 
 def arcsin(o):
@@ -42,8 +40,8 @@ def arcsin(o):
         return math.asin(o)
     value = math.asin(o.value)
     uncertainty = o.uncertainty / math.sqrt(1 - o.value ** 2)
-    return SimpleUncertainty(value, abs(math.asin(o.value + o.uncertainty) - value)) \
-        if isinstance(o, SimpleUncertainty) else StdUncertainty(value, abs(uncertainty))
+    return StdUncertainty(value, abs(math.asin(o.value + o.uncertainty) - value)) \
+        if isinstance(o, StdUncertainty) else StdUncertaintyNoGraph(value, abs(uncertainty))
 
 
 def arccos(o):
@@ -51,8 +49,8 @@ def arccos(o):
         return math.acos(o)
     value = math.acos(o.value)
     uncertainty = -o.uncertainty / math.sqrt(1 - o.value ** 2)
-    return SimpleUncertainty(value, abs(math.acos(o.value + o.uncertainty) - value)) \
-        if isinstance(o, SimpleUncertainty) else StdUncertainty(value, abs(uncertainty))
+    return StdUncertainty(value, abs(math.acos(o.value + o.uncertainty) - value)) \
+        if isinstance(o, StdUncertainty) else StdUncertaintyNoGraph(value, abs(uncertainty))
 
 
 def arctan(o):
@@ -60,14 +58,13 @@ def arctan(o):
         return math.atan(o)
     value = math.atan(o.value)
     uncertainty = o.uncertainty / (1 + o.value ** 2)
-    return SimpleUncertainty(value, abs(math.atan(o.value + o.uncertainty) - value)) \
-        if isinstance(o, SimpleUncertainty) else StdUncertainty(value, abs(uncertainty))
+    return StdUncertainty(value, abs(math.atan(o.value + o.uncertainty) - value)) \
+        if isinstance(o, StdUncertainty) else StdUncertaintyNoGraph(value, abs(uncertainty))
 
 
-def exp(o):  # TODO: Fix
+def exp(o):
     if isinstance(o, (int, float)):
         return math.exp(o)
-    pass
 
 
 def log(o, base=10):
@@ -75,8 +72,8 @@ def log(o, base=10):
         return math.log(o, base)
     value = math.log(o.value, base)
     uncertainty = o.uncertainty / (math.log(base, math.e) * o.value)
-    return SimpleUncertainty(value, abs(math.log(o.value + o.uncertainty, base) - value)) \
-        if isinstance(o, SimpleUncertainty) else StdUncertainty(value, abs(uncertainty))
+    return StdUncertainty(value, abs(math.log(o.value + o.uncertainty, base) - value)) \
+        if isinstance(o, StdUncertainty) else StdUncertaintyNoGraph(value, abs(uncertainty))
 
 
 def ln(o):
@@ -84,8 +81,8 @@ def ln(o):
         return math.log(o, math.e)
     value = math.log(o.value, math.e)
     uncertainty = o.uncertainty / o.value
-    return SimpleUncertainty(value, abs(math.log(o.value + o.uncertainty, math.e) - value)) \
-        if isinstance(o, SimpleUncertainty) else StdUncertainty(value, abs(uncertainty))
+    return StdUncertainty(value, abs(math.log(o.value + o.uncertainty, math.e) - value)) \
+        if isinstance(o, StdUncertainty) else StdUncertaintyNoGraph(value, abs(uncertainty))
 
 
 def sq(o):
@@ -93,8 +90,8 @@ def sq(o):
         return o * o
     value = o.value * o.value
     uncertainty = 2 * o.value * o.uncertainty
-    return SimpleUncertainty(value, abs(uncertainty)) \
-        if isinstance(o, SimpleUncertainty) else StdUncertainty(value, abs(uncertainty))
+    return StdUncertainty(value, abs(uncertainty)) \
+        if isinstance(o, StdUncertainty) else StdUncertaintyNoGraph(value, abs(uncertainty))
 
 
 def sqrt(o):
@@ -102,8 +99,8 @@ def sqrt(o):
         return math.sqrt(o)
     value = math.sqrt(o.value)
     uncertainty = 1 / (2 * math.sqrt(o.value)) * o.uncertainty
-    return SimpleUncertainty(value, abs(uncertainty)) \
-        if isinstance(o, SimpleUncertainty) else StdUncertainty(value, abs(uncertainty))
+    return StdUncertainty(value, abs(uncertainty)) \
+        if isinstance(o, StdUncertainty) else StdUncertaintyNoGraph(value, abs(uncertainty))
 
 
 def cbrt(o):
@@ -111,8 +108,8 @@ def cbrt(o):
         return math.pow(o, 1 / 3)
     value = math.pow(o.value, 1 / 3)
     uncertainty = 1 / (3 * (o.value ** (2 / 3))) * o.uncertainty
-    return SimpleUncertainty(value, abs(uncertainty)) \
-        if isinstance(o, SimpleUncertainty) else StdUncertainty(value, abs(uncertainty))
+    return StdUncertainty(value, abs(uncertainty)) \
+        if isinstance(o, StdUncertainty) else StdUncertaintyNoGraph(value, abs(uncertainty))
 
 
 def sanity_check(o, n):
@@ -274,4 +271,4 @@ print(r_(SimpleUncertainty(0, 0), 5))
 
 # it should be noted that r() would omit trailing zeros
 # if number is integer, trailing zeros would be omitted
-print(r_(SimpleUncertainty(1.2345678, 5), 90))
+# print(r_(SimpleUncertainty(1.2345678, 5), 90))
