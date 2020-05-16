@@ -989,12 +989,15 @@ def calculate():
                                                                                       "eval(constants_no_graph['%s']['tau'])" % method)
             U = SimpleUncertaintyNoGraph if request.form['method'] == 'simple' else StdUncertaintyNoGraph
             try:
+                result = str(eval(equation))
                 db.session.add(Calculation(date=datetime.utcnow(), equation=request.form['equation'], mode=method,
                                            show_graph=False))
                 db.session.commit()
-                return jsonify({'result': str(eval(equation)), 'graph': ''})
-            except:
-                return 'Please fix your equation'
+
+                return jsonify({'result': result, 'graph': ''})
+            except Exception as e:
+                return e.args
+                # return 'Please fix your equation'
         else:
             num, dot = start_session()
             method = request.form['method']

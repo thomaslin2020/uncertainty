@@ -63,7 +63,7 @@
                     fd.append('showGraph', this.showGraph.toString())
                     fd.append('equation', this.equation.replace("^", "**"))
                     this.result = "loading..."
-                    axios.post('https://uncertainty-calculator.herokuapp.com/api/calculate', fd)
+                    axios.post('https://thomaslin2020.pythonanywhere.com/api/calculate', fd)
                         .then(response => {
                             this.result = response.data
                             console.log(response)
