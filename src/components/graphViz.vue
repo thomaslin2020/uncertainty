@@ -11,11 +11,10 @@
         props: ["dotData"],
         watch: {
             dotData(dotData) {
-                this.render(dotData); // direct render bc. vuex data debounced
+                this.render(dotData);
             }
         },
         mounted() {
-            // initial render (if data not undefined)
             if (this.dotData) {
                 this.render(this.dotData);
             }
@@ -24,7 +23,7 @@
             async render(data) {
                 try {
                     const viz = new Viz({Module, render});
-                    this.$el.innerHTML = await viz.renderString(data); // , this.config)
+                    this.$el.innerHTML = await viz.renderString(data);
                     this.$emit("error", "");
                     this.$store.commit("createPanZoom");
                     if (document.querySelector("svg")) {

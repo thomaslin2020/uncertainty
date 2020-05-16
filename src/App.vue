@@ -32,7 +32,7 @@
         <footer class="footer page-footer font-small unique-color-dark ">
             <div class="footer-copyright text-center py-3">
                 <div class="footer-text-container">
-                    <div style="width: 80%; vertical-align: center;">
+                    <div style="width: 88%; max-width: 100%; vertical-align: center;">
                         <div style="display: inline-flex; flex-direction: row;">
                             <a class="media-button">
                                 <font-awesome-icon class="fa fa-wechat" :icon="{ prefix: 'fab', iconName: 'weixin' }"/>
