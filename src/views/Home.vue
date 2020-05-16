@@ -20,13 +20,6 @@
                         <b-checkbox style="display: inline-block; margin-right: 10px" v-model="showGraph"><p
                                 style="font-size: 18px">
                             <strong>Show Progress</strong></p></b-checkbox>
-                        <label for="verbose" style="vertical-align: middle;"><strong>Level:</strong></label><select
-                            v-if="showGraph"
-                            id="verbose" class="input-button"
-                            v-model="level">
-                        <option value="0">Normal</option>
-                        <option value="1">Detailed</option>
-                    </select>
 
                         <b-button class="input-button" @click="send" type="submit" value="upload">Calculate</b-button>
                     </div>
@@ -49,7 +42,6 @@
                 result: 'None',
                 equation: "",
                 mode: 'simple',
-                level: "0",
                 showGraph: false
             }
         },
@@ -68,6 +60,7 @@
                     const fd = new FormData()
                     this.equation += ')'.repeat(this.count(this.equation, '(') - this.count(this.equation, ')'))
                     fd.append('method', this.mode)
+                    fd.append('showGraph', this.showGraph.toString())
                     fd.append('equation', this.equation.replace("^", "**"))
                     this.result = "loading..."
                     axios.post('https://uncertainty-calculator.herokuapp.com/api/calculate', fd)

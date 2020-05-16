@@ -2,16 +2,24 @@ import math
 import numpy as np
 import sys
 
+from flask_migrate import Migrate
+from flask_sqlalchemy import SQLAlchemy
+from datetime import datetime
 from decimal import Decimal
-from flask import Flask, jsonify, request, render_template
+from flask import Flask, jsonify, request
 from flask_cors import CORS
 from graphviz import Digraph
 from locale import atof
 
 app = Flask(__name__)
 app.config.from_object(__name__)
+app.config[
+    'SQLALCHEMY_DATABASE_URI'] = "postgres://vkqaytdz:MZX9H4J6Y8c7L8Al5XAmcENBoR7QFL3k@raja.db.elephantsql.com:5432/vkqaytdz"
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 CORS(app, resources={r'/*': {'origins': '*'}})
+db = SQLAlchemy(app)
+migrate = Migrate(app, db)
 
 constants = {
     "simple": {
@@ -38,6 +46,25 @@ constants_no_graph = {
         "tau": "StdUncertaintyNoGraph(math.tau, 0, symbol='τ')"
     }
 }
+
+
+class Calculation(db.Model):
+    __tablename__ = 'calculation'
+
+    id = db.Column(db.Integer, primary_key=True)
+    date = db.Column(db.DateTime, default=datetime.utcnow)
+    equation = db.Column(db.Text)
+    mode = db.Column(db.Text)
+    show_graph = db.Column(db.Boolean)
+
+    def __init__(self, date, equation, mode, show_graph):
+        self.date = date
+        self.equation = equation
+        self.mode = mode
+        self.show_graph = show_graph
+
+    def __repr__(self):
+        return f"<Equation {self.equation}>"
 
 
 def start_session(f='pdf'):
@@ -955,7 +982,6 @@ def hello_world():
 def calculate():
     global num, dot
     if request.method == 'POST':
-        U = None
         if request.form['showGraph'] == 'false':
             method = request.form['method']
             equation = request.form['equation'].replace('pi', "eval(constants_no_graph['%s']['pi'])" % method) \
@@ -963,7 +989,10 @@ def calculate():
                                                                                       "eval(constants_no_graph['%s']['tau'])" % method)
             U = SimpleUncertaintyNoGraph if request.form['method'] == 'simple' else StdUncertaintyNoGraph
             try:
-                return str(eval(equation))
+                db.session.add(Calculation(date=datetime.utcnow(), equation=request.form['equation'], mode=method,
+                                           show_graph=False))
+                db.session.commit()
+                return jsonify({'result': str(eval(equation)), 'graph': ''})
             except:
                 return 'Please fix your equation'
         else:
@@ -973,10 +1002,13 @@ def calculate():
             equation = request.form['equation'].replace('pi', "eval(constants['%s']['pi'])" % method) \
                 .replace('e', "eval(constants['%s']['e'])" % method).replace('tau', "eval(constants['%s']['tau'])" %
                                                                              method)
-            result = str(eval(equation))
             try:
+                result = str(eval(equation))
                 graph = str(dot)
                 graph = graph if graph != "// Computational Graph\ndigraph {\n}" else ""
+                db.session.add(Calculation(date=datetime.utcnow(), equation=request.form['equation'], mode=method,
+                                           show_graph=True))
+                db.session.commit()
                 return jsonify({'result': result, 'graph': graph})
             except:
                 return 'Please fix your equation'
