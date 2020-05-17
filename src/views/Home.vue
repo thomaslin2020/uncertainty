@@ -138,9 +138,13 @@
                     if (this.round_data) {
                         if (this.sigfigs === 'max') {
                             equation = "r(" + this.equation + ",32)"
+                            fd.append('round', '32')
                         } else {
                             equation = "r(" + this.equation + "," + this.sigfigs + ")"
+                            fd.append('round', this.sigfigs)
                         }
+                    } else {
+                        fd.append('round', '-1')
                     }
                     fd.append('method', this.mode)
                     fd.append('showGraph', this.showGraph.toString())

@@ -56,12 +56,16 @@ class Calculation(db.Model):
     equation = db.Column(db.Text)
     mode = db.Column(db.String(8))
     show_graph = db.Column(db.Boolean)
+    rounding = db.Column(db.Integer)
+    answer = db.Column(db.Text)
 
-    def __init__(self, date, equation, mode, show_graph):
+    def __init__(self, date, equation, mode, show_graph, rounding, answer):
         self.date = date
         self.equation = equation
         self.mode = mode
         self.show_graph = show_graph
+        self.rounding = rounding
+        self.answer = answer
 
     def __repr__(self):
         return f"<Equation {self.equation}>"
@@ -941,8 +945,16 @@ def calculate():
             U = SimpleUncertaintyNoGraph if request.form['method'] == 'simple' else StdUncertaintyNoGraph
             try:
                 result = str(eval(equation))
+                rounding_form = request.form['round']
+                if rounding_form != '-1':
+                    if rounding_form == 'max':
+                        rounding = 32
+                    else:
+                        rounding = int(rounding_form)
+                else:
+                    rounding = -1
                 db.session.add(Calculation(date=datetime.utcnow(), equation=request.form['equation'], mode=method,
-                                           show_graph=False))
+                                           show_graph=False, rounding=rounding, answer=result))
                 db.session.commit()
                 return jsonify({'result': result, 'graph': ''})
             except:
@@ -960,8 +972,16 @@ def calculate():
                 graph = graph if graph != "digraph {\n}" else ""
                 if graph != '':
                     graph = "digraph {\n\t" + "bgcolor=transparent\n\t" + graph[graph.index('0'):]
+                rounding_form = request.form['round']
+                if rounding_form != '-1':
+                    if rounding_form == 'max':
+                        rounding = 32
+                    else:
+                        rounding = int(rounding_form)
+                else:
+                    rounding = -1
                 db.session.add(Calculation(date=datetime.utcnow(), equation=request.form['equation'], mode=method,
-                                           show_graph=True))
+                                           show_graph=True, rounding=rounding, answer=result))
                 db.session.commit()
                 return jsonify({'result': result, 'graph': graph})
             except:
