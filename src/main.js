@@ -5,7 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import router from './router'
 import {library} from '@fortawesome/fontawesome-svg-core'
-import {faGithub, faInstagram, faWeixin} from '@fortawesome/free-brands-svg-icons'
+import {faLinkedin,faGithub, faInstagram} from '@fortawesome/free-brands-svg-icons'
 import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome'
 import {faEnvelope} from '@fortawesome/free-solid-svg-icons'
 import VueTableDynamic from 'vue-table-dynamic'
@@ -14,7 +14,7 @@ import 'vuesax/dist/vuesax.css'
 import 'katex/dist/katex.min.css';
 import VueKatex from 'vue-katex';
 
-library.add(faGithub, faInstagram, faWeixin, faEnvelope)
+library.add(faGithub, faInstagram, faLinkedin, faEnvelope)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 

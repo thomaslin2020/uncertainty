@@ -10,8 +10,8 @@
                     <b-collapse id="nav-collapse" is-nav>
                         <b-navbar-nav class="ml-auto">
                             <b-nav-item to="/">Home</b-nav-item>
-                            <b-nav-item to="/about">About</b-nav-item>
-                            <!--                            <b-nav-item to="/table">Table</b-nav-item>-->
+                            <b-nav-item to="/about">About Us</b-nav-item>
+                            <b-nav-item to="/guide">Quick Guide</b-nav-item>
                             <b-nav-item to="/tools">Tools</b-nav-item>
                         </b-navbar-nav>
                     </b-collapse>
@@ -32,17 +32,22 @@
                 <div class="footer-text-container">
                     <div style="width: 88%; max-width: 100%; vertical-align: center;">
                         <div style="display: inline-flex; flex-direction: row;">
-                            <a class="media-button">
-                                <font-awesome-icon :icon="{ prefix: 'fab', iconName: 'weixin' }" class="fa fa-wechat"/>
+                            <a class="media-button" href="https://www.linkedin.com/in/chen-yuan-thomas-lin-6384a111b"
+                               style="color: rgb(45,62,81) !important;">
+                                <font-awesome-icon :icon="{ prefix: 'fab', iconName: 'linkedin' }"
+                                                   class="fa fa-wechat"/>
                             </a>
-                            <a class="media-button">
+                            <a class="media-button" href="https://www.instagram.com/tho_mas_marji/"
+                               style="color: rgb(45, 62, 81) !important;">
                                 <font-awesome-icon :icon="{ prefix: 'fab', iconName: 'instagram' }"
                                                    class="fa fa-instagram"/>
                             </a>
-                            <a class="media-button">
+                            <a class="media-button" href="https://github.com/thomaslin2020/uncertainty"
+                               style="color: rgb(45, 62, 81) !important;">
                                 <font-awesome-icon :icon="{ prefix: 'fab', iconName: 'github' }" class="fa fa-github"/>
                             </a>
-                            <a class="media-button">
+                            <a class="media-button" href="mailto:thomaslin910608@gmail.com"
+                               style="color: rgb(45, 62, 81) !important;">
                                 <font-awesome-icon class="fa fa-mail" icon="envelope"/>
                             </a>
                         </div>

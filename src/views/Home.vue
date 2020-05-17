@@ -84,6 +84,11 @@
                                 <li>U(555,55) rounded to 3 sig figs = U(555,60)</li>
                                 <li>U(555,55) rounded to 2 sig figs = U(560,60)</li>
                             </ul>
+                            <ul>
+                                <li><i>Note: No computational graphs (show progress) will be generated for calculations
+                                    with only real number values (no constants and uncertainty values).</i>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                     <br>

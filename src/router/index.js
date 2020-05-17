@@ -11,14 +11,19 @@ const routes = [
         component: Home
     },
     {
-        path: '/about',
-        name: 'About',
-        component: () => import('../views/About.vue')
+        path: '/guide',
+        name: 'Guide',
+        component: () => import('../views/Guide.vue')
     },
     {
         path: '/table',
         name: 'TableCalculation',
         component: () => import('../views/TableCalculation.vue')
+    },
+    {
+        path: '/about',
+        name: 'About',
+        component: () => import('../views/About.vue')
     },
     {
         path: '/tools',
