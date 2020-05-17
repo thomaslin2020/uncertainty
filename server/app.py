@@ -54,7 +54,7 @@ class Calculation(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     date = db.Column(db.DateTime, default=datetime.utcnow)
     equation = db.Column(db.Text)
-    mode = db.Column(db.Text)
+    mode = db.Column(db.String(8))
     show_graph = db.Column(db.Boolean)
 
     def __init__(self, date, equation, mode, show_graph):
@@ -833,9 +833,9 @@ def sanity_check(o, n):
 
 
 def integer_check(o, n):
-    temp = o.replace('.', '')
-    if len(o) == n and len(temp) > 1:
-        if temp[-1] == '0':
+    o = o.replace('.', '')
+    if n >= len(o) > 1:
+        if o[-1] == '0':
             return o + '.'
     return o
 
@@ -984,9 +984,10 @@ def calculate():
     if request.method == 'POST':
         if request.form['showGraph'] == 'false':
             method = request.form['method']
-            equation = request.form['equation'].replace('pi', "eval(constants_no_graph['%s']['pi'])" % method) \
-                .replace('e', "eval(constants_no_graph['%s']['e'])" % method).replace('tau',
-                                                                                      "eval(constants_no_graph['%s']['tau'])" % method)
+            equation = request.form['equation'].replace('e', "eval(constants_no_graph['%s']['e'])" % method).replace(
+                'tau', "eval(constants_no_graph['%s']['tau'])" % method).replace(
+                'pi', "eval(constants_no_graph['%s']['pi'])" % method)
+
             U = SimpleUncertaintyNoGraph if request.form['method'] == 'simple' else StdUncertaintyNoGraph
             try:
                 result = str(eval(equation))
@@ -995,25 +996,25 @@ def calculate():
                 db.session.commit()
                 return jsonify({'result': result, 'graph': ''})
             except:
-                return 'Please fix your equation'
+                return jsonify({'result': 'Please fix your equation', 'graph': ''})
         else:
             num, dot = start_session()
             method = request.form['method']
             U = SimpleUncertainty if method == 'simple' else StdUncertainty
-            equation = request.form['equation'].replace('pi', "eval(constants['%s']['pi'])" % method) \
-                .replace('e', "eval(constants['%s']['e'])" % method).replace('tau', "eval(constants['%s']['tau'])" %
-                                                                             method)
+            equation = request.form['equation'].replace('e', "eval(constants['%s']['e'])" % method).replace(
+                'tau', "eval(constants['%s']['tau'])" % method).replace(
+                'pi', "eval(constants['%s']['pi'])" % method)
             try:
                 result = str(eval(equation))
                 graph = dot.source
                 graph = graph if graph != "digraph {\n}" else ""
-                graph = "digraph {\n\t"+"bgcolor=transparent\n\t"+graph[graph.index('0'):]
+                graph = "digraph {\n\t" + "bgcolor=transparent\n\t" + graph[graph.index('0'):]
                 db.session.add(Calculation(date=datetime.utcnow(), equation=request.form['equation'], mode=method,
                                            show_graph=True))
                 db.session.commit()
                 return jsonify({'result': result, 'graph': graph})
             except:
-                return 'Please fix your equation'
+                return jsonify({'result': 'Please fix your equation', 'graph': ''})
 
 
 if __name__ == '__main__':
