@@ -1,5 +1,0 @@
-digraph {
-	hello [label=h]
-	world [label=h]
-	world -> hello
-}

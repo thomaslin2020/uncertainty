@@ -154,7 +154,7 @@
                     fd.append('showGraph', this.showGraph.toString())
                     fd.append('equation', equation)
                     this.result = "loading..."
-                    axios.post('https://thomaslin2020.pythonanywhere.com/api/calculate', fd)
+                    axios.post('https://uncertainty-calculator.herokuapp.com/api/calculate', fd)
                         .then(response => {
                             this.result = response.data.result
                             this.dotData = response.data.graph
