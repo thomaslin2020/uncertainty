@@ -961,6 +961,7 @@ def calculate():
                 return jsonify({'result': 'Please fix your equation', 'graph': ''})
         else:
             num, dot = start_session()
+            print('ok')
             method = request.form['method']
             U = SimpleUncertainty if method == 'simple' else StdUncertainty
             equation = request.form['equation'].replace('e', "eval(constants['%s']['e'])" % method).replace(
