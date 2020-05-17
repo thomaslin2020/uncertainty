@@ -1,6 +1,5 @@
 import math
 import os
-import re
 import sys
 from datetime import datetime
 from decimal import Decimal
@@ -934,9 +933,7 @@ def calculate():
     if request.method == 'POST':
         if request.form['showGraph'] == 'false':
             method = request.form['method']
-            equation = re.sub('[ABCDEFGHIJKLMNOPQRSTVWSYZfhjkmvwxyz!@#&\[{}\]:;\',?`~\$=<>“\\\]', '',
-                              request.form['equation'])
-            equation = equation.replace('e', "eval(constants_no_graph['%s']['e'])" % method).replace(
+            equation = request.form['equation'].replace('e', "eval(constants_no_graph['%s']['e'])" % method).replace(
                 'tau', "eval(constants_no_graph['%s']['tau'])" % method).replace(
                 'pi', "eval(constants_no_graph['%s']['pi'])" % method)
 
@@ -961,9 +958,7 @@ def calculate():
             num, dot = start_session()
             method = request.form['method']
             U = SimpleUncertainty if method == 'simple' else StdUncertainty
-            equation = re.sub('[ABCDEFGHIJKLMNOPQRSTVWSYZfhjkmvwxyz!@#&\[{}\]:;\',?`~\$=<>“\\\]', '',
-                              request.form['equation'])
-            equation = equation.replace('e', "eval(constants['%s']['e'])" % method).replace(
+            equation = request.form['equation'].replace('e', "eval(constants['%s']['e'])" % method).replace(
                 'tau', "eval(constants['%s']['tau'])" % method).replace(
                 'pi', "eval(constants['%s']['pi'])" % method)
             try:
