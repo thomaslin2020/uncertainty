@@ -961,7 +961,6 @@ def calculate():
                 return jsonify({'result': 'Please fix your equation', 'graph': ''})
         else:
             num, dot = start_session()
-            print('ok')
             method = request.form['method']
             U = SimpleUncertainty if method == 'simple' else StdUncertainty
             equation = request.form['equation'].replace('e', "eval(constants['%s']['e'])" % method).replace(
@@ -981,9 +980,12 @@ def calculate():
                         rounding = int(rounding_form)
                 else:
                     rounding = -1
+                print('ok')
                 db.session.add(Calculation(date=datetime.utcnow(), equation=request.form['equation'], mode=method,
                                            show_graph=True, rounding=rounding, answer=result))
+                print('ok')
                 db.session.commit()
+                print('ok')
                 return jsonify({'result': result, 'graph': graph})
             except:
                 return jsonify({'result': 'Please fix your equation', 'graph': ''})
