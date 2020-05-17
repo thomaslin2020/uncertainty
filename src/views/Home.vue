@@ -44,32 +44,32 @@
                             <h2>Description</h2>
                             <p><strong>U(a,b)</strong> represents the uncertainty value <strong>a ± b</strong> (e.g. (2
                                 ± 1) = U(1,2))</p>
-                            <p><strong>Operations that can be used include:</strong></p>
+                            <p style="margin-bottom: 5px"><strong>Supported operations include:</strong></p>
                             <ul>
-                                <li>Basic Operations: Addition(+), Subtraction(-), Multiplication(⨉), Division(÷),
+                                <li><strong>Basic Operations:</strong> Addition(+), Subtraction(-), Multiplication(⨉), Division(÷),
                                     Power(^)
                                 </li>
-                                <li>Trigonometric functions: sin, cos, tan, arcsin, arccos, arctan</li>
-                                <li>Exponential and logarithmic functions: log (default base 10), ln, exp</li>
-                                <li>Other operations: square (sq), square root (sqrt), cube root (cbrt)</li>
+                                <li><strong>Trigonometric functions:</strong> sin, cos, tan, arcsin, arccos, arctan <strong>e.g. sin(U(0.52,0.01))</strong></li>
+                                <li><strong>Exponential and logarithmic functions:</strong> log, ln, exp <strong>e.g. log(U(3.5,0.01),2)</strong> (base 2)</li>
+                                <li style="margin-left: 3em"><i>Note: log without second parameter indicates log10 </i><strong>e.g. log(U(3.5,0.01))</strong> </li>
+                                <li><strong>Other operations:</strong> square (sq), square root (sqrt), cube root (cbrt) <strong>e.g. sqrt(U(2,1))</strong></li>
                             </ul>
-                            <p><strong>Constants:</strong></p>
+                            <p style="margin-bottom: 5px"><strong>Constants:</strong></p>
                             <ul>
                                 <li>pi (π) , e, tau (τ)</li>
                             </ul>
-                            <p><strong>Example: </strong></p>
+                            <p style="margin-bottom: 5px"><strong>Full Example: </strong></p>
                             <pre><code style="white-space: normal;">pi+sin(U(1.0,0.1))*U(2.0,0.1)^2/log(sqrt(U(3.0,0.1))) </code></pre>
-                            <p><strong>Rounding:</strong></p>
-                            <p>Uncertainty values are rounded to 1 sig fig. Values are rounded based on the smallest
-                                decimal
-                                of the uncertainty value. The maximum number of sig figs is limited to the maximum
-                                number of
-                                sig figs of the input value.</p>
-                            <p><strong>Examples: </strong></p>
+                            <p style="margin-bottom: 5px"><strong>Rounding (if selected): </strong></p>
+                            <p style="margin-bottom: 5px">Uncertainty values are rounded to <strong>1 sig fig</strong>. Values are rounded based on the smallest
+                                decimal of the uncertainty value. The maximum number of sig figs is limited to the maximum
+                                number of sig figs of the input value.</p>
+                            <ul><li><i>Note: Numbers with only zeros after the decimal point will be rounded to 1 decimal </i><div style="display: inline-block"><strong>e.g. 1.0000 ⇒ 1.0</strong></div></li></ul>
+                            <p style="margin-bottom: 5px"><strong>Examples: </strong></p>
                             <ul>
-                                <li>U(1.0,0.01) round to 3 sig figs = U(1,0)</li>
-                                <li>U(555,55) round to 3 sig figs = U(555,60)</li>
-                                <li>U(555,55) round to 2 sig figs = U(560,60)</li>
+                                <li>U(1.0,0.01) rounded to 3 sig figs = U(1,0)</li>
+                                <li>U(555,55) rounded to 3 sig figs = U(555,60)</li>
+                                <li>U(555,55) rounded to 2 sig figs = U(560,60)</li>
                             </ul>
                         </div>
                     </div>
@@ -195,6 +195,7 @@
     }
 
     li {
+        padding-left: 5px;
         margin-left: 1em;
         text-align: left;
     }

@@ -1,7 +1,62 @@
 <template>
     <div>
         <h1>This is a Tools Page</h1>
-        <p>A collection of tools</p>
+        <p><strong>A collection of tools commonly used in mathematics, chemistry, and physics. </strong></p>
+        <div class="parent-container">
+            <div class="border-container">
+                <div class="info-container">
+                    <h3>Desmos: <a href="https://www.desmos.com/calculator">Visit the Website</a></h3>
+                    <vs-button @click="desmosActive=true" color="primary" type="filled" v-if="!isMobile">
+                        Preview
+                    </vs-button>
+                    <vs-popup fullscreen title="Desmos Graphing" :active.sync="desmosActive" v-if="!isMobile">
+                        <div style="overflow:hidden;">
+                            <iframe width="100%" height="1000px"
+                                    src="https://www.desmos.com/calculator"></iframe>
+                        </div>
+                    </vs-popup>
+                    <br>
+                    <p style="margin-bottom: 5px"><strong>Explore math with Desmos.</strong>
+                        Graph functions, plot data, evaluate equations, explore transformations, and much more – for
+                        free!</p>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="parent-container">
+            <div class="border-container">
+                <div class="info-container">
+                    <h3>Dynamic Periodic Table: <a href="https://ptable.com/">Visit the Website</a></h3>
+                    <vs-button @click="pTableActive=true" color="primary" type="filled" v-if="!isMobile">
+                        Preview
+                    </vs-button>
+                    <vs-popup fullscreen title="Dynamic Periodic Table" :active.sync="pTableActive" v-if="!isMobile">
+                        <div style="overflow:hidden;">
+                            <iframe width="100%" height="1000px"
+                                    src="https://ptable.com/"></iframe>
+                        </div>
+                    </vs-popup>
+                    <br>
+                    <p><strong>The world's most popular periodic table web site!</strong> Dynamic layouts, property
+                        trend visualization, orbitals, thousands of isotopes, and 5 writeup sources.</p>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="parent-container">
+            <div class="border-container">
+                <div class="info-container">
+                    <h3>Symbolab: <a href="https://www.symbolab.com/">Visit the Website</a></h3>
+                    <vs-button disabled color="primary" type="filled" v-if="!isMobile">
+                        No Preview Available
+                    </vs-button>
+                    <br>
+                    <p><strong>Symbolab: equation search and math solver</strong> - solves algebra, trigonometry and
+                        calculus problems step by step.</p>
+                </div>
+            </div>
+        </div>
+        <br>
         <div class="parent-container">
             <div class="border-container">
                 <div class="info-container">
@@ -15,6 +70,29 @@
                                     src="https://www.unitconverters.net/"></iframe>
                         </div>
                     </vs-popup>
+                    <br>
+                    <p>
+                        <strong>Quick, free, online unit converter that converts common units of measurement</strong>, along with 77
+                        other converters covering an assortment of units.</p>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="parent-container">
+            <div class="border-container">
+                <div class="info-container">
+                    <h3>WolframAlpha: <a href="https://www.wolframalpha.com/">Visit the Website</a></h3>
+                    <vs-button @click="wolframAlphaActive=true" color="primary" type="filled" v-if="!isMobile">
+                        Preview
+                    </vs-button>
+                    <vs-popup fullscreen title="WolframAlpha" :active.sync="wolframAlphaActive" v-if="!isMobile">
+                        <div style="overflow:hidden;">
+                            <iframe width="100%" height="1000px"
+                                    src="https://www.wolframalpha.com/"></iframe>
+                        </div>
+                    </vs-popup>
+                    <br>
+                    <p><strong>Compute answers using Wolfram's breakthrough technology & knowledgebase</strong>, relied on by millions of students & professionals.</p>
                 </div>
             </div>
         </div>
@@ -26,6 +104,9 @@
         data() {
             return {
                 unitConverterActive: false,
+                wolframAlphaActive: false,
+                desmosActive: false,
+                pTableActive: false,
                 isMobile: this.mobileCheck()
             }
         },

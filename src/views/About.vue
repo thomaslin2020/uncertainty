@@ -59,9 +59,10 @@
                 <ul>
                     <li>Time measurement - response time of hitting a stopwatch</li>
                     <li>Detecting color changes in an experiment</li>
-                    <li><strong>They must be mentioned when they apply, even though quantitative data is not collected
+                    <li><i>Note: The sources of random uncertainties <strong>must</strong> be mentioned when they apply,
+                        even though quantitative data is not collected
                         based
-                        on these observations</strong></li>
+                        on these observations</i></li>
                 </ul>
 
                 <div style="text-align: left">
@@ -84,12 +85,31 @@
                     <li><strong>Cannot</strong> be eliminated with repeated measurement</li>
                 </ul>
 
-                <p><strong>Precision</strong> - How close together the measurements are</p>
-
-                <p><strong>Accuracy</strong> - How close to the true value of the measurements are </p>
-
-                <p>Sources of systematic error: (cite this from textbook)</p>
-
+                <div style="text-align: left">
+                    <strong>Precision vs Accuracy</strong>
+                </div>
+                <ul>
+                    <li>
+                        <strong>Precision</strong> - How close together the measurements are
+                    </li>
+                    <li>
+                        <strong>Accuracy</strong> - How close to the true value of the measurements are
+                    </li>
+                </ul>
+                <div class="figure-container">
+                    <figure><img
+                            src="https://www.dnasoftware.com/wp-content/uploads/2015/07/targets.png"
+                            alt="Image" style="padding-bottom: 10px; max-width: 100%"/>
+                        <figcaption>Image source: <a
+                                href="https://www.dnasoftware.com/our-products/copycount-qpcr-analysis-copynumber/precision-and-accuracy/">DNA
+                            Software</a>
+                        </figcaption>
+                    </figure>
+                </div>
+                <br>
+                <div style="text-align: left">
+                    <strong>Sources of systematic error</strong>
+                </div>
                 <ul>
                     <li>Instrumental (eg. Improperly calibrated)</li>
                     <li>Observational (eg. Parallax error)</li>
@@ -98,10 +118,34 @@
                 </ul>
 
                 <p><em>All relevant errors <strong>must</strong> be addressed in the evaluation!</em></p>
-
+                <p>Source of information: <a href="http://www.physics.nmsu.edu/research/lab110g/html/ERRORS.html">http://www.physics.nmsu.edu/research/lab110g/html/ERRORS.html</a>
+                </p>
                 <h2>Rules of significant figures:</h2>
 
-                <p>Write something here…</p>
+                <ul>
+                    <li>Non-zero digits are always significant</li>
+                    <li>
+                        Any zeros between two significant digits are significant
+                    </li>
+                    <li>
+                        A final zero or trailing zeros in the decimal portion ONLY are significant
+                    </li>
+                </ul>
+                <div class="figure-container" style="margin-bottom: 10px">
+                    <figure style="padding-top: 10px"><img
+                            src="../assets/sigfigs_example_1.png"
+                            alt="Image" style="max-height: 220px; margin-right: 10px;"/>
+                        <img
+                                src="../assets/sigfigs_example_2.png"
+                                alt="Image" style="max-height: 220px;margin-left: 10px;"/>
+                        <figcaption style="padding-top: 15px; padding-bottom: 0">Image source: <a
+                                href="https://en.wikipedia.org/wiki/Significant_figures">Wikipedia</a>
+                        </figcaption>
+                    </figure>
+                </div>
+                <p>Source of information: <a
+                        href="https://www.nku.edu/~intsci/sci110/worksheets/rules_for_significant_figures.html">https://www.nku.edu/~intsci/sci110/worksheets/rules_for_significant_figures.html</a>
+
 
                 <h2>Calculating error:</h2>
 
@@ -181,17 +225,6 @@
                 </div>
                 <br>
 
-                <div class="figure-container">
-                    <figure><img
-                            src="https://www.cherrybiotech.com/wp-content/uploads/2018/06/Figure-1-e1530193488428.png"
-                            alt="Image"/>
-                        <figcaption>Image source: <a
-                                href="https://www.cherrybiotech.com/scientific-note/accuracy-and-precision-in-measurements">Cherry
-                            Biotech</a>
-                        </figcaption>
-                    </figure>
-                </div>
-
 
             </div>
         </div>
@@ -256,6 +289,7 @@
 
     h2 {
         text-align: left;
+        font-size: 28px;
     }
 
     h3 {
