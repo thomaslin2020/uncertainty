@@ -91,7 +91,7 @@
                 <h2>Result: {{result}}</h2>
                 <div style="display: flex;
         flex-direction: column;
-        justify-content: center;" v-if="dotData">
+        justify-content: center; padding-top: 5px;" v-if="dotData">
                     <graph-viz :dot-data="dotData"></graph-viz>
                 </div>
             </div>
