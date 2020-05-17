@@ -89,6 +89,7 @@
                     if (this.sigfigs.length === 0 && this.round_data === true) {
                         this.sigfigs = "3"
                     }
+                    this.sigfigs = this.sigfigs.replace(/\D/g, '')
                     if (this.round_data) {
                         equation = "r(" + this.equation + "," + this.sigfigs + ")"
                     }
