@@ -203,7 +203,7 @@ class SimpleUncertainty:  # normal
                                  last_node=operator_node, temp=None)
 
     def __mul__(self, other):
-        operator = '*'
+        operator = '⨉'
         if self.last_operator == operator and self.last_node is not None:
             if isinstance(other, (int, float)):
                 temp_node(self, other, True)
@@ -229,7 +229,7 @@ class SimpleUncertainty:  # normal
                                      operator_node, last_operator=operator, last_node=operator_node, temp=None)
 
     def __rmul__(self, other):
-        operator = '*'
+        operator = '⨉'
         temp = temp_node(self, other)
         dot.node(self.node, '%.3g' % other)
         dot.node(temp, '%s' % self.symbol) if self.symbol else dot.node(temp, '(%.3g±%.3g)' % (
@@ -240,7 +240,7 @@ class SimpleUncertainty:  # normal
                                  last_node=operator_node, temp=None)
 
     def __truediv__(self, other):
-        operator = '/'
+        operator = '÷'
         if self.last_operator == operator and self.last_node is not None:
             if isinstance(other, (int, float)):
                 temp_node(self, other, True)
@@ -262,11 +262,11 @@ class SimpleUncertainty:  # normal
             operator_node = binary_node(self, other.node, operator)
             temp = self.value / other.value
             return SimpleUncertainty(temp, abs(((self.uncertainty / abs(self.value)) + (
-                    other.uncertainty / abs(other.value))) * temp), self.uncertainty + other.uncertainty,
+                    other.uncertainty / abs(other.value))) * temp),
                                      operator_node, last_operator=operator, last_node=operator_node, temp=None)
 
     def __rtruediv__(self, other):
-        operator = '/'
+        operator = '÷'
         temp = temp_node(self, other)
         dot.node(self.node, '%.3g' % other)
         dot.node(temp, '%s' % self.symbol) if self.symbol else dot.node(temp, '(%.3g±%.3g)' % (
@@ -390,7 +390,7 @@ class StdUncertainty:  # normal
                               last_node=operator_node, temp=None)
 
     def __mul__(self, other):
-        operator = '*'
+        operator = '⨉'
         if self.last_operator == operator and self.last_node is not None:
             if isinstance(other, (int, float)):
                 temp_node(self, other, True)
@@ -417,7 +417,7 @@ class StdUncertainty:  # normal
                                   operator_node, last_operator=operator, last_node=operator_node, temp=None)
 
     def __rmul__(self, other):
-        operator = '*'
+        operator = '⨉'
         temp = temp_node(self, other)
         dot.node(self.node, '%.3g' % other)
         dot.node(temp, '%s' % self.symbol) if self.symbol else dot.node(temp, '(%.3g±%.3g)' % (
@@ -428,7 +428,7 @@ class StdUncertainty:  # normal
                               last_node=operator_node, temp=None)
 
     def __truediv__(self, other):
-        operator = '/'
+        operator = '÷'
         if self.last_operator == operator and self.last_node is not None:
             if isinstance(other, (int, float)):
                 temp_node(self, other, True)
@@ -456,7 +456,7 @@ class StdUncertainty:  # normal
                                   operator_node, last_operator=operator, last_node=operator_node, temp=None)
 
     def __rtruediv__(self, other):
-        operator = '/'
+        operator = '÷'
         temp = temp_node(self, other)
         dot.node(self.node, '%.3g' % other)
         dot.node(temp, '%s' % self.symbol) if self.symbol else dot.node(temp, '(%.3g±%.3g)' % (
@@ -969,4 +969,3 @@ def calculate():
 
 if __name__ == '__main__':
     app.run(port='5000', debug=True)
-
