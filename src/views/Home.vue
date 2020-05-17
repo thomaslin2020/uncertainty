@@ -39,7 +39,7 @@
                 <br>
                 <div class="description" v-show="showDescription">
                     <div style="background: white; border-radius: 10px;
-        border: 4px solid rgba(0, 0, 0, 0.2); padding: 15px; padding-left: 30px; padding-right: 20px;">
+        border: 4px solid rgba(0, 0, 0, 0.2); padding: 15px 20px 15px 30px;">
                         <div>
                             <h2>Description</h2>
                             <p><strong>U(a,b)</strong> represents the uncertainty value <strong>a ± b</strong> (e.g. (2
