@@ -11,13 +11,19 @@
                 <br>
                 <div class="options">
                     <div style="display: inline-block;vertical-align: middle">
+                        <b-checkbox style="display: inline-block; margin-right: 10px" v-model="round_data"><p
+                                style="font-size: 18px">
+                            <strong>Round</strong></p></b-checkbox>
+                        <b-input style="display: inline; width: 105px; margin-right: 10px" v-if="round_data"
+                                 placeholder="# of sigfigs" v-model="sigfigs"></b-input>
                         <label for="mode" style="vertical-align: middle;"><strong>Mode:</strong></label><select
                             id="mode" class="input-button"
                             v-model="mode">
                         <option value="simple" selected="selected">Simple</option>
                         <option value="standard">Standard</option>
                     </select>
-                        <b-checkbox v-if="!isMobile" style="display: inline-block; margin-right: 10px" v-model="showGraph"><p
+                        <b-checkbox v-if="!isMobile" style="display: inline-block; margin-right: 10px"
+                                    v-model="showGraph"><p
                                 style="font-size: 18px">
                             <strong>Show Progress</strong></p></b-checkbox>
 
@@ -52,6 +58,8 @@
                 mode: 'simple',
                 showGraph: false,
                 dotData: "",
+                round_data: false,
+                sigfigs: "",
                 isMobile: this.mobileCheck()
             }
         },
@@ -77,9 +85,16 @@
                 if (this.equation.length !== 0) {
                     const fd = new FormData()
                     this.equation += ')'.repeat(this.count(this.equation, '(') - this.count(this.equation, ')'))
+                    let equation = this.equation.replace("^", "**")
+                    if (this.sigfigs.length === 0 && this.round_data === true) {
+                        this.sigfigs = "3"
+                    }
+                    if (this.round_data) {
+                        equation = "r(" + this.equation + "," + this.sigfigs + ")"
+                    }
                     fd.append('method', this.mode)
                     fd.append('showGraph', this.showGraph.toString())
-                    fd.append('equation', this.equation.replace("^", "**"))
+                    fd.append('equation', equation)
                     this.result = "loading..."
                     axios.post('https://thomaslin2020.pythonanywhere.com/api/calculate', fd)
                         .then(response => {

@@ -845,41 +845,23 @@ def integer_check(o, n):
 # note that the precision is limited by how python represents floats
 # => numbers cannot end in a series of 0, must be followed by a non-zero number
 # else 20.00 would be changed to 20.0
-def round_to(o, n, cap_sigfigs):
-    if cap_sigfigs == 0:
-        cap_sigfigs = False
+def round_to(o, n):
     if isinstance(o, (int, float)):
-        max_sigfigs = 0
-        if cap_sigfigs:
-            max_sigfigs = len(atof(str(o), Decimal).as_tuple().digits)
-            temp_num = np.format_float_positional(o, precision=min(max_sigfigs, n),
-                                                  unique=False, fractional=False, trim='k')
-            temp_num = sanity_check(temp_num, min(max_sigfigs, n))
-        else:
-            temp_num = np.format_float_positional(o, precision=min(n, 15),
-                                                  unique=False, fractional=False, trim='k')
-            temp_num = sanity_check(temp_num, n)
+        max_sigfigs = len(atof(str(o), Decimal).as_tuple().digits)
+        temp_num = np.format_float_positional(o, precision=min(max_sigfigs, n),
+                                              unique=False, fractional=False, trim='k')
+        temp_num = sanity_check(temp_num, min(max_sigfigs, n))
         if temp_num[-1] == '.':
-            if cap_sigfigs:
-                temp_num = integer_check(temp_num, min(max_sigfigs, n) + 1)
-            else:
-                temp_num = integer_check(temp_num, min(n, 15) + 1)
+            temp_num = integer_check(temp_num, min(max_sigfigs, n) + 1)
         temp_num = temp_num[:-1] if temp_num[-1] == '.' else temp_num
         return temp_num
 
     temp = str(o.value)
-    max_sigfigs = 0
-    if cap_sigfigs:
-        max_sigfigs = len(atof(str(o.value), Decimal).as_tuple().digits)
-        o.value = o.value if o.value < 1e-14 else o.value + 1e-15
-        temp_num = np.format_float_positional(o.value, precision=min(max_sigfigs, n), unique=False, fractional=False,
-                                              trim='k')
-        temp_num = sanity_check(temp_num, min(max_sigfigs, n))
-    else:
-        o.value = o.value if o.value < 1e-14 else o.value + 1e-15
-        temp_num = np.format_float_positional(o.value, precision=min(n, 15), unique=False, fractional=False,
-                                              trim='k')
-        temp_num = sanity_check(temp_num, min(n, 15))
+    max_sigfigs = len(atof(str(o.value), Decimal).as_tuple().digits)
+    o.value = o.value if o.value < 1e-14 else o.value + 1e-15
+    temp_num = np.format_float_positional(o.value, precision=min(max_sigfigs, n), unique=False, fractional=False,
+                                          trim='k')
+    temp_num = sanity_check(temp_num, min(max_sigfigs, n))
     temp_num = temp_num[:-1] if temp_num[-1] == '.' else temp_num
     o.uncertainty = o.uncertainty if o.uncertainty < 1e-14 else o.uncertainty + 1e-15
     uncertainty = np.format_float_positional(o.uncertainty, precision=1, unique=False, fractional=False, trim='k')
@@ -889,84 +871,52 @@ def round_to(o, n, cap_sigfigs):
         if set(ending) == {'0'}:  # every number after decimal point is 0
             if uncertainty[-1] != '.':
                 if len(ending) < len(uncertainty[uncertainty.index('.') + 1:]):
-                    return '(%s±%s)' % (
-                        temp_num[:temp_num.index('.') + len(uncertainty[uncertainty.index('.') + 1:]) + 1], '0')
+                    return '%s ≈ (%s±%s)' % (o,
+                                             temp_num[
+                                             :temp_num.index('.') + len(uncertainty[uncertainty.index('.') + 1:]) + 1],
+                                             '0')
             temp = uncertainty
             temp = temp[:-1] if temp[-1] == '.' else temp
             if uncertainty[-1] == '.':
-                if cap_sigfigs:
-                    temp_num = np.format_float_positional(float(temp_num), precision=min(max_sigfigs, n),
-                                                          unique=False, fractional=False, trim='k')
-                    temp_num = sanity_check(temp_num, min(max_sigfigs, n))
-                else:
-                    temp_num = np.format_float_positional(float(temp_num), precision=min(n, 15),
-                                                          unique=False, fractional=False, trim='k')
-                    temp_num = sanity_check(temp_num, min(n, 15))
+                temp_num = np.format_float_positional(float(temp_num), precision=min(max_sigfigs, n),
+                                                      unique=False, fractional=False, trim='k')
+                temp_num = sanity_check(temp_num, min(max_sigfigs, n))
                 if temp_num[-1] == '.':
-                    if cap_sigfigs:
-                        temp_num = integer_check(temp_num, min(max_sigfigs, n) + 1)
-                    else:
-                        temp_num = integer_check(temp_num, min(n, 15) + 1)
+                    temp_num = integer_check(temp_num, min(max_sigfigs, n) + 1)
                 temp_num = temp_num[:-1] if temp_num[-1] == '.' else temp_num
-                return '(%s±%s)' % (temp_num, temp)
+                return '%s ≈ (%s±%s)' % (o, temp_num, temp)
             else:
-                return '(%s±%s)' % (
-                    temp_num[:temp_num.index('.') + len(uncertainty[uncertainty.index('.') + 1:]) + 1], temp)
+                return '%s ≈ (%s±%s)' % (o,
+                                         temp_num[
+                                         :temp_num.index('.') + len(uncertainty[uncertainty.index('.') + 1:]) + 1],
+                                         temp)
 
         # number is smaller than the smallest digit (unable to represent) - error is negligible
         elif 10 ** -(len(temp_num[temp_num.index('.'):]) - 1) > float(uncertainty):
-            return '(%s±%s)' % (temp_num, '0')
+            return '%s ≈ (%s±%s)' % (o, temp_num, '0')
         else:
             uncertainty_digits = 10 ** -math.floor(math.log10(float(uncertainty)))
             temp_num = str(round(float(temp) * uncertainty_digits) / uncertainty_digits)
-            if cap_sigfigs:
-                temp_num = sanity_check(temp_num, min(max_sigfigs, n))
-                temp_num = temp_num[:temp_num.index('.') + 1 + len(uncertainty[uncertainty.index('.') + 1:])]
-            else:
-                temp_num = np.format_float_positional(o.value, precision=min(n, 15),
-                                                      unique=False, fractional=False, trim='k')
-                temp_num = sanity_check(temp_num, min(n, 15))
+            temp_num = sanity_check(temp_num, min(max_sigfigs, n))
+            temp_num = temp_num[:temp_num.index('.') + 1 + len(uncertainty[uncertainty.index('.') + 1:])]
             uncertainty = uncertainty[:-1] if uncertainty[-1] == '.' else uncertainty
             if temp_num[-1] == '.':
-                if cap_sigfigs:
-                    temp_num = integer_check(temp_num, min(max_sigfigs, n) + 1)
-                else:
-                    temp_num = integer_check(temp_num, min(n, 15) + 1)
-        return '(%s±%s)' % (temp_num, uncertainty)
+                temp_num = integer_check(temp_num, min(max_sigfigs, n) + 1)
+        return '%s ≈ (%s±%s)' % (o, temp_num, uncertainty)
     else:
         if float(uncertainty) < 0.5:
             uncertainty = '0'
-            if cap_sigfigs:
-                return '(%s±%s)' % (integer_check(temp_num, min(max_sigfigs, n)), uncertainty)
-            else:
-                return '(%s±%s)' % (integer_check(temp_num, min(n, 15)), uncertainty)
+            return '%s ≈ (%s±%s)' % (o, integer_check(temp_num, min(max_sigfigs, n)), uncertainty)
         else:
             uncertainty = round(float(uncertainty) if float(uncertainty) < 1e-14 else float(uncertainty) + 1e-15)
             uncertainty_digits = 10 ** math.floor(math.log10(uncertainty))
             uncertainty = '0' if uncertainty < 10 ** (len(str(temp_num)) - n) else uncertainty
             temp_num = round(round(int(temp_num) / uncertainty_digits) * uncertainty_digits)
-            if cap_sigfigs:
-                return '(%s±%s)' % (integer_check(str(temp_num), min(max_sigfigs, n)), uncertainty)
-            else:
-                return '(%s±%s)' % (integer_check(str(temp_num), min(n, 15)), uncertainty)
+            return '%s ≈ (%s±%s)' % (o, integer_check(str(temp_num), min(max_sigfigs, n)), uncertainty)
 
 
 def r(o, n=3):  # shorthand for typing convenience
-    return round_to(o, n, True)
-
-
-def r_(o, n=3):  # shorthand for typing convenience
-    return round_to(o, n, False)
-
-
-# demo of difference between r_() and r()
-"""
-print(r(3.00, 5))
-print(r_(3.00, 5))
-print(r(SimpleUncertainty(3.000000, 0.00), 5))
-print(r_(SimpleUncertainty(3.000000, 0.00), 5))
-print(r_(SimpleUncertainty(0, 0), 5))
-"""
+    return round_to(o, n)
 
 
 # it should be noted that r() would omit trailing zeros
