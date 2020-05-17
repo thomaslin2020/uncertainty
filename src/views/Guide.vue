@@ -285,7 +285,7 @@
     }
 
     li {
-        margin-left: 15px;
+        margin-left: 2em;
         text-align: left;
     }
 

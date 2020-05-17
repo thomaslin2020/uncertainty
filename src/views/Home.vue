@@ -52,12 +52,14 @@
                                 </li>
                                 <li><strong>Trigonometric functions:</strong> sin, cos, tan, arcsin, arccos, arctan
                                     <strong>e.g. sin(U(0.52,0.01))</strong></li>
-                                <li><strong>Exponential and logarithmic functions:</strong> log, ln, exp <strong>e.g.
+                                <li><strong>Logarithmic functions:</strong> log, ln <strong>e.g.
                                     log(U(3.5,0.01),2)</strong> (base 2)
                                 </li>
+                                <li style="margin-left: 3em"><i>For exponential functions use e^x or U(a,b)^x </i><strong>e.g. e^5 or U(2,1)^4</strong></li>
                                 <li style="margin-left: 3em"><i>Note: log without second parameter indicates
                                     log10 </i><strong>e.g. log(U(3.5,0.01))</strong></li>
-                                <li><strong>Other operations:</strong> square (sq), square root (sqrt), cube root (cbrt)
+                                <li><strong>Other operations:</strong> square (sq), square root (sqrt), cube root
+                                    (cbrt), radians to degrees (r2d), degrees to radians (d2r)
                                     <strong>e.g. sqrt(U(2,1))</strong></li>
                             </ul>
                             <p style="margin-bottom: 5px"><strong>Constants:</strong></p>
@@ -70,8 +72,7 @@
                             <p style="margin-bottom: 5px">Uncertainty values are rounded to <strong>1 sig fig</strong>.
                                 Values are rounded based on the smallest
                                 decimal of the uncertainty value. The maximum number of sig figs is limited to the
-                                maximum
-                                number of sig figs of the input value.</p>
+                                maximum number of sig figs of the input value.</p>
                             <ul>
                                 <li><i>Note: Numbers with only zeros after the decimal point will be rounded to 1
                                     decimal </i>

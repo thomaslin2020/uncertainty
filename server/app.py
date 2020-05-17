@@ -778,7 +778,7 @@ def cbrt(o):
         return StdUncertainty(value, abs(uncertainty), unary_temp_node(o, 'cube root'))
 
 
-def deg2rad(o):
+def d2r(o):
     if isinstance(o, (int, float)):
         return o * math.pi / 180
     temp = math.pi / 180
@@ -794,7 +794,7 @@ def deg2rad(o):
         return StdUncertainty(value, abs(uncertainty), unary_temp_node(o, 'deg2rad'))
 
 
-def rad2deg(o):
+def r2d(o):
     if isinstance(o, (int, float)):
         return o * 180 / math.pi
     temp = 180 / math.pi
@@ -808,11 +808,6 @@ def rad2deg(o):
         return SimpleUncertainty(value, abs(uncertainty), unary_temp_node(o, 'rad2deg'))
     else:
         return StdUncertainty(value, abs(uncertainty), unary_temp_node(o, 'rad2deg'))
-
-
-def exp(o):
-    if isinstance(o, (int, float)):
-        return math.exp(o)
 
 
 def sanity_check(o, n):
