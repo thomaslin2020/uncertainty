@@ -3,12 +3,12 @@
         <h1>Calculations with Tables</h1>
         <div class="input-parent">
             <div style="width: 80%">
-                <b-input v-model="input_value" name="columns-input" type="text"
-                         placeholder="Enter your variables"></b-input>
+                <b-input name="columns-input" placeholder="Enter your variables" type="text"
+                         v-model="input_value"></b-input>
                 <br>
                 <div>
-                    <b-button class="input-button" @click="generate_table">Generate Table</b-button>
-                    <b-button class="input-button" @click="clear_table">Clear Table</b-button>
+                    <b-button @click="generate_table" class="input-button">Generate Table</b-button>
+                    <b-button @click="clear_table" class="input-button">Clear Table</b-button>
                 </div>
                 <br>
             </div>
@@ -17,9 +17,9 @@
             <div class="parent">
                 <div style="width: 90%; max-width: 100%;">
                     <vue-table-dynamic
+                            :key="refresh_key"
                             :params="params"
-                            @cell-change="onCellChange"
-                            ref="table" :key="refresh_key"
+                            @cell-change="onCellChange" ref="table"
                     >
                     </vue-table-dynamic>
                 </div>
@@ -28,24 +28,24 @@
         <div class="input-parent" v-if="showTable">
             <div style="width: 80%">
                 <br>
-                <b-input id="equation-input" name="equation-input" type="text"
-                         placeholder="Enter your equation"></b-input>
+                <b-input id="equation-input" name="equation-input" placeholder="Enter your equation"
+                         type="text"></b-input>
                 <br>
                 <div>
-                    <label for="mode"><strong>Mode:</strong></label><select id="mode" class="input-button"
+                    <label for="mode"><strong>Mode:</strong></label><select class="input-button" id="mode"
                                                                             v-model="mode">
-                    <option value="simple" selected="selected">Simple</option>
+                    <option selected="selected" value="simple">Simple</option>
                     <option value="standard">Standard</option>
                 </select>
-                    <label for="verbose"><strong>Level:</strong></label><select id="verbose" class="input-button"
+                    <label for="verbose"><strong>Level:</strong></label><select class="input-button" id="verbose"
                                                                                 v-model="level">
                     <option value="-1">Simplest</option>
-                    <option value="0" selected="selected">Normal (Combined)</option>
+                    <option selected="selected" value="0">Normal (Combined)</option>
                     <option value="1">Normal</option>
                     <option value="2">Detailed (Combined)</option>
                     <option value="3">Detailed</option>
                 </select>
-                    <b-button class="input-button" @click="calculate">Calculate</b-button>
+                    <b-button @click="calculate" class="input-button">Calculate</b-button>
                 </div>
             </div>
         </div>
@@ -134,7 +134,6 @@
     }
 </script>
 
-
 <style scoped>
     .input-parent {
         display: flex;
@@ -152,5 +151,4 @@
         flex-direction: column;
         justify-content: center;
     }
-
 </style>

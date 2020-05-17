@@ -98,8 +98,9 @@
                 </ul>
                 <div class="figure-container">
                     <figure><img
+                            alt="Image"
                             src="https://www.dnasoftware.com/wp-content/uploads/2015/07/targets.png"
-                            alt="Image" style="padding-bottom: 10px; max-width: 100%"/>
+                            style="padding-bottom: 10px; max-width: 100%"/>
                         <figcaption>Image source: <a
                                 href="https://www.dnasoftware.com/our-products/copycount-qpcr-analysis-copynumber/precision-and-accuracy/">DNA
                             Software</a>
@@ -133,11 +134,11 @@
                 </ul>
                 <div class="figure-container" style="margin-bottom: 10px">
                     <figure style="padding-top: 10px"><img
-                            src="../assets/sigfigs_example_1.png"
-                            alt="Image" style="max-height: 220px; margin-right: 10px;"/>
+                            alt="Image"
+                            src="../assets/sigfigs_example_1.png" style="max-height: 220px; margin-right: 10px;"/>
                         <img
-                                src="../assets/sigfigs_example_2.png"
-                                alt="Image" style="max-height: 220px;margin-left: 10px;"/>
+                                alt="Image"
+                                src="../assets/sigfigs_example_2.png" style="max-height: 220px;margin-left: 10px;"/>
                         <figcaption style="padding-top: 15px; padding-bottom: 0">Image source: <a
                                 href="https://en.wikipedia.org/wiki/Significant_figures">Wikipedia</a>
                         </figcaption>
@@ -301,7 +302,6 @@
         padding: 5px;
         margin: auto;
     }
-
 
     figcaption {
         font: italic smaller sans-serif;

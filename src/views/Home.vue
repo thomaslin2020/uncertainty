@@ -5,8 +5,8 @@
                 <h1>Uncertainty Calculator</h1>
                 <br>
 
-                <b-input id="equation" name="equation" type="text"
-                         placeholder="Enter your equation"
+                <b-input id="equation" name="equation" placeholder="Enter your equation"
+                         type="text"
                          v-model="equation"></b-input>
                 <br>
                 <div class="options">
@@ -14,22 +14,22 @@
                         <b-checkbox style="display: inline-block; margin-right: 10px" v-model="round_data"><p
                                 style="font-size: 18px">
                             <strong>Round</strong></p></b-checkbox>
-                        <b-input style="display: inline; width: 105px; margin-right: 10px" v-if="round_data"
-                                 placeholder="# of sigfigs" v-model="sigfigs"></b-input>
+                        <b-input placeholder="# of sigfigs" style="display: inline; width: 105px; margin-right: 10px"
+                                 v-if="round_data" v-model="sigfigs"></b-input>
                         <label for="mode" style="vertical-align: middle;"><strong>Mode:</strong></label><select
-                            id="mode" class="input-button"
+                            class="input-button" id="mode"
                             v-model="mode">
-                        <option value="simple" selected="selected">Simple</option>
+                        <option selected="selected" value="simple">Simple</option>
                         <option value="standard">Standard</option>
                     </select>
-                        <b-checkbox v-if="!isMobile" style="display: inline-block; margin-right: 10px"
+                        <b-checkbox style="display: inline-block; margin-right: 10px" v-if="!isMobile"
                                     v-model="showGraph"><p
                                 style="font-size: 18px">
                             <strong>Show Progress</strong></p></b-checkbox>
                         <div style="display: inline-block">
-                            <b-button class="input-button" @click="send" type="submit" value="upload">Calculate
+                            <b-button @click="send" class="input-button" type="submit" value="upload">Calculate
                             </b-button>
-                            <b-button class="input-button" @click="showDescription = !showDescription">
+                            <b-button @click="showDescription = !showDescription" class="input-button">
                                 <template v-if="!showDescription">Show Description</template>
                                 <template v-else>Hide Description</template>
                             </b-button>
@@ -46,13 +46,19 @@
                                 ± 1) = U(1,2))</p>
                             <p style="margin-bottom: 5px"><strong>Supported operations include:</strong></p>
                             <ul>
-                                <li><strong>Basic Operations:</strong> Addition(+), Subtraction(-), Multiplication(⨉), Division(÷),
+                                <li><strong>Basic Operations:</strong> Addition(+), Subtraction(-), Multiplication(⨉),
+                                    Division(÷),
                                     Power(^)
                                 </li>
-                                <li><strong>Trigonometric functions:</strong> sin, cos, tan, arcsin, arccos, arctan <strong>e.g. sin(U(0.52,0.01))</strong></li>
-                                <li><strong>Exponential and logarithmic functions:</strong> log, ln, exp <strong>e.g. log(U(3.5,0.01),2)</strong> (base 2)</li>
-                                <li style="margin-left: 3em"><i>Note: log without second parameter indicates log10 </i><strong>e.g. log(U(3.5,0.01))</strong> </li>
-                                <li><strong>Other operations:</strong> square (sq), square root (sqrt), cube root (cbrt) <strong>e.g. sqrt(U(2,1))</strong></li>
+                                <li><strong>Trigonometric functions:</strong> sin, cos, tan, arcsin, arccos, arctan
+                                    <strong>e.g. sin(U(0.52,0.01))</strong></li>
+                                <li><strong>Exponential and logarithmic functions:</strong> log, ln, exp <strong>e.g.
+                                    log(U(3.5,0.01),2)</strong> (base 2)
+                                </li>
+                                <li style="margin-left: 3em"><i>Note: log without second parameter indicates
+                                    log10 </i><strong>e.g. log(U(3.5,0.01))</strong></li>
+                                <li><strong>Other operations:</strong> square (sq), square root (sqrt), cube root (cbrt)
+                                    <strong>e.g. sqrt(U(2,1))</strong></li>
                             </ul>
                             <p style="margin-bottom: 5px"><strong>Constants:</strong></p>
                             <ul>
@@ -61,10 +67,17 @@
                             <p style="margin-bottom: 5px"><strong>Full Example: </strong></p>
                             <pre><code style="white-space: normal;">pi+sin(U(1.0,0.1))*U(2.0,0.1)^2/log(sqrt(U(3.0,0.1))) </code></pre>
                             <p style="margin-bottom: 5px"><strong>Rounding (if selected): </strong></p>
-                            <p style="margin-bottom: 5px">Uncertainty values are rounded to <strong>1 sig fig</strong>. Values are rounded based on the smallest
-                                decimal of the uncertainty value. The maximum number of sig figs is limited to the maximum
+                            <p style="margin-bottom: 5px">Uncertainty values are rounded to <strong>1 sig fig</strong>.
+                                Values are rounded based on the smallest
+                                decimal of the uncertainty value. The maximum number of sig figs is limited to the
+                                maximum
                                 number of sig figs of the input value.</p>
-                            <ul><li><i>Note: Numbers with only zeros after the decimal point will be rounded to 1 decimal </i><div style="display: inline-block"><strong>e.g. 1.0000 ⇒ 1.0</strong></div></li></ul>
+                            <ul>
+                                <li><i>Note: Numbers with only zeros after the decimal point will be rounded to 1
+                                    decimal </i>
+                                    <div style="display: inline-block"><strong>e.g. 1.0000 ⇒ 1.0</strong></div>
+                                </li>
+                            </ul>
                             <p style="margin-bottom: 5px"><strong>Examples: </strong></p>
                             <ul>
                                 <li>U(1.0,0.01) rounded to 3 sig figs = U(1,0)</li>
@@ -76,9 +89,9 @@
                     <br>
                 </div>
                 <h2>Result: {{result}}</h2>
-                <div v-if="dotData" style="display: flex;
+                <div style="display: flex;
         flex-direction: column;
-        justify-content: center;">
+        justify-content: center;" v-if="dotData">
                     <graph-viz :dot-data="dotData"></graph-viz>
                 </div>
             </div>

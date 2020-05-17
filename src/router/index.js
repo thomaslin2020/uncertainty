@@ -5,7 +5,7 @@ import Home from '../views/Home.vue'
 Vue.use(VueRouter)
 
 const routes = [
-    { 
+    {
         path: '/',
         name: 'Home',
         component: Home
@@ -21,19 +21,9 @@ const routes = [
         component: () => import('../views/TableCalculation.vue')
     },
     {
-        path: '/guide',
-        name: 'Guide',
-        component: () => import('../views/Guide.vue')
-    },
-    {
         path: '/tools',
         name: 'Tools',
         component: () => import('../views/Tools.vue')
-    },
-    {
-        path: '/resources',
-        name: 'Resources',
-        component: () => import('../views/Resources.vue')
     },
     {path: '*', redirect: {name: 'Home'}}
 ]

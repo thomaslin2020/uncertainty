@@ -1,8 +1,8 @@
 <template>
     <b-textarea
             :style="computedStyles"
-            v-model="val"
             @focus="resize"
+            v-model="val"
     ></b-textarea>
 </template>
 <script>

@@ -3,18 +3,16 @@
         <div class="main-container">
             <div id="nav">
                 <b-navbar id="nav_bar" toggleable="md" type="light" variant="light">
-                    <b-navbar-brand to="/" style="padding-top: 0; padding-bottom: 0; margin-left: 0.375rem"><img
-                            src="@/assets/icon.png"
-                            style="max-width: 50px;" alt="Logo"/></b-navbar-brand>
+                    <b-navbar-brand style="padding-top: 0; padding-bottom: 0; margin-left: 0.375rem" to="/"><img
+                            alt="Logo"
+                            src="@/assets/icon.png" style="max-width: 50px;"/></b-navbar-brand>
                     <b-navbar-toggle id="collapse-button" target="nav-collapse"></b-navbar-toggle>
                     <b-collapse id="nav-collapse" is-nav>
                         <b-navbar-nav class="ml-auto">
                             <b-nav-item to="/">Home</b-nav-item>
                             <b-nav-item to="/about">About</b-nav-item>
-<!--                            <b-nav-item to="/table">Table</b-nav-item>-->
-<!--                            <b-nav-item to="/guide">Quick Guide</b-nav-item>-->
+                            <!--                            <b-nav-item to="/table">Table</b-nav-item>-->
                             <b-nav-item to="/tools">Tools</b-nav-item>
-<!--                            <b-nav-item to="/resources">Resources</b-nav-item>-->
                         </b-navbar-nav>
                     </b-collapse>
                 </b-navbar>
@@ -35,14 +33,14 @@
                     <div style="width: 88%; max-width: 100%; vertical-align: center;">
                         <div style="display: inline-flex; flex-direction: row;">
                             <a class="media-button">
-                                <font-awesome-icon class="fa fa-wechat" :icon="{ prefix: 'fab', iconName: 'weixin' }"/>
+                                <font-awesome-icon :icon="{ prefix: 'fab', iconName: 'weixin' }" class="fa fa-wechat"/>
                             </a>
                             <a class="media-button">
-                                <font-awesome-icon class="fa fa-instagram"
-                                                   :icon="{ prefix: 'fab', iconName: 'instagram' }"/>
+                                <font-awesome-icon :icon="{ prefix: 'fab', iconName: 'instagram' }"
+                                                   class="fa fa-instagram"/>
                             </a>
                             <a class="media-button">
-                                <font-awesome-icon class="fa fa-github" :icon="{ prefix: 'fab', iconName: 'github' }"/>
+                                <font-awesome-icon :icon="{ prefix: 'fab', iconName: 'github' }" class="fa fa-github"/>
                             </a>
                             <a class="media-button">
                                 <font-awesome-icon class="fa fa-mail" icon="envelope"/>
@@ -83,16 +81,6 @@
         width: 100%;
     }
 
-    .navbar-brand {
-        padding-top: 0;
-        padding-bottom: 0;
-    }
-
-    .nav-item {
-        font-weight: bold;
-        color: #2c3e50;
-    }
-
     #nav a {
         font-weight: bold;
         color: #2c3e50;
@@ -100,10 +88,6 @@
 
     #nav a.router-link-exact-active {
         color: #42b983;
-    }
-
-    .html {
-        height: 100%;
     }
 
     .main-container {

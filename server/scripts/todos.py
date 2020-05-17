@@ -1,14 +1,13 @@
 # TODO: Unit Conversion
 # TODO: NLP processing
 import sys
-import math
+
+from graphviz import Digraph
+from server.scripts.constants import *
+
 
 # TODO: Add different levels of verbosity
 # visualize uncertainty propagation
-
-from graphviz import Digraph
-
-from server.scripts.constants import *
 
 
 def temp_node(o, name):

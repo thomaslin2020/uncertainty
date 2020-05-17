@@ -9,10 +9,10 @@
                     <vs-button @click="desmosActive=true" color="primary" type="filled" v-if="!isMobile">
                         Preview
                     </vs-button>
-                    <vs-popup fullscreen title="Desmos Graphing" :active.sync="desmosActive" v-if="!isMobile">
+                    <vs-popup :active.sync="desmosActive" fullscreen title="Desmos Graphing" v-if="!isMobile">
                         <div style="overflow:hidden;">
-                            <iframe width="100%" height="1000px"
-                                    src="https://www.desmos.com/calculator"></iframe>
+                            <iframe height="1000px" src="https://www.desmos.com/calculator"
+                                    width="100%"></iframe>
                         </div>
                     </vs-popup>
                     <br>
@@ -30,10 +30,10 @@
                     <vs-button @click="pTableActive=true" color="primary" type="filled" v-if="!isMobile">
                         Preview
                     </vs-button>
-                    <vs-popup fullscreen title="Dynamic Periodic Table" :active.sync="pTableActive" v-if="!isMobile">
+                    <vs-popup :active.sync="pTableActive" fullscreen title="Dynamic Periodic Table" v-if="!isMobile">
                         <div style="overflow:hidden;">
-                            <iframe width="100%" height="1000px"
-                                    src="https://ptable.com/"></iframe>
+                            <iframe height="1000px" src="https://ptable.com/"
+                                    width="100%"></iframe>
                         </div>
                     </vs-popup>
                     <br>
@@ -47,7 +47,7 @@
             <div class="border-container">
                 <div class="info-container">
                     <h3>Symbolab: <a href="https://www.symbolab.com/">Visit the Website</a></h3>
-                    <vs-button disabled color="primary" type="filled" v-if="!isMobile">
+                    <vs-button color="primary" disabled type="filled" v-if="!isMobile">
                         No Preview Available
                     </vs-button>
                     <br>
@@ -64,15 +64,16 @@
                     <vs-button @click="unitConverterActive=true" color="primary" type="filled" v-if="!isMobile">
                         Preview
                     </vs-button>
-                    <vs-popup fullscreen title="Unit Converter" :active.sync="unitConverterActive" v-if="!isMobile">
+                    <vs-popup :active.sync="unitConverterActive" fullscreen title="Unit Converter" v-if="!isMobile">
                         <div style="overflow:hidden;">
-                            <iframe width="100%" height="1000px"
-                                    src="https://www.unitconverters.net/"></iframe>
+                            <iframe height="1000px" src="https://www.unitconverters.net/"
+                                    width="100%"></iframe>
                         </div>
                     </vs-popup>
                     <br>
                     <p>
-                        <strong>Quick, free, online unit converter that converts common units of measurement</strong>, along with 77
+                        <strong>Quick, free, online unit converter that converts common units of measurement</strong>,
+                        along with 77
                         other converters covering an assortment of units.</p>
                 </div>
             </div>
@@ -85,14 +86,15 @@
                     <vs-button @click="wolframAlphaActive=true" color="primary" type="filled" v-if="!isMobile">
                         Preview
                     </vs-button>
-                    <vs-popup fullscreen title="WolframAlpha" :active.sync="wolframAlphaActive" v-if="!isMobile">
+                    <vs-popup :active.sync="wolframAlphaActive" fullscreen title="WolframAlpha" v-if="!isMobile">
                         <div style="overflow:hidden;">
-                            <iframe width="100%" height="1000px"
-                                    src="https://www.wolframalpha.com/"></iframe>
+                            <iframe height="1000px" src="https://www.wolframalpha.com/"
+                                    width="100%"></iframe>
                         </div>
                     </vs-popup>
                     <br>
-                    <p><strong>Compute answers using Wolfram's breakthrough technology & knowledgebase</strong>, relied on by millions of students & professionals.</p>
+                    <p><strong>Compute answers using Wolfram's breakthrough technology & knowledgebase</strong>, relied
+                        on by millions of students & professionals.</p>
                 </div>
             </div>
         </div>
@@ -150,5 +152,4 @@
         border-color: blue;
         border-radius: 10px;
     }
-
 </style>

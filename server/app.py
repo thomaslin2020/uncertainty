@@ -1,16 +1,16 @@
 import math
-import numpy as np
 import os
 import sys
-
-from flask_migrate import Migrate
-from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 from decimal import Decimal
+from locale import atof
+
+import numpy as np
 from flask import Flask, jsonify, request
 from flask_cors import CORS
+from flask_migrate import Migrate
+from flask_sqlalchemy import SQLAlchemy
 from graphviz import Digraph
-from locale import atof
 
 app = Flask(__name__)
 app.config.from_object(__name__)
