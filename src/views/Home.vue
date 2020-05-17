@@ -29,12 +29,15 @@
                         <div style="display: inline-block">
                             <b-button class="input-button" @click="send" type="submit" value="upload">Calculate
                             </b-button>
-                            <b-button class="input-button" @click="result='None'">Description</b-button>
+                            <b-button class="input-button" @click="showDescription = !showDescription">
+                                <template v-if="!showDescription">Show Description</template>
+                                <template v-else>Hide Description</template>
+                            </b-button>
                         </div>
                     </div>
                 </div>
                 <br>
-                <div class="description" v-if="result === 'None'">
+                <div class="description" v-show="showDescription">
                     <div style="background: white; border-radius: 10px;
         border: 4px solid rgba(0, 0, 0, 0.2); padding: 15px 15px 15px 30px;">
                         <div>
@@ -124,6 +127,7 @@
                 return check;
             },
             send() {
+                this.showDescription = false
                 if (this.equation.length !== 0) {
                     const fd = new FormData()
                     this.equation += ')'.repeat(this.count(this.equation, '(') - this.count(this.equation, ')'))
