@@ -943,19 +943,20 @@ def calculate():
                 'pi', "eval(constants_no_graph['%s']['pi'])" % method)
 
             U = SimpleUncertaintyNoGraph if request.form['method'] == 'simple' else StdUncertaintyNoGraph
-            try:
-                result = str(eval(equation))
-                rounding_form = request.form['round']
-                if rounding_form != '-1':
-                    if rounding_form == 'max':
-                        rounding = 32
-                    else:
-                        rounding = int(rounding_form)
+            result = str(eval(equation))
+            rounding_form = request.form['round']
+            if rounding_form != '-1':
+                if rounding_form == 'max':
+                    rounding = 32
                 else:
-                    rounding = -1
-                db.session.add(Calculation(date=datetime.utcnow(), equation=request.form['equation'], mode=method,
-                                           show_graph=False, rounding=rounding, answer=result))
-                db.session.commit()
+                    rounding = int(rounding_form)
+            else:
+                rounding = -1
+            db.session.add(Calculation(date=datetime.utcnow(), equation=request.form['equation'], mode=method,
+                                       show_graph=False, rounding=rounding, answer=result))
+            db.session.commit()
+            try:
+
                 return jsonify({'result': result, 'graph': ''})
             except:
                 return jsonify({'result': 'Please fix your equation', 'graph': ''})
@@ -980,12 +981,9 @@ def calculate():
                         rounding = int(rounding_form)
                 else:
                     rounding = -1
-                print('ok')
                 db.session.add(Calculation(date=datetime.utcnow(), equation=request.form['equation'], mode=method,
                                            show_graph=True, rounding=rounding, answer=result))
-                print('ok')
                 db.session.commit()
-                print('ok')
                 return jsonify({'result': result, 'graph': graph})
             except:
                 return jsonify({'result': 'Please fix your equation', 'graph': ''})
