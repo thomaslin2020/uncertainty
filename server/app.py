@@ -16,7 +16,7 @@ app = Flask(__name__)
 app.config.from_object(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('POSTGRESQL')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
+print(os.environ.get('POSTGRESQL'))
 CORS(app, resources={r'/*': {'origins': '*'}})
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
