@@ -958,7 +958,8 @@ def calculate():
                 result = str(eval(equation))
                 graph = dot.source
                 graph = graph if graph != "digraph {\n}" else ""
-                graph = "digraph {\n\t" + "bgcolor=transparent\n\t" + graph[graph.index('0'):]
+                if graph != '':
+                    graph = "digraph {\n\t" + "bgcolor=transparent\n\t" + graph[graph.index('0'):]
                 db.session.add(Calculation(date=datetime.utcnow(), equation=request.form['equation'], mode=method,
                                            show_graph=True))
                 db.session.commit()

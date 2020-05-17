@@ -26,17 +26,49 @@
                                     v-model="showGraph"><p
                                 style="font-size: 18px">
                             <strong>Show Progress</strong></p></b-checkbox>
-
-                        <b-button class="input-button" @click="send" type="submit" value="upload">Calculate</b-button>
+                        <div style="display: inline-block">
+                            <b-button class="input-button" @click="send" type="submit" value="upload">Calculate
+                            </b-button>
+                            <b-button class="input-button" @click="result='None'">Description</b-button>
+                        </div>
                     </div>
                 </div>
                 <br>
                 <div class="description" v-if="result === 'None'">
                     <div style="background: white; border-radius: 10px;
-        border: 4px solid rgba(0, 0, 0, 0.2); padding: 15px 15px 15px 20px;">
-                        <p style="text-align: left">
-
-                        </p>
+        border: 4px solid rgba(0, 0, 0, 0.2); padding: 15px 15px 15px 30px;">
+                        <div>
+                            <h2>Description</h2>
+                            <p><strong>U(a,b)</strong> represents the uncertainty value <strong>a ± b</strong> (e.g. (2
+                                ± 1) = U(1,2))</p>
+                            <p><strong>Operations that can be used include:</strong></p>
+                            <ul>
+                                <li>Basic Operations: Addition(+), Subtraction(-), Multiplication(⨉), Division(÷),
+                                    Power(^)
+                                </li>
+                                <li>Trigonometric functions: sin, cos, tan, arcsin, arccos, arctan</li>
+                                <li>Exponential and logarithmic functions: log (default base 10), ln, exp</li>
+                                <li>Other operations: square (sq), square root (sqrt), cube root (cbrt)</li>
+                            </ul>
+                            <p><strong>Constants:</strong></p>
+                            <ul>
+                                <li>pi (π) , e, tau (τ)</li>
+                            </ul>
+                            <p><strong>Example: </strong></p>
+                            <pre><code style="white-space: normal;">pi+sin(U(1.0,0.1))*U(2.0,0.1)^2/log(sqrt(U(3.0,0.1))) </code></pre>
+                            <p><strong>Rounding:</strong></p>
+                            <p>Uncertainty values are rounded to 1 sig fig. Values are rounded based on the smallest
+                                decimal
+                                of the uncertainty value. The maximum number of sig figs is limited to the maximum
+                                number of
+                                sig figs of the input value.</p>
+                            <p><strong>Examples: </strong></p>
+                            <ul>
+                                <li>U(1.0,0.01) round to 3 sig figs = U(1,0)</li>
+                                <li>U(555,55) round to 3 sig figs = U(555,60)</li>
+                                <li>U(555,55) round to 2 sig figs = U(560,60)</li>
+                            </ul>
+                        </div>
                     </div>
                     <br>
                 </div>
@@ -148,5 +180,14 @@
     label {
         font-size: 20px;
         margin: auto;
+    }
+
+    p {
+        text-align: left;
+    }
+
+    li {
+        margin-left: 1em;
+        text-align: left;
     }
 </style>
