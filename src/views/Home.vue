@@ -31,6 +31,15 @@
                     </div>
                 </div>
                 <br>
+                <div class="description" v-if="result === 'None'">
+                    <div style="background: white; border-radius: 10px;
+        border: 4px solid rgba(0, 0, 0, 0.2); padding: 15px 15px 15px 20px;">
+                        <p style="text-align: left">
+
+                        </p>
+                    </div>
+                    <br>
+                </div>
                 <h2>Result: {{result}}</h2>
                 <div v-if="dotData" style="display: flex;
         flex-direction: column;
@@ -60,6 +69,7 @@
                 dotData: "",
                 round_data: false,
                 sigfigs: "",
+                showDescription: true,
                 isMobile: this.mobileCheck()
             }
         },

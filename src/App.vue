@@ -12,7 +12,7 @@
                             <b-nav-item to="/">Home</b-nav-item>
                             <b-nav-item to="/about">About</b-nav-item>
 <!--                            <b-nav-item to="/table">Table</b-nav-item>-->
-                            <b-nav-item to="/guide">Quick Guide</b-nav-item>
+<!--                            <b-nav-item to="/guide">Quick Guide</b-nav-item>-->
                             <b-nav-item to="/tools">Tools</b-nav-item>
 <!--                            <b-nav-item to="/resources">Resources</b-nav-item>-->
                         </b-navbar-nav>

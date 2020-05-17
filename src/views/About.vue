@@ -179,6 +179,7 @@
                         </tr>
                     </table>
                 </div>
+                <br>
 
                 <div class="figure-container">
                     <figure><img
