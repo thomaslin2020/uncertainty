@@ -86,10 +86,10 @@
                     const fd = new FormData()
                     this.equation += ')'.repeat(this.count(this.equation, '(') - this.count(this.equation, ')'))
                     let equation = this.equation.replace("^", "**")
+                    this.sigfigs = this.sigfigs.replace(/\D/g, '')
                     if (this.sigfigs.length === 0 && this.round_data === true) {
                         this.sigfigs = "3"
                     }
-                    this.sigfigs = this.sigfigs.replace(/\D/g, '')
                     if (this.round_data) {
                         equation = "r(" + this.equation + "," + this.sigfigs + ")"
                     }
