@@ -706,6 +706,7 @@ def log(o, base=10.0):
         return math.log(o, base)
     value = math.log(o.value, base)
     uncertainty = o.uncertainty / (math.log(base, math.e) * o.value)
+    base = int(base) if base == int(base) else base
     if isinstance(o, SimpleUncertaintyNoGraph):
         return SimpleUncertaintyNoGraph(value, abs(math.log(o.value + o.uncertainty, base) - value))
     elif isinstance(o, StdUncertaintyNoGraph):
