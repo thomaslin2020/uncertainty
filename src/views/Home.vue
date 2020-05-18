@@ -1,11 +1,10 @@
 <template>
-    <div id="home">
+    <div id="home" @keydown.enter="send">
         <div style="display: flex;  justify-content: center; align-items: center;">
             <div style="width: 80%">
                 <h1>Uncertainty Calculator</h1>
                 <br>
-
-                <b-input id="equation" name="equation" placeholder="Enter your equation"
+                <b-input autofocus id="equation" name="equation" placeholder="Enter your equation"
                          type="text"
                          v-model="equation"></b-input>
                 <br>
