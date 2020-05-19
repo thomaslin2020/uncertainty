@@ -155,7 +155,7 @@ def binary_node_full(s, o, operator, value_calculation, uncertainty_calculation)
 class SimpleUncertainty:  # normal
     def __init__(self, value, uncertainty, *nodes, last_operator=None, last_node=None, temp=None, symbol=None):
         if not isinstance(value, (int, float)):
-            self.value = float(value)
+            self.value = value.value
         else:
             self.value = value
         self.uncertainty = uncertainty
@@ -338,9 +338,6 @@ class SimpleUncertainty:  # normal
         temp = self.value ** power
         return SimpleUncertainty(temp, abs((self.uncertainty / abs(self.value)) * temp * power), operator_node)
 
-    def __float__(self):
-        return self.value
-
     def __str__(self):
         return '(%f±%f)' % (self.value, self.uncertainty)
 
@@ -348,7 +345,7 @@ class SimpleUncertainty:  # normal
 class StdUncertainty:  # normal
     def __init__(self, value, uncertainty, *nodes, last_operator=None, last_node=None, temp=None, symbol=None):
         if not isinstance(value, (int, float)):
-            self.value = float(value)
+            self.value = value.value
         else:
             self.value = value
         self.uncertainty = uncertainty
@@ -533,9 +530,6 @@ class StdUncertainty:  # normal
         temp = self.value ** power
         return StdUncertainty(temp, abs((self.uncertainty / abs(self.value)) * temp * power), operator_node)
 
-    def __float__(self):
-        return self.value
-
     def __str__(self):
         return '(%f±%f)' % (self.value, self.uncertainty)
 
@@ -543,7 +537,7 @@ class StdUncertainty:  # normal
 class SimpleUncertaintyFull:  # normal
     def __init__(self, value, uncertainty, *nodes, symbol=None):
         if not isinstance(value, (int, float)):
-            self.value = float(value)
+            self.value = value.value
         else:
             self.value = value
         self.uncertainty = uncertainty
@@ -695,7 +689,7 @@ class SimpleUncertaintyFull:  # normal
 class StdUncertaintyFull:  # normal
     def __init__(self, value, uncertainty, *nodes, symbol=None):
         if not isinstance(value, (int, float)):
-            self.value = float(value)
+            self.value = value.value
         else:
             self.value = value
         self.uncertainty = uncertainty
@@ -844,9 +838,6 @@ class StdUncertaintyFull:  # normal
         dot.edge(operator_node, t2, label=' Uncertainty ')
         return StdUncertaintyFull(temp, abs((self.uncertainty / abs(self.value)) * temp * power), t1, t2)
 
-    def __float__(self):
-        return self.value
-
     def __str__(self):
         return '(%f±%f)' % (self.value, self.uncertainty)
 
@@ -854,7 +845,7 @@ class StdUncertaintyFull:  # normal
 class SimpleUncertaintyNoGraph:
     def __init__(self, value, uncertainty, symbol=None):
         if not isinstance(value, (int, float)):
-            self.value = float(value)
+            self.value = value.value
         else:
             self.value = value
         self.uncertainty = uncertainty
@@ -913,9 +904,6 @@ class SimpleUncertaintyNoGraph:
         temp = self.value ** power
         return SimpleUncertaintyNoGraph(temp, abs((self.uncertainty / abs(self.value)) * temp * power))
 
-    def __float__(self):
-        return self.value
-
     def __str__(self):
         return '(%f±%f)' % (self.value, self.uncertainty)
 
@@ -923,7 +911,7 @@ class SimpleUncertaintyNoGraph:
 class StdUncertaintyNoGraph:
     def __init__(self, value, uncertainty, symbol=None):
         if not isinstance(value, (int, float)):
-            self.value = float(value)
+            self.value = value.value
         else:
             self.value = value
         self.uncertainty = uncertainty
@@ -984,9 +972,6 @@ class StdUncertaintyNoGraph:
         temp = self.value ** power
         return StdUncertaintyNoGraph(temp, abs((self.uncertainty / abs(self.value)) * temp * power))
 
-    def __float__(self):
-        return self.value
-
     def __str__(self):
         return '(%f±%f)' % (self.value, self.uncertainty)
 
@@ -1007,13 +992,13 @@ def sin(o):
         return StdUncertainty(value, abs(uncertainty), unary_temp_node(o, 'sin'))
     elif isinstance(o, SimpleUncertaintyFull):
         return SimpleUncertaintyFull(value, abs(math.sin(o.value + o.uncertainty) - value),
-                                     unary_temp_node_full(o, 'sin', '%.3g' % value,
-                                                          'Δ: |sin(%.3g + %.3g) - sin(%.3g)|' % (
-                                                              o.value, o.uncertainty, o.value)))
+                                     *unary_temp_node_full(o, 'sin', '%.3g' % value,
+                                                           'Δ: |sin(%.3g + %.3g) - sin(%.3g)|' % (
+                                                               o.value, o.uncertainty, o.value)))
     else:
-        return StdUncertaintyFull(value, abs(uncertainty), unary_temp_node_full(o, 'sin', '%.3g' % value,
-                                                                                'Δ: |cos(%.3g)⋅%.3g|' % (
-                                                                                    o.value, o.uncertainty)))
+        return StdUncertaintyFull(value, abs(uncertainty), *unary_temp_node_full(o, 'sin', '%.3g' % value,
+                                                                                 'Δ: |cos(%.3g)⋅%.3g|' % (
+                                                                                     o.value, o.uncertainty)))
 
 
 def cos(o):
@@ -1031,13 +1016,13 @@ def cos(o):
         return StdUncertainty(value, abs(uncertainty), unary_temp_node(o, 'cos'))
     elif isinstance(o, SimpleUncertaintyFull):
         return SimpleUncertaintyFull(value, abs(math.cos(o.value + o.uncertainty) - value),
-                                     unary_temp_node_full(o, 'cos', '%.3g' % value,
-                                                          'Δ: |cos(%.3g + %.3g) - cos(%.3g)|' % (
-                                                              o.value, o.uncertainty, o.value)))
+                                     *unary_temp_node_full(o, 'cos', '%.3g' % value,
+                                                           'Δ: |cos(%.3g + %.3g) - cos(%.3g)|' % (
+                                                               o.value, o.uncertainty, o.value)))
     else:
-        return StdUncertaintyFull(value, abs(uncertainty), unary_temp_node_full(o, 'cos', '%.3g' % value,
-                                                                                'Δ: |-sin(%.3g)⋅%.3g|' % (
-                                                                                    o.value, o.uncertainty)))
+        return StdUncertaintyFull(value, abs(uncertainty), *unary_temp_node_full(o, 'cos', '%.3g' % value,
+                                                                                 'Δ: |-sin(%.3g)⋅%.3g|' % (
+                                                                                     o.value, o.uncertainty)))
 
 
 def tan(o):
@@ -1055,13 +1040,13 @@ def tan(o):
         return StdUncertainty(value, abs(uncertainty), unary_temp_node(o, 'tan'))
     elif isinstance(o, SimpleUncertaintyFull):
         return SimpleUncertaintyFull(value, abs(math.tan(o.value + o.uncertainty) - value),
-                                     unary_temp_node_full(o, 'tan', '%.3g' % value,
-                                                          'Δ: |tan(%.3g + %.3g) - tan(%.3g)|' % (
-                                                              o.value, o.uncertainty, o.value)))
+                                     *unary_temp_node_full(o, 'tan', '%.3g' % value,
+                                                           'Δ: |tan(%.3g + %.3g) - tan(%.3g)|' % (
+                                                               o.value, o.uncertainty, o.value)))
     else:
-        return StdUncertaintyFull(value, abs(uncertainty), unary_temp_node_full(o, 'tan', '%.3g' % value,
-                                                                                'Δ: |sec(%.3g)^2⋅%.3g|' % (
-                                                                                    o.value, o.uncertainty)))
+        return StdUncertaintyFull(value, abs(uncertainty), *unary_temp_node_full(o, 'tan', '%.3g' % value,
+                                                                                 'Δ: |sec(%.3g)^2⋅%.3g|' % (
+                                                                                     o.value, o.uncertainty)))
 
 
 def asin(o):
@@ -1079,13 +1064,13 @@ def asin(o):
         return StdUncertainty(value, abs(uncertainty), unary_temp_node(o, 'arcsin'))
     elif isinstance(o, SimpleUncertaintyFull):
         return SimpleUncertaintyFull(value, abs(math.asin(o.value + o.uncertainty) - value),
-                                     unary_temp_node_full(o, 'arcsin', '%.3g' % value,
-                                                          'Δ: |arcsin(%.3g + %.3g) - arcsin(%.3g)|' % (
-                                                              o.value, o.uncertainty, o.value)))
+                                     *unary_temp_node_full(o, 'arcsin', '%.3g' % value,
+                                                           'Δ: |arcsin(%.3g + %.3g) - arcsin(%.3g)|' % (
+                                                               o.value, o.uncertainty, o.value)))
     else:
-        return StdUncertaintyFull(value, abs(uncertainty), unary_temp_node_full(o, 'arcsin', '%.3g' % value,
-                                                                                'Δ: |%.3g / sqrt(1 - %.3g^2)|' % (
-                                                                                    o.uncertainty, o.value)))
+        return StdUncertaintyFull(value, abs(uncertainty), *unary_temp_node_full(o, 'arcsin', '%.3g' % value,
+                                                                                 'Δ: |%.3g / sqrt(1 - %.3g^2)|' % (
+                                                                                     o.uncertainty, o.value)))
 
 
 def acos(o):
@@ -1103,13 +1088,13 @@ def acos(o):
         return StdUncertainty(value, abs(uncertainty), unary_temp_node(o, 'arccos'))
     elif isinstance(o, SimpleUncertaintyFull):
         return SimpleUncertaintyFull(value, abs(math.acos(o.value + o.uncertainty) - value),
-                                     unary_temp_node_full(o, 'arccos', '%.3g' % value,
-                                                          'Δ: |arccos(%.3g + %.3g) - arccos(%.3g)|' % (
-                                                              o.value, o.uncertainty, o.value)))
+                                     *unary_temp_node_full(o, 'arccos', '%.3g' % value,
+                                                           'Δ: |arccos(%.3g + %.3g) - arccos(%.3g)|' % (
+                                                               o.value, o.uncertainty, o.value)))
     else:
-        return StdUncertaintyFull(value, abs(uncertainty), unary_temp_node_full(o, 'arccos', '%.3g' % value,
-                                                                                'Δ: |-%.3g / sqrt(1 - %.3g^2)|' % (
-                                                                                    o.uncertainty, o.value)))
+        return StdUncertaintyFull(value, abs(uncertainty), *unary_temp_node_full(o, 'arccos', '%.3g' % value,
+                                                                                 'Δ: |-%.3g / sqrt(1 - %.3g^2)|' % (
+                                                                                     o.uncertainty, o.value)))
 
 
 def atan(o):
@@ -1127,13 +1112,13 @@ def atan(o):
         return StdUncertainty(value, abs(uncertainty), unary_temp_node(o, 'arctan'))
     elif isinstance(o, SimpleUncertaintyFull):
         return SimpleUncertaintyFull(value, abs(math.atan(o.value + o.uncertainty) - value),
-                                     unary_temp_node_full(o, 'arctan', '%.3g' % value,
-                                                          'Δ: |arctan(%.3g + %.3g) - arctan(%.3g)|' % (
-                                                              o.value, o.uncertainty, o.value)))
+                                     *unary_temp_node_full(o, 'arctan', '%.3g' % value,
+                                                           'Δ: |arctan(%.3g + %.3g) - arctan(%.3g)|' % (
+                                                               o.value, o.uncertainty, o.value)))
     else:
-        return StdUncertaintyFull(value, abs(uncertainty), unary_temp_node_full(o, 'arctan', '%.3g' % value,
-                                                                                'Δ: |%.3g / (1 + %.3g^2)|' % (
-                                                                                    o.uncertainty, o.value)))
+        return StdUncertaintyFull(value, abs(uncertainty), *unary_temp_node_full(o, 'arctan', '%.3g' % value,
+                                                                                 'Δ: |%.3g / (1 + %.3g^2)|' % (
+                                                                                     o.uncertainty, o.value)))
 
 
 def log(o, base=10.0):
@@ -1153,15 +1138,15 @@ def log(o, base=10.0):
         return StdUncertainty(value, abs(uncertainty), unary_temp_node(o, 'log%s' % base))
     elif isinstance(o, SimpleUncertaintyFull):
         return SimpleUncertaintyFull(value, abs(math.log(o.value + o.uncertainty, base) - value),
-                                     unary_temp_node_full(o, 'log%s' % base, '%.3g' % value,
-                                                          'Δ: |log%s(%.3g + %.3g) - log%s(%.3g)|' % (base,
-                                                                                                     o.value,
-                                                                                                     o.uncertainty,
-                                                                                                     base, o.value)))
+                                     *unary_temp_node_full(o, 'log%s' % base, '%.3g' % value,
+                                                           'Δ: |log%s(%.3g + %.3g) - log%s(%.3g)|' % (base,
+                                                                                                      o.value,
+                                                                                                      o.uncertainty,
+                                                                                                      base, o.value)))
     else:
-        return StdUncertaintyFull(value, abs(uncertainty), unary_temp_node_full(o, 'log%s' % base, '%.3g' % value,
-                                                                                'Δ: |%.3g / (ln(%s)⋅%.3g)|' % (
-                                                                                    o.uncertainty, base, o.value)))
+        return StdUncertaintyFull(value, abs(uncertainty), *unary_temp_node_full(o, 'log%s' % base, '%.3g' % value,
+                                                                                 'Δ: |%.3g / (ln(%s)⋅%.3g)|' % (
+                                                                                     o.uncertainty, base, o.value)))
 
 
 def ln(o):
@@ -1180,13 +1165,13 @@ def ln(o):
         return StdUncertainty(value, abs(uncertainty), unary_temp_node(o, 'ln'))
     elif isinstance(o, SimpleUncertaintyFull):
         return SimpleUncertaintyFull(value, abs(math.log(o.value + o.uncertainty, math.e) - value),
-                                     unary_temp_node_full(o, 'ln', '%.3g' % value,
-                                                          'Δ: |ln(%.3g + %.3g) - ln(%.3g)|' % (
-                                                              o.value, o.uncertainty, o.value)))
+                                     *unary_temp_node_full(o, 'ln', '%.3g' % value,
+                                                           'Δ: |ln(%.3g + %.3g) - ln(%.3g)|' % (
+                                                               o.value, o.uncertainty, o.value)))
     else:
-        return StdUncertaintyFull(value, abs(uncertainty), unary_temp_node_full(o, 'ln' % base, '%.3g' % value,
-                                                                                'Δ: |%.3g / %.3g|' % (
-                                                                                    o.uncertainty, o.value)))
+        return StdUncertaintyFull(value, abs(uncertainty), *unary_temp_node_full(o, 'ln' % base, '%.3g' % value,
+                                                                                 'Δ: |%.3g / %.3g|' % (
+                                                                                     o.uncertainty, o.value)))
 
 
 def sq(o):
@@ -1204,12 +1189,12 @@ def sq(o):
         return StdUncertainty(value, abs(uncertainty), unary_temp_node(o, 'square'))
     elif isinstance(o, SimpleUncertaintyFull):
         return SimpleUncertaintyFull(value, abs(uncertainty),
-                                     unary_temp_node_full(o, 'square', '%.3g' % value,
-                                                          'Δ: 2 ⋅ %.3g ⋅ %.3g' % (o.value, o.uncertainty)))
+                                     *unary_temp_node_full(o, 'square', '%.3g' % value,
+                                                           'Δ: 2 ⋅ %.3g ⋅ %.3g' % (o.value, o.uncertainty)))
     else:
-        return StdUncertaintyFull(value, abs(uncertainty), unary_temp_node_full(o, 'square' % base, '%.3g' % value,
-                                                                                'Δ: 2 ⋅ %.3g ⋅ %.3g' % (
-                                                                                    o.value, o.uncertainty)))
+        return StdUncertaintyFull(value, abs(uncertainty), *unary_temp_node_full(o, 'square' % base, '%.3g' % value,
+                                                                                 'Δ: 2 ⋅ %.3g ⋅ %.3g' % (
+                                                                                     o.value, o.uncertainty)))
 
 
 def sqrt(o):
@@ -1227,12 +1212,12 @@ def sqrt(o):
         return StdUncertainty(value, abs(uncertainty), unary_temp_node(o, 'square root'))
     elif isinstance(o, SimpleUncertaintyFull):
         return SimpleUncertaintyFull(value, abs(uncertainty),
-                                     unary_temp_node_full(o, 'square root', '%.3g' % value,
-                                                          'Δ: %.3g / (2 ⋅ sqrt(%.3g))' % (o.uncertainty, o.value)))
+                                     *unary_temp_node_full(o, 'square root', '%.3g' % value,
+                                                           'Δ: %.3g / (2 ⋅ sqrt(%.3g))' % (o.uncertainty, o.value)))
     else:
-        return StdUncertaintyFull(value, abs(uncertainty), unary_temp_node_full(o, 'square root', '%.3g' % value,
-                                                                                'Δ: %.3g / (2 ⋅ sqrt(%.3g))' % (
-                                                                                    o.uncertainty, o.value)))
+        return StdUncertaintyFull(value, abs(uncertainty), *unary_temp_node_full(o, 'square root', '%.3g' % value,
+                                                                                 'Δ: %.3g / (2 ⋅ sqrt(%.3g))' % (
+                                                                                     o.uncertainty, o.value)))
 
 
 def cbrt(o):
@@ -1250,12 +1235,12 @@ def cbrt(o):
         return StdUncertainty(value, abs(uncertainty), unary_temp_node(o, 'cube root'))
     elif isinstance(o, SimpleUncertaintyFull):
         return SimpleUncertaintyFull(value, abs(uncertainty),
-                                     unary_temp_node_full(o, 'cube root', '%.3g' % value,
-                                                          'Δ: %.3g / (3 ⋅ (%.3g)^(2/3))' % (o.uncertainty, o.value)))
+                                     *unary_temp_node_full(o, 'cube root', '%.3g' % value,
+                                                           'Δ: %.3g / (3 ⋅ (%.3g)^(2/3))' % (o.uncertainty, o.value)))
     else:
-        return StdUncertaintyFull(value, abs(uncertainty), unary_temp_node_full(o, 'cube root', '%.3g' % value,
-                                                                                'Δ: %.3g / (3 ⋅ (%.3g)^(2/3))' % (
-                                                                                    o.uncertainty, o.value)))
+        return StdUncertaintyFull(value, abs(uncertainty), *unary_temp_node_full(o, 'cube root', '%.3g' % value,
+                                                                                 'Δ: %.3g / (3 ⋅ (%.3g)^(2/3))' % (
+                                                                                     o.uncertainty, o.value)))
 
 
 def d2r(o):
@@ -1274,11 +1259,11 @@ def d2r(o):
         return StdUncertainty(value, abs(uncertainty), unary_temp_node(o, 'deg2rad'))
     elif isinstance(o, SimpleUncertaintyFull):
         return SimpleUncertaintyFull(value, abs(uncertainty),
-                                     unary_temp_node_full(o, 'deg2rad', '%.3g' % value,
-                                                          'Δ: %.3g ⋅ π/180' % o.value))
+                                     *unary_temp_node_full(o, 'deg2rad', '%.3g' % value,
+                                                           'Δ: %.3g ⋅ π/180' % o.value))
     else:
-        return StdUncertaintyFull(value, abs(uncertainty), unary_temp_node_full(o, 'deg2rad', '%.3g' % value,
-                                                                                'Δ: %.3g ⋅ π/180' % o.uncertainty))
+        return StdUncertaintyFull(value, abs(uncertainty), *unary_temp_node_full(o, 'deg2rad', '%.3g' % value,
+                                                                                 'Δ: %.3g ⋅ π/180' % o.uncertainty))
 
 
 def r2d(o):
@@ -1297,11 +1282,11 @@ def r2d(o):
         return StdUncertainty(value, abs(uncertainty), unary_temp_node(o, 'rad2deg'))
     elif isinstance(o, SimpleUncertaintyFull):
         return SimpleUncertaintyFull(value, abs(uncertainty),
-                                     unary_temp_node_full(o, 'rad2deg', '%.3g' % value,
-                                                          'Δ: %.3g ⋅ 180/π' % o.value))
+                                     *unary_temp_node_full(o, 'rad2deg', '%.3g' % value,
+                                                           'Δ: %.3g ⋅ 180/π' % o.value))
     else:
-        return StdUncertaintyFull(value, abs(uncertainty), unary_temp_node_full(o, 'rad2deg', '%.3g' % value,
-                                                                                'Δ: %.3g ⋅ 180/π' % o.uncertainty))
+        return StdUncertaintyFull(value, abs(uncertainty), *unary_temp_node_full(o, 'rad2deg', '%.3g' % value,
+                                                                                 'Δ: %.3g ⋅ 180/π' % o.uncertainty))
 
 
 def sanity_check(o, n):
