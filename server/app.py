@@ -693,9 +693,15 @@ class SimpleUncertaintyFull:  # normal
 
     def __pow__(self, power):
         operator = '^'
+        if not isinstance(power, (int, float)):
+            remove_trace([power.node])
+            power = power.value
         operator_node = str(next(num))
+        power_node = str(next(num))
+        dot.node(power_node, '%.3g' % power)
         dot.node(operator_node, operator)
         dot.edge(self.node, operator_node)
+        dot.edge(power_node, operator_node)
         t1, t2 = str(next(num)), str(next(num))
         temp = self.value ** power
         dot.node(t1, "%.3g ^ %.3g" % (self.value, power))
@@ -850,9 +856,15 @@ class StdUncertaintyFull:  # normal
 
     def __pow__(self, power):
         operator = '^'
+        if not isinstance(power, (int, float)):
+            remove_trace([power.node])
+            power = power.value
         operator_node = str(next(num))
+        power_node = str(next(num))
+        dot.node(power_node, '%.3g' % power)
         dot.node(operator_node, operator)
         dot.edge(self.node, operator_node)
+        dot.edge(power_node, operator_node)
         t1, t2 = str(next(num)), str(next(num))
         temp = self.value ** power
         dot.node(t1, "%.3g ^ %.3g" % (self.value, power))
@@ -1452,7 +1464,7 @@ def calculate():
                 success = False
                 result = 'Please fix your equation'
             db.session.add(Calculation(date=datetime.utcnow(), equation=request.form['equation'], mode=method,
-                                       show_graph=False, rounding=rounding, answer=result, success=success,full=False))
+                                       show_graph=False, rounding=rounding, answer=result, success=success, full=False))
             db.session.commit()
             return jsonify({'result': result, 'graph': ''})
         else:
@@ -1488,7 +1500,7 @@ def calculate():
                 graph = ''
                 success = False
             db.session.add(Calculation(date=datetime.utcnow(), equation=request.form['equation'], mode=method,
-                                       show_graph=True, rounding=rounding, answer=result, success=success,full=full))
+                                       show_graph=True, rounding=rounding, answer=result, success=success, full=full))
             db.session.commit()
             return jsonify({'result': result, 'graph': graph})
 
