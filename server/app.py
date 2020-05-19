@@ -74,8 +74,9 @@ class Calculation(db.Model):
     rounding = db.Column(db.Integer)
     answer = db.Column(db.Text)
     success = db.Column(db.Boolean)
+    full = db.Column(db.Boolean)
 
-    def __init__(self, date, equation, mode, show_graph, rounding, answer, success):
+    def __init__(self, date, equation, mode, show_graph, rounding, answer, success, full):
         self.date = date
         self.equation = equation
         self.mode = mode
@@ -83,6 +84,7 @@ class Calculation(db.Model):
         self.rounding = rounding
         self.answer = answer
         self.success = success
+        self.full = full
 
     def __repr__(self):
         return f"<Equation {self.equation}>"
@@ -1450,7 +1452,7 @@ def calculate():
                 success = False
                 result = 'Please fix your equation'
             db.session.add(Calculation(date=datetime.utcnow(), equation=request.form['equation'], mode=method,
-                                       show_graph=False, rounding=rounding, answer=result, success=success))
+                                       show_graph=False, rounding=rounding, answer=result, success=success,full=False))
             db.session.commit()
             return jsonify({'result': result, 'graph': ''})
         else:
@@ -1461,11 +1463,13 @@ def calculate():
                 equation = request.form['equation'].replace('e', "eval(constants['%s']['e'])" % method).replace(
                     'tau', "eval(constants['%s']['tau'])" % method).replace(
                     'pi', "eval(constants['%s']['pi'])" % method)
+                full = False
             else:
                 U = SimpleUncertaintyFull if method == 'simple' else StdUncertaintyFull
                 equation = request.form['equation'].replace('e', "eval(constants_full['%s']['e'])" % method).replace(
                     'tau', "eval(constants_full['%s']['tau'])" % method).replace(
                     'pi', "eval(constants_full['%s']['pi'])" % method)
+                full = True
             rounding_form = request.form['round']
             if rounding_form != '-1':
                 rounding = 32 if rounding_form == 'max' else int(rounding_form)
@@ -1484,7 +1488,7 @@ def calculate():
                 graph = ''
                 success = False
             db.session.add(Calculation(date=datetime.utcnow(), equation=request.form['equation'], mode=method,
-                                       show_graph=True, rounding=rounding, answer=result, success=success))
+                                       show_graph=True, rounding=rounding, answer=result, success=success,full=full))
             db.session.commit()
             return jsonify({'result': result, 'graph': graph})
 
