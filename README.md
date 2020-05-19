@@ -67,6 +67,7 @@ You may be interested in this if:
 - You've just started learning about calculating uncertainty values and would like to visualize the intermediate steps of the calculation
 - You need to know the intermediate steps of a calculation
 - You would like to visualize the order of operators in a calculation (Computer Science)
+- You want to take a look at something cool 😎
 
 - *Note: No computational graphs (show progress) will be generated for calculations with only real number values (no constants and uncertainty values).* 
 
@@ -77,4 +78,5 @@ You may be interested in this if:
   />
 </div>
 
-Feel free to report any bugs and submit any feature requests.
+
+Feel free to report any bugs and submit any feature requests through github issues or by [emailing me](mailto:thomaslin910608@gmail.com).
