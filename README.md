@@ -2,6 +2,13 @@
 
 This calculator is a web app for performing calculations involving quantities with uncertainties.
 
+<div align="center">
+  <img
+    alt="Home Page"
+    src="./assets/home.jpg"
+  />
+</div>
+
 [![Maintenance](https://img.shields.io/maintenance/yes/2020.svg)]() [![Build Status](https://travis-ci.org/arnog/mathlive.svg?branch=master)](https://travis-ci.org/arnog/mathlive) 
 
 - [x] Calculates error propagation for common functions with steps of calculation
