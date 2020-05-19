@@ -352,9 +352,15 @@ class SimpleUncertainty:  # normal
 
     def __pow__(self, power):
         operator = '^'
+        if not isinstance(power, (int, float)):
+            remove_trace([power.node])
+            power = power.value
         operator_node = str(next(num))
+        power_node = str(next(num))
+        dot.node(power_node, '%.3g' % power)
         dot.node(operator_node, operator)
         dot.edge(self.node, operator_node)
+        dot.edge(power_node, operator_node)
         temp = self.value ** power
         return SimpleUncertainty(temp, abs((self.uncertainty / abs(self.value)) * temp * power), operator_node)
 
@@ -545,9 +551,15 @@ class StdUncertainty:  # normal
 
     def __pow__(self, power):
         operator = '^'
+        if not isinstance(power, (int, float)):
+            remove_trace([power.node])
+            power = power.value
         operator_node = str(next(num))
+        power_node = str(next(num))
+        dot.node(power_node, '%.3g' % power)
         dot.node(operator_node, operator)
         dot.edge(self.node, operator_node)
+        dot.edge(power_node, operator_node)
         temp = self.value ** power
         return StdUncertainty(temp, abs((self.uncertainty / abs(self.value)) * temp * power), operator_node)
 
@@ -936,6 +948,8 @@ class SimpleUncertaintyNoGraph:
             return SimpleUncertaintyNoGraph(other, 0) / SimpleUncertaintyNoGraph(self.value, self.uncertainty)
 
     def __pow__(self, power):
+        if not isinstance(power, (int, float)):
+            power = power.value
         temp = self.value ** power
         return SimpleUncertaintyNoGraph(temp, abs((self.uncertainty / abs(self.value)) * temp * power))
 
@@ -1004,6 +1018,8 @@ class StdUncertaintyNoGraph:
             return StdUncertaintyNoGraph(other, 0) / StdUncertaintyNoGraph(self.value, self.uncertainty)
 
     def __pow__(self, power):
+        if not isinstance(power, (int, float)):
+            power = power.value
         temp = self.value ** power
         return StdUncertaintyNoGraph(temp, abs((self.uncertainty / abs(self.value)) * temp * power))
 
