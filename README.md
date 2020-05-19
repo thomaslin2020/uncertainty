@@ -11,8 +11,5 @@ This calculator is a web app for performing calculations involving quantities wi
 - [ ] Integration with Excel data through drag and drop
 - [ ] Performs calculations on entire tables
 - [ ] Export results as **PDF** with Latex formatting, **csv**, and **excel** 
-- [ ] Share results with friends
-- [ ] Login to track calcultion history
-- [ ] Graphing based on uncertainty values
 
 Try it at [https://thomaslin2020.github.io/uncertainty](https://thomaslin2020.github.io/uncertainty) 
