@@ -173,7 +173,7 @@ class SimpleUncertainty:  # normal
     def __init__(self, value, uncertainty, *nodes, last_operator=None, last_node=None, temp=None, symbol=None):
         if not isinstance(value, (int, float)):
             self.value = value.value
-            remove_trace(list(value.node))
+            remove_trace([value.node])
         else:
             self.value = value
         self.uncertainty = uncertainty
@@ -364,7 +364,7 @@ class StdUncertainty:  # normal
     def __init__(self, value, uncertainty, *nodes, last_operator=None, last_node=None, temp=None, symbol=None):
         if not isinstance(value, (int, float)):
             self.value = value.value
-            remove_trace(list(value.node))
+            remove_trace([value.node])
         else:
             self.value = value
         self.uncertainty = uncertainty
@@ -557,7 +557,7 @@ class SimpleUncertaintyFull:  # normal
     def __init__(self, value, uncertainty, *nodes, symbol=None):
         if not isinstance(value, (int, float)):
             self.value = value.value
-            remove_trace(list(value.node))
+            remove_trace([value.node])
         else:
             self.value = value
         self.uncertainty = uncertainty
@@ -710,7 +710,7 @@ class StdUncertaintyFull:  # normal
     def __init__(self, value, uncertainty, *nodes, symbol=None):
         if not isinstance(value, (int, float)):
             self.value = value.value
-            remove_trace(list(value.node))
+            remove_trace([value.node])
         else:
             self.value = value
         self.uncertainty = uncertainty
