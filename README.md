@@ -7,6 +7,7 @@ This calculator is a web app for performing calculations involving quantities wi
     alt="Home Page"
     src="./assets/home.jpg"
   />
+  <br>
 </div>
 
 [![Maintenance](https://img.shields.io/maintenance/yes/2020.svg)]() [![Build Status](https://travis-ci.org/arnog/mathlive.svg?branch=master)](https://travis-ci.org/arnog/mathlive) 
