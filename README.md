@@ -22,7 +22,7 @@ This calculator is a web app for performing calculations involving quantities wi
 - [ ] Export results as **PDF** with Latex formatting, **csv**, and **excel** 
 
 ## Description:
-U(a,b) represents the uncertainty value a ± b (e.g. (2 ± 1) = U(1,2))
+U(a,b) represents the uncertainty value a ± b (e.g. (2 ± 1) = U(2,1))
 
 **Supported operations include:**
 

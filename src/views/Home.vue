@@ -42,7 +42,7 @@
                         <div>
                             <h2>Description</h2>
                             <p><strong>U(a,b)</strong> represents the uncertainty value <strong>a ± b</strong> (e.g. (2
-                                ± 1) = U(1,2))</p>
+                                ± 1) = U(2,1))</p>
                             <p style="margin-bottom: 5px"><strong>Supported operations include:</strong></p>
                             <ul>
                                 <li><strong>Basic Operations:</strong> Addition(+), Subtraction(-), Multiplication(⨉),
