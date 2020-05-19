@@ -10,6 +10,7 @@ from flask_cors import CORS
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from graphviz import Digraph
+from setuptools.namespaces import flatten
 
 app = Flask(__name__)
 app.config.from_object(__name__)
