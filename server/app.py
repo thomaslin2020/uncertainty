@@ -152,6 +152,21 @@ def binary_node_full(s, o, operator, value_calculation, uncertainty_calculation)
     return t1, t2
 
 
+def remove_trace(nodes):
+    o = [re.sub('\\[.*\\]', '', i).strip().replace('\t', '').replace('\n', '') for i in dot.body]
+    o = [i.split(" -> ") if " -> " in i else [i] for i in o]
+    temp = [(i, j) for i, j in enumerate(o) for n in nodes if n in j]
+    if not temp:
+        return
+    index, values = list(zip(*temp))
+    values = set(flatten(values))
+    for i in sorted(index)[::-1]:
+        dot.body.pop(i)
+    for i in nodes:
+        values.remove(i)
+    return remove_trace(list(values))
+
+
 class SimpleUncertainty:  # normal
     def __init__(self, value, uncertainty, *nodes, last_operator=None, last_node=None, temp=None, symbol=None):
         if not isinstance(value, (int, float)):
@@ -172,6 +187,8 @@ class SimpleUncertainty:  # normal
             self.node = temp
             dot.node(self.node, symbol) if symbol else dot.node(self.node,
                                                                 '(%.3g±%.3g)' % (self.value, self.uncertainty))
+        if not isinstance(value, (int, float)):
+            remove_trace(list(value.node))
 
     def __neg__(self):
         operator = 'neg'
@@ -362,6 +379,8 @@ class StdUncertainty:  # normal
             self.node = temp
             dot.node(self.node, symbol) if symbol else dot.node(self.node,
                                                                 '(%.3g±%.3g)' % (self.value, self.uncertainty))
+        if not isinstance(value, (int, float)):
+            remove_trace(list(value.node))
 
     def __neg__(self):
         operator = 'neg'
@@ -547,6 +566,8 @@ class SimpleUncertaintyFull:  # normal
         dot.node(self.node, symbol) if symbol else dot.node(self.node,
                                                             '(%.3g±%.3g)' % (self.value, self.uncertainty))
         dot.edges([(n, self.node) for n in self.nodes])
+        if not isinstance(value, (int, float)):
+            remove_trace(list(value.node))
 
     def __neg__(self):
         operator = 'neg'
@@ -699,6 +720,8 @@ class StdUncertaintyFull:  # normal
         dot.node(self.node, symbol) if symbol else dot.node(self.node,
                                                             '(%.3g±%.3g)' % (self.value, self.uncertainty))
         dot.edges([(n, self.node) for n in self.nodes])
+        if not isinstance(value, (int, float)):
+            remove_trace(list(value.node))
 
     def __neg__(self):
         operator = 'neg'
