@@ -8,7 +8,6 @@ This calculator is a web app for performing calculations involving quantities wi
 - [x] Supports accurate rounding and significant figures
 - [x] Builds computational graph of calculation
 - [x] Supports common constants such as π, e, and τ
-- [ ] View results in scientific and engineering modes
 - [ ] Integration with Excel data through drag and drop
 - [ ] Performs calculations on entire tables
 - [ ] Export results as **PDF** with Latex formatting, **csv**, and **excel** 
