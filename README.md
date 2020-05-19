@@ -66,5 +66,11 @@ You may be interested in this if:
  
 - *Note: No computational graphs (show progress) will be generated for calculations with only real number values (no constants and uncertainty values).* 
 
+<div style="margin-bottom: 15px">
+  <img
+    alt="Home Page"
+    src="./assets/graph.jpg"
+  />
+</div>
 
 Try it at [https://thomaslin2020.github.io/uncertainty](https://thomaslin2020.github.io/uncertainty) 
