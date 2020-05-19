@@ -41,7 +41,10 @@ U(a,b) represents the uncertainty value a ± b (e.g. (2 ± 1) = U(1,2))
 - pi (π) , e, tau (τ)
 
 **Full Example:**
-	```pi+sin(U(1.0,0.1))*U(2.0,0.1)^2/log(sqrt(U(3.0,0.1))) ```
+
+```
+pi+sin(U(1.0,0.1))*U(2.0,0.1)^2/log(sqrt(U(3.0,0.1))) 
+```
 
 **Rounding (if selected):**
 Uncertainty values are rounded to **1 sig fig**. Values are rounded based on the smallest decimal of the uncertainty value. The maximum number of sig figs is limited to the maximum number of sig figs of the input value.
