@@ -11,6 +11,7 @@ This calculator is a web app for performing calculations involving quantities wi
   />
 </div>
 
+**Current Progress:**
 - [x] Calculates error propagation for common functions with steps of calculation
 - [x] Supports accurate rounding and significant figures
 - [x] Builds computational graph of calculation
@@ -41,7 +42,6 @@ U(a,b) represents the uncertainty value a ± b (e.g. (2 ± 1) = U(1,2))
 - pi (π) , e, tau (τ)
 
 **Full Example:**
-
 ```
 pi+sin(U(1.0,0.1))*U(2.0,0.1)^2/log(sqrt(U(3.0,0.1))) 
 ```
