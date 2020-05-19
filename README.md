@@ -4,7 +4,7 @@ This calculator is a web app for performing calculations involving quantities wi
 
 [![Maintenance](https://img.shields.io/maintenance/yes/2020.svg)]() [![Build Status](https://travis-ci.org/arnog/mathlive.svg?branch=master)](https://travis-ci.org/arnog/mathlive) 
 
-<div align="center" style="margin-bottom: 15px">
+<div style="margin-bottom: 15px">
   <img
     alt="Home Page"
     src="./assets/home.jpg"
@@ -36,7 +36,7 @@ U(a,b) represents the uncertainty value a ± b (e.g. (2 ± 1) = U(1,2))
 
   
 
-  **Constants:**
+**Constants:**
 
 - pi (π) , e, tau (τ)
 
@@ -54,6 +54,16 @@ Uncertainty values are rounded to **1 sig fig**. Values are rounded based on the
 - U(555,55) rounded to 3 sig figs = U(555,60)
 - U(555,55) rounded to 2 sig figs = U(560,60)
 
+**Computational Graphs**
+
+Computational graphs provide a way for visualizing the process of calculating uncertainties while combining operations with the same operator.
+
+You may be interested in this if:
+
+- You've just started learning about calculating uncertainty values and would like to visualize the intermediate steps of the calculation
+- You need to know the intermediate steps of a calculation
+- You would like to visualize the order of operators in a calculation (Computer Science)
+ 
 - *Note: No computational graphs (show progress) will be generated for calculations with only real number values (no constants and uncertainty values).* 
 
 
