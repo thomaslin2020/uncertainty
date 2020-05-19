@@ -1450,10 +1450,16 @@ def calculate():
         else:
             num, dot = start_session()
             method = request.form['method']
-            U = SimpleUncertainty if method == 'simple' else StdUncertainty
-            equation = request.form['equation'].replace('e', "eval(constants['%s']['e'])" % method).replace(
-                'tau', "eval(constants['%s']['tau'])" % method).replace(
-                'pi', "eval(constants['%s']['pi'])" % method)
+            if request.form['full'] == 'false':
+                U = SimpleUncertainty if method == 'simple' else StdUncertainty
+                equation = request.form['equation'].replace('e', "eval(constants['%s']['e'])" % method).replace(
+                    'tau', "eval(constants['%s']['tau'])" % method).replace(
+                    'pi', "eval(constants['%s']['pi'])" % method)
+            else:
+                U = SimpleUncertaintyFull if method == 'simple' else StdUncertaintyFull
+                equation = request.form['equation'].replace('e', "eval(constants_full['%s']['e'])" % method).replace(
+                    'tau', "eval(constants_full['%s']['tau'])" % method).replace(
+                    'pi', "eval(constants_full['%s']['pi'])" % method)
             rounding_form = request.form['round']
             if rounding_form != '-1':
                 rounding = 32 if rounding_form == 'max' else int(rounding_form)

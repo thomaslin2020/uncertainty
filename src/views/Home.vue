@@ -25,6 +25,10 @@
                                     v-model="showGraph"><p
                                 style="font-size: 18px">
                             <strong>Show Progress</strong></p></b-checkbox>
+                        <b-checkbox style="display: inline-block; margin-right: 10px" v-if="!isMobile && showGraph"
+                                    v-model="full"><p
+                                style="font-size: 18px">
+                            <strong>Full Progress</strong></p></b-checkbox>
                         <div style="display: inline-block">
                             <b-button @click="send" class="input-button" type="submit" value="upload">Calculate
                             </b-button>
@@ -122,6 +126,7 @@
                 dotData: "",
                 round_data: false,
                 sigfigs: "",
+                full: false,
                 showDescription: true,
                 isMobile: this.mobileCheck()
             }
@@ -170,6 +175,7 @@
                     }
                     fd.append('method', this.mode)
                     fd.append('showGraph', this.showGraph.toString())
+                    fd.append('full', this.full.toString())
                     fd.append('equation', equation)
                     this.result = "loading..."
                     axios.post('https://uncertainty-calculator.herokuapp.com/api/calculate', fd)
