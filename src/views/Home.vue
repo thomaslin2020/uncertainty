@@ -58,7 +58,8 @@
                                 <li><strong>Logarithmic functions:</strong> log, ln <strong>e.g.
                                     log(U(3.5,0.01),2)</strong> (base 2)
                                 </li>
-                                <li style="margin-left: 3em"><i>For exponential functions use e^x or U(a,b)^x </i><strong>e.g. e^5 or U(2,1)^4</strong></li>
+                                <li style="margin-left: 3em"><i>For exponential functions use e^x or
+                                    U(a,b)^x </i><strong>e.g. e^5 or U(2,1)^4</strong></li>
                                 <li style="margin-left: 3em"><i>Note: log without second parameter indicates
                                     log10 </i><strong>e.g. log(U(3.5,0.01))</strong></li>
                                 <li><strong>Other operations:</strong> square (sq), square root (sqrt), cube root
@@ -175,7 +176,11 @@
                     }
                     fd.append('method', this.mode)
                     fd.append('showGraph', this.showGraph.toString())
-                    fd.append('full', this.full.toString())
+                    if (this.showGraph === false) {
+                        fd.append('full', 'false')
+                    } else {
+                        fd.append('full', this.full.toString())
+                    }
                     fd.append('equation', equation)
                     this.result = "loading..."
                     axios.post('https://uncertainty-calculator.herokuapp.com/api/calculate', fd)
