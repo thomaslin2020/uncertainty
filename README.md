@@ -73,4 +73,4 @@ You may be interested in this if:
   />
 </div>
 
-Try it at [https://thomaslin2020.github.io/uncertainty](https://thomaslin2020.github.io/uncertainty) 
+Feel free to report any bugs and submit any feature requests.
