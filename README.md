@@ -11,9 +11,9 @@ This calculator is a web app for performing calculations involving quantities wi
   />
 </div>
 
-##  
 
 **Current Progress:**
+
 - [x] Calculates error propagation for common functions with steps of calculation
 - [x] Supports accurate rounding and significant figures
 - [x] Builds computational graph of calculation
@@ -68,7 +68,7 @@ You may be interested in this if:
 - You've just started learning about calculating uncertainty values and would like to visualize the intermediate steps of the calculation
 - You need to know the intermediate steps of a calculation
 - You would like to visualize the order of operators in a calculation (Computer Science)
- 
+
 - *Note: No computational graphs (show progress) will be generated for calculations with only real number values (no constants and uncertainty values).* 
 
 <div style="margin-bottom: 15px">
