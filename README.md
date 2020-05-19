@@ -10,8 +10,6 @@ This calculator is a web app for performing calculations involving quantities wi
     src="./assets/home.jpg"
   />
 </div>
-
-
 **Current Progress:**
 
 - [x] Calculates error propagation for common functions with steps of calculation
