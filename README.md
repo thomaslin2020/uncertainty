@@ -11,6 +11,8 @@ This calculator is a web app for performing calculations involving quantities wi
   />
 </div>
 
+##  
+
 **Current Progress:**
 - [x] Calculates error propagation for common functions with steps of calculation
 - [x] Supports accurate rounding and significant figures
