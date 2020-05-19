@@ -1,4 +1,5 @@
 import math
+import re
 import sys
 from datetime import datetime
 from decimal import Decimal
@@ -172,6 +173,7 @@ class SimpleUncertainty:  # normal
     def __init__(self, value, uncertainty, *nodes, last_operator=None, last_node=None, temp=None, symbol=None):
         if not isinstance(value, (int, float)):
             self.value = value.value
+            remove_trace(list(value.node))
         else:
             self.value = value
         self.uncertainty = uncertainty
@@ -188,8 +190,6 @@ class SimpleUncertainty:  # normal
             self.node = temp
             dot.node(self.node, symbol) if symbol else dot.node(self.node,
                                                                 '(%.3g±%.3g)' % (self.value, self.uncertainty))
-        if not isinstance(value, (int, float)):
-            remove_trace(list(value.node))
 
     def __neg__(self):
         operator = 'neg'
@@ -364,6 +364,7 @@ class StdUncertainty:  # normal
     def __init__(self, value, uncertainty, *nodes, last_operator=None, last_node=None, temp=None, symbol=None):
         if not isinstance(value, (int, float)):
             self.value = value.value
+            remove_trace(list(value.node))
         else:
             self.value = value
         self.uncertainty = uncertainty
@@ -380,8 +381,6 @@ class StdUncertainty:  # normal
             self.node = temp
             dot.node(self.node, symbol) if symbol else dot.node(self.node,
                                                                 '(%.3g±%.3g)' % (self.value, self.uncertainty))
-        if not isinstance(value, (int, float)):
-            remove_trace(list(value.node))
 
     def __neg__(self):
         operator = 'neg'
@@ -558,6 +557,7 @@ class SimpleUncertaintyFull:  # normal
     def __init__(self, value, uncertainty, *nodes, symbol=None):
         if not isinstance(value, (int, float)):
             self.value = value.value
+            remove_trace(list(value.node))
         else:
             self.value = value
         self.uncertainty = uncertainty
@@ -567,8 +567,6 @@ class SimpleUncertaintyFull:  # normal
         dot.node(self.node, symbol) if symbol else dot.node(self.node,
                                                             '(%.3g±%.3g)' % (self.value, self.uncertainty))
         dot.edges([(n, self.node) for n in self.nodes])
-        if not isinstance(value, (int, float)):
-            remove_trace(list(value.node))
 
     def __neg__(self):
         operator = 'neg'
@@ -712,6 +710,7 @@ class StdUncertaintyFull:  # normal
     def __init__(self, value, uncertainty, *nodes, symbol=None):
         if not isinstance(value, (int, float)):
             self.value = value.value
+            remove_trace(list(value.node))
         else:
             self.value = value
         self.uncertainty = uncertainty
@@ -721,8 +720,6 @@ class StdUncertaintyFull:  # normal
         dot.node(self.node, symbol) if symbol else dot.node(self.node,
                                                             '(%.3g±%.3g)' % (self.value, self.uncertainty))
         dot.edges([(n, self.node) for n in self.nodes])
-        if not isinstance(value, (int, float)):
-            remove_trace(list(value.node))
 
     def __neg__(self):
         operator = 'neg'
@@ -1479,7 +1476,8 @@ def calculate():
                 graph = dot.source
                 graph = graph if graph != "digraph {\n}" else ""
                 if graph != '':
-                    graph = "digraph {\n\t" + "bgcolor=transparent\n\t" + graph[graph.index('0'):]
+                    graph = "digraph {\n\t" + "bgcolor=transparent\n\t" + graph[graph.index(
+                        dot.body[0].replace('\t', '').replace('\n', '')[0]):]
                 success = True
             except:
                 result = 'Please fix your equation'

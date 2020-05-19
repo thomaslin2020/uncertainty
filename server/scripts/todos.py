@@ -65,6 +65,7 @@ class SimpleUncertaintyFull:  # normal
     def __init__(self, value, uncertainty, *nodes, symbol=None):
         if not isinstance(value, (int, float)):
             self.value = value.value
+            remove_trace(list(value.node))
         else:
             self.value = value
         self.uncertainty = uncertainty
@@ -231,5 +232,7 @@ sin(U(SimpleUncertaintyFull(3, 0) + 5, 5) - 2)
 print(dot.source)
 
 # U(3, 5) / U(3, 5)
-# print(type(U(2, 4)).__name__)
+# print(type(U(2, 4")).__name__)
 dot.save('files/file.gv')
+
+print("digraph {\n\tbgcolor=transparent\n\t0 [label=\"π\"]\n\t7 [label=\"(4.14±0.1)\"]\n\t8 [label=sin]\n\t7 -> 8\n\t9 [label=-0.841]\n\t10 [label=\"Δ: |sin(4.14 + 0.1) - sin(4.14)|\"]\n\t8 -> 9 [xlabel=\" Value \"]\n\t8 -> 10 [label=\" Uncertainty \"]\n\t11 [label=\"(-0.841±0.0497)\"]\n\t9 -> 11\n\t10 -> 11\n\t12 [label=\"(2±0.1)\"]\n\t13 [label=\"^\"]\n\t12 -> 13\n\t14 [label=\"2 ^ 2\"]\n\t15 [label=\"(0.1/2) ⨉ (2^2) ⨉ 2\"]\n\t13 -> 14 [xlabel=\" Value \"]\n\t13 -> 15 [label=\" Uncertainty \"]\n\t16 [label=\"(4±0.4)\"]\n\t14 -> 16\n\t15 -> 16\n\t17 [label=\"⨉\"]\n\t11 -> 17\n\t16 -> 17\n\t18 [label=\"-0.841 ⨉ 4\"]\n\t19 [label=\"Δ: [(0.0497/-0.841)+(0.4/4)] ⨉ -3.37\"]\n\t17 -> 18 [xlabel=\" Value \"]\n\t17 -> 19 [label=\" Uncertainty \"]\n\t20 [label=\"(-3.37±0.536)\"]\n\t18 -> 20\n\t19 -> 20\n\t21 [label=\"(3±0.1)\"]\n\t22 [label=\"square root\"]\n\t21 -> 22\n\t23 [label=1.73]\n\t24 [label=\"Δ: 0.1 / (2 ⋅ sqrt(3))\"]\n\t22 -> 23 [xlabel=\" Value \"]\n\t22 -> 24 [label=\" Uncertainty \"]\n\t25 [label=\"(1.73±0.0289)\"]\n\t23 -> 25\n\t24 -> 25\n\t26 [label=log10]\n\t25 -> 26\n\t27 [label=0.239]\n\t28 [label=\"Δ: |log10(1.73 + 0.0289) - log10(1.73)|\"]\n\t26 -> 27 [xlabel=\" Value \"]\n\t26 -> 28 [label=\" Uncertainty \"]\n\t29 [label=\"(0.239±0.00718)\"]\n\t27 -> 29\n\t28 -> 29\n\t30 [label=\"÷\"]\n\t20 -> 30\n\t29 -> 30\n\t31 [label=\"-3.37 / 0.239\"]\n\t32 [label=\"Δ: [(0.536/-3.37)+(0.00718/0.239)] ⨉ -14.1\"]\n\t30 -> 31 [xlabel=\" Value \"]\n\t30 -> 32 [label=\" Uncertainty \"]\n\t33 [label=\"(-14.1±2.67)\"]\n\t31 -> 33\n\t32 -> 33\n\t34 [label=\"+\"]\n\t0 -> 34\n\t33 -> 34\n\t35 [label=\"3.14 + -14.1\"]\n\t36 [label=\"Δ: 0 + 2.67\"]\n\t34 -> 35 [xlabel=\" Value \"]\n\t34 -> 36 [label=\" Uncertainty \"]\n\t37 [label=\"(-11±2.67)\"]\n\t35 -> 37\n\t36 -> 37\n}")
