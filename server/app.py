@@ -178,7 +178,11 @@ class SimpleUncertainty:  # normal
             remove_trace([value.node])
         else:
             self.value = value
-        self.uncertainty = uncertainty
+        if not isinstance(uncertainty, (int, float)):
+            self.uncertainty = uncertainty.value
+            remove_trace([uncertainty.node])
+        else:
+            self.uncertainty = uncertainty
         self.last_operator = last_operator
         self.last_node = last_node
         self.nodes = nodes
@@ -375,7 +379,11 @@ class StdUncertainty:  # normal
             remove_trace([value.node])
         else:
             self.value = value
-        self.uncertainty = uncertainty
+        if not isinstance(uncertainty, (int, float)):
+            self.uncertainty = uncertainty.value
+            remove_trace([uncertainty.node])
+        else:
+            self.uncertainty = uncertainty
         self.last_operator = last_operator
         self.last_node = last_node
         self.nodes = nodes
@@ -574,7 +582,11 @@ class SimpleUncertaintyFull:  # normal
             remove_trace([value.node])
         else:
             self.value = value
-        self.uncertainty = uncertainty
+        if not isinstance(uncertainty, (int, float)):
+            self.uncertainty = uncertainty.value
+            remove_trace([uncertainty.node])
+        else:
+            self.uncertainty = uncertainty
         self.nodes = nodes
         self.symbol = symbol
         self.node = str(next(num))
@@ -733,7 +745,11 @@ class StdUncertaintyFull:  # normal
             remove_trace([value.node])
         else:
             self.value = value
-        self.uncertainty = uncertainty
+        if not isinstance(uncertainty, (int, float)):
+            self.uncertainty = uncertainty.value
+            remove_trace([uncertainty.node])
+        else:
+            self.uncertainty = uncertainty
         self.nodes = nodes
         self.symbol = symbol
         self.node = str(next(num))
@@ -895,7 +911,10 @@ class SimpleUncertaintyNoGraph:
             self.value = value.value
         else:
             self.value = value
-        self.uncertainty = uncertainty
+        if not isinstance(uncertainty, (int, float)):
+            self.uncertainty = uncertainty.value
+        else:
+            self.uncertainty = uncertainty
 
     def __neg__(self):
         return SimpleUncertaintyNoGraph(-self.value, self.uncertainty)
@@ -963,7 +982,10 @@ class StdUncertaintyNoGraph:
             self.value = value.value
         else:
             self.value = value
-        self.uncertainty = uncertainty
+        if not isinstance(uncertainty, (int, float)):
+            self.uncertainty = uncertainty.value
+        else:
+            self.uncertainty = uncertainty
 
     def __neg__(self):
         return StdUncertaintyNoGraph(-self.value, self.uncertainty)

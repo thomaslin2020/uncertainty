@@ -244,4 +244,4 @@ U = SimpleUncertaintyFull
 # U(3, 5) / U(3, 5)
 # print(type(U(2, 4")).__name__)
 dot.save('files/file.gv')
-print("digraph {\n\tbgcolor=transparent\n\t0 [label=\"(3±5)\"]\n\t10 [label=20.1]\n\t9 [label=\"^\"]\n\t0 -> 9\n\t10 -> 9\n\t11 [label=\"(3.83e+09±1.28e+11)\"]\n\t9 -> 11\n}")
+print("")
