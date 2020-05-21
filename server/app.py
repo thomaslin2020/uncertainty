@@ -261,7 +261,7 @@ class SimpleUncertainty:  # normal
             if isinstance(other, (int, float)):
                 temp = temp_node(self, other)
                 operator_node = binary_node(self, temp, operator)
-                return SimpleUncertainty(self.value + other, self.uncertainty, operator_node,
+                return SimpleUncertainty(self.value - other, self.uncertainty, operator_node,
                                          last_operator=operator,
                                          last_node=operator_node, temp=None)
             operator_node = binary_node(self, other.node, operator)
@@ -462,7 +462,7 @@ class StdUncertainty:  # normal
             if isinstance(other, (int, float)):
                 temp = temp_node(self, other)
                 operator_node = binary_node(self, temp, operator)
-                return StdUncertainty(self.value + other, self.uncertainty, operator_node,
+                return StdUncertainty(self.value - other, self.uncertainty, operator_node,
                                       last_operator=operator,
                                       last_node=operator_node, temp=None)
             operator_node = binary_node(self, other.node, operator)
