@@ -1242,7 +1242,7 @@ def ln(o):
                                                            'Δ: |ln(%.3g + %.3g) - ln(%.3g)|' % (
                                                                o.value, o.uncertainty, o.value)))
     else:
-        return StdUncertaintyFull(value, abs(uncertainty), *unary_temp_node_full(o, 'ln' % base, '%.3g' % value,
+        return StdUncertaintyFull(value, abs(uncertainty), *unary_temp_node_full(o, 'ln', '%.3g' % value,
                                                                                  'Δ: |%.3g / %.3g|' % (
                                                                                      o.uncertainty, o.value)))
 

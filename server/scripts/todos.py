@@ -245,3 +245,18 @@ U = SimpleUncertaintyFull
 # print(type(U(2, 4")).__name__)
 dot.save('files/file.gv')
 print("")
+
+
+class A:
+    def __init__(self, num):
+        self.num = num
+
+    def __add__(self, other):
+        return A(self.num + other.num)
+
+    def __str__(self):
+        return str(self.num)
+
+
+print(A(3).__add__(A(3)))
+print(A(3) + A(3))
