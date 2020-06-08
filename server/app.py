@@ -1,4 +1,5 @@
 import math
+import os
 import re
 import sys
 from datetime import datetime
@@ -16,7 +17,7 @@ from setuptools.namespaces import flatten
 app = Flask(__name__)
 app.config.from_object(__name__)
 app.config[
-    'SQLALCHEMY_DATABASE_URI'] = "postgres://vkqaytdz:MZX9H4J6Y8c7L8Al5XAmcENBoR7QFL3k@raja.db.elephantsql.com:5432/vkqaytdz"
+    'SQLALCHEMY_DATABASE_URI'] = os.environ.get('POSTGRESQL')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 CORS(app, resources={r'/*': {'origins': '*'}})
