@@ -53,7 +53,7 @@
                                     Division(÷),
                                     Power(^)
                                 </li>
-                                <li><strong>Trigonometric functions:</strong> sin, cos, tan, arcsin, arccos, arctan
+                                <li><strong>Trigonometric functions:</strong> sin, cos, tan, arcsin (asin), arccos (acos), arctan (atan)
                                     <strong>e.g. sin(U(0.52,0.01))</strong></li>
                                 <li><strong>Logarithmic functions:</strong> log, ln <strong>e.g.
                                     log(U(3.5,0.01),2)</strong> (base 2)
